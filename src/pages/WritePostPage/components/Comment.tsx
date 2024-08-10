@@ -1,21 +1,33 @@
-import React from "react";
-import profile from "../../../assets/images/ico_profile2.svg";  // 실제 경로에 맞게 수정하세요
-import moreVertical from "../../../assets/images/ico_more-vertical.svg";  // 실제 경로에 맞게 수정하세요
-import heart from "../../../assets/images/24x24/ico_heart.png";  // 실제 경로에 맞게 수정하세요
+import React, { useState } from "react";
+import profile from "../../../assets/images/ico_profile2.svg";  
+import moreVertical from "../../../assets/images/ico_more-vertical.svg"; 
+import heart from "../../../assets/images/24x24/ico_heart.png"; 
+import heartFilled from "../../../assets/images/24x24/ico_heart_filled.svg";
 
 interface CommentProps {
     userName: string;
     time: number;
     text: string;
     like: number;
-    onLike: () =>void;
 }
 
 const formatNumber = (num: number): string => {
     return new Intl.NumberFormat().format(num);
 };
 
-const Comment: React.FC<CommentProps> = ({ userName, time, text, like, onLike }) => {
+const Comment: React.FC<CommentProps> = ({ userName, time, text, like}) => {
+    const [isLiked, setIsLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(like);
+
+    const handleLikeClick = () => {
+        if (isLiked) {
+            setLikeCount(likeCount - 1);
+        } else {
+            setLikeCount(likeCount + 1);
+        }
+        setIsLiked(!isLiked);
+    };
+
     return (
         <div className="mx-auto w-[337px] h-auto py-[10px] px-[20px] bg-[white] rounded-[20px] mb-3">
             <div className="p-2">
@@ -33,11 +45,11 @@ const Comment: React.FC<CommentProps> = ({ userName, time, text, like, onLike })
                 <div className="flex justify-between items-center">
                     <div className="text-[#1D2228] mt-2 whitespace-pre-line">{text}</div>
                     <div className="text-gray-500 text-[12px] flex flex-col justify-center items-center">
-                        <button onClick={onLike} className="focus: outline-none">
-                            <img src={heart} alt="heart icon" />
+                        <button onClick={handleLikeClick} className="focus:outline-none">
+                            <img src={isLiked ? heartFilled : heart} alt="heart icon" />
                         </button>
                         <div>
-                            {formatNumber(like)}
+                            {formatNumber(likeCount)}
                         </div>
                     </div>
                 </div>
