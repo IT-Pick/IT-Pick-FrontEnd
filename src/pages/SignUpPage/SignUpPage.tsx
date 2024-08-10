@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import InputField from './components/InputField';
 import { validateEmail, validatePassword } from './utils/validation';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +9,7 @@ const SignUpPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
 
   const isEmailValid = useMemo(() => validateEmail(email), [email]);
   const isPasswordValid = useMemo(() => validatePassword(password), [password]);
@@ -23,6 +25,10 @@ const SignUpPage: React.FC = () => {
   const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(event.target.value);
   };
+
+  const handleClick = () => {
+    navigate('/agreement');
+  }
 
   const isFormValid = isEmailValid && isPasswordValid && password === confirmPassword;
 
@@ -73,10 +79,11 @@ const SignUpPage: React.FC = () => {
       </div>
       <div className="mx-5 mt-[150px] mb-4">
         <button
+        onClick={handleClick}
           className={`w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
           disabled={!isFormValid}
           style={{ border: 'none', padding: 0, borderRadius: '12px' }}
-        >가입하기
+        >다음
         </button>
       </div>
     </div>

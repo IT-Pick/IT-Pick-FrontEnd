@@ -33,6 +33,10 @@ const ProfileEditPage: React.FC = () => {
         navigate('/');
     };
 
+    const handleInterest = () => {
+        navigate('/interest');
+    }
+
     return (
         <div className="w-[390px] flex flex-col items-center mx-auto">
             <header className="w-full flex justify-between items-center py-4">
@@ -60,7 +64,7 @@ const ProfileEditPage: React.FC = () => {
                         <p className="text-[14px] text-gray3 font-pretendard font-normal">{formatDate('20020927')}</p>
                     </div>
                     <div className="flex justify-between py-3">
-                        <p className="text-[16px] text-black font-pretendard font-normal">관심 주제 설정</p>
+                        <button onClick={handleInterest} className="text-[16px] text-black font-pretendard font-normal">관심 주제 설정</button>
                         <p className="text-[14px] text-gray3 font-pretendard font-normal">여행, 연예</p>
                     </div>
                 </div>

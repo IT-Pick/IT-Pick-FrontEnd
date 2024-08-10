@@ -5,7 +5,6 @@ import './index.css';
 import HomePage from './pages/HomePage/HomePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-//import SetProfile from './pages/SetProfile/SetProfile';
 import ParticipatedDebatesPage from './pages/HistoryPage/ParticipatedDebate';
 import DebatePage from './pages/HistoryPage/Debate';
 import RankingPage from './pages/RankingPage/RankingPage';
@@ -29,7 +28,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="/set-profile" element={<SetProfile />} /> */}
         <Route path="/new-set-profile" element={<NewSetProfile />} />
         <Route path="/participated-debates" element={<ParticipatedDebatesPage />} />
         <Route path="/debate" element={<DebatePage />} />

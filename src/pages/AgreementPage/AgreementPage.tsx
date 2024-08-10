@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import ico_roundcheck_filled from "../../assets/images/24x24/ico_roundcheck_filled.svg";
 import ico_roundcheck_outline from "../../assets/images/24x24/ico_roundcheck_outline.svg";
+import { useNavigate } from "react-router-dom";
 
 const AgreementPage: React.FC = () => {
     const [isAllChecked, setIsAllChecked] = useState(false);
     const [isAgeChecked, setIsAgeChecked] = useState(false);
     const [isAdChecked, setIsAdChecked] = useState(false);
+    const navigate = useNavigate();
 
     const handleAllCheck = () => {
         const newCheckState = !isAllChecked;
@@ -18,13 +20,17 @@ const AgreementPage: React.FC = () => {
         const newCheckState = !isAgeChecked;
         setIsAgeChecked(newCheckState);
         setIsAllChecked(newCheckState && isAdChecked);
-    }
+    };
 
     const handleAdCheck = () => {
         const newCheckState = !isAdChecked;
         setIsAdChecked(newCheckState);
         setIsAllChecked(newCheckState && isAgeChecked);
-    }
+    };
+
+    const handleSignUpClick = () => {
+        navigate('/new-set-profile');
+    };
 
     const isFormValid = isAgeChecked;
 
@@ -73,6 +79,7 @@ const AgreementPage: React.FC = () => {
                 </div>
             </div>
             <button 
+                onClick={handleSignUpClick}
                 className={`w-[352px] h-[48px] ml-[19px] mt-[300px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
                 disabled={!isFormValid}
                 style={{ border: 'none', padding: 0, borderRadius: '12px' }}
