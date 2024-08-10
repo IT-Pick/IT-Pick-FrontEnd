@@ -19,7 +19,7 @@ import KeywordPage from './pages/KeywordPage/KeywordPage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import ErrorPage from './pages/ErrorPage/404ErrorPage';
 import MyAlarm from './pages/MyAlarmPage/MyAlarmPage';
-import UploadedPage from './pages/WritePostPage/UploadedPage';
+import UploadedPage from './pages/UploadedVotePage/UploadedPage';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>

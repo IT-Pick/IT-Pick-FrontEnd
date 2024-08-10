@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Header from "./components/Header";
-import Content from "./components/Content";
-import CommentList from "./components/CommentList";
-import AddComment from "./components/AddComment";
+import Header from "../UploadedVotePage/components/Header";
+import Content from "../UploadedVotePage/components/Content";
+import CommentList from "../UploadedVotePage/components/CommentList";
+import AddComment from "../UploadedVotePage/components/AddComment";
 
 const initialInfo = [
     {
