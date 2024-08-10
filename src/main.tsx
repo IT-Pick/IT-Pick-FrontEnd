@@ -20,6 +20,7 @@ import MyAlarm from './pages/MyAlarmPage/MyAlarmPage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import ErrorPage from './pages/ErrorPage/404ErrorPage';
 import DebateCreatePage from './pages/WritePostPage/DebateCreatePage';
+import Interest from './pages/InterestPage/Interest';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
@@ -46,6 +47,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/create" element={<DebateCreatePage />} />
 
         <Route path='*' element={<ErrorPage />} />
+        <Route path='/interest' element={<Interest/>} />
       </Routes>
     </BrowserRouter>
   // </React.StrictMode>
