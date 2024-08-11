@@ -3,7 +3,7 @@ import Header from "./component/Header";
 import Item from "./component/Item";
 import CompleteBtn from "./component/CompleteBtn";
 
-const Interest: React.FC = () => {
+const InterestPage: React.FC = () => {
     return(
         <div className="w-[390px] bg-background mx-auto px-[32px]">
             <Header/>
@@ -13,4 +13,4 @@ const Interest: React.FC = () => {
     )
 }
 
-export default Interest;
+export default InterestPage;
