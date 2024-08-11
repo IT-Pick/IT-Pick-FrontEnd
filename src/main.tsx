@@ -16,7 +16,6 @@ import NewSetProfile from './pages/SetProfile/NewSetProfile';
 import AgreementPage from './pages/AgreementPage/AgreementPage';
 import NoDataPage from './components/NoDataPage';
 import KeywordPage from './pages/KeywordPage/KeywordPage';
-import MyAlarm from './pages/MyAlarmPage/MyAlarmPage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import ErrorPage from './pages/ErrorPage/404ErrorPage';
 import MyAlarm from './pages/MyAlarmPage/MyAlarmPage';
