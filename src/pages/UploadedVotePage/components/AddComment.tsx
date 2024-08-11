@@ -27,7 +27,7 @@ const AddComment: React.FC<AddCommentProps> = ({ onAddComment }) => {
                 placeholder="댓글을 입력해주세요"
                 value={comment}
                 onChange={handleInputChange}
-                className="w-[272px] px-4 py-2 rounded-lg bg-[#EDF0F3]"
+                className="w-[272px] px-4 py-2 rounded-lg bg-[#EDF0F3] focus:outline-none"
             />
             <button type="submit" className="text-white rounded-lg">
                 <img src={send} alt="submit button"/>

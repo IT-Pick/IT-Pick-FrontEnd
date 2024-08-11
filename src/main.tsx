@@ -43,9 +43,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='/keyword' element={<KeywordPage/>} />
         <Route path='/my-alarm' element={<MyAlarm />} />
         <Route path="/search" element={<SearchPage />} />
-
-        <Route path='*' element={<ErrorPage />} />
         <Route path='/uploaded-debate' element={<UploadedPage/>} />
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   // </React.StrictMode>

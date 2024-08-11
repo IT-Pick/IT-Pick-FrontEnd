@@ -32,11 +32,11 @@ const Comment: React.FC<CommentProps> = ({ userName, time, text, like}) => {
         <div className="mx-auto w-[337px] h-auto py-[10px] px-[20px] bg-[white] rounded-[20px] mb-3">
             <div className="p-2">
                 <div className="flex w-full justify-between items-center">
-                    <div className="flex gap-[10px] items-center">
-                        <img src={profile} alt="profile" className="rounded-full" />
-                        <div className="text-[14px] font-bold">{userName}</div>
-                        <div className="text-gray-500 text-[14px] text-[#CED5DB]">{time}분 전</div>
-                        <button className="ml-2 text-[14px] text-[#9EAAB5]">답글 달기</button>
+                    <div className="flex items-center">
+                        <img src={profile} alt="profile" className="rounded-full" width={28} height={28} />
+                        <div className="text-[14px] pl-[8px] font-bold">{userName}</div>
+                        <div className="text-[14px] text-gray2 pl-[8px]">{time}분 전</div>
+                        <button className="ml-2 text-[14px] text-gray3 pl-[16px]">답글 달기</button>
                     </div>
                     <div>
                         <img src={moreVertical} alt="more vertical btn" />
@@ -48,7 +48,7 @@ const Comment: React.FC<CommentProps> = ({ userName, time, text, like}) => {
                         <button onClick={handleLikeClick} className="focus:outline-none">
                             <img src={isLiked ? heartFilled : heart} alt="heart icon" />
                         </button>
-                        <div>
+                        <div className="text-gray3">
                             {formatNumber(likeCount)}
                         </div>
                     </div>
