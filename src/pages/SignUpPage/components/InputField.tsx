@@ -1,6 +1,8 @@
 import React from 'react';
 import certifyUnable from '../../../assets/images/ic_btn_certify_unable.svg';
 import certifyAble from '../../../assets/images/ic_btn_certify_able.svg';
+import codeUnable from '../../../assets/images/24x24/ico_code_roundcheck_unable.svg';
+import codeAble from '../../../assets/images/24x24/ico_code_roundcheck_unable.svg';
 import hideIcon from '../../../assets/images/ic_icon_hide.svg';
 import showIcon from '../../../assets/images/ic_icon_show.svg';
 
@@ -12,6 +14,7 @@ interface InputFieldProps {
   isValid?: boolean;
   errorMessage?: string;
   showValidationButton?: boolean;
+  showCodeCheck?: boolean;
   showToggle?: boolean;
   onToggle?: () => void;
   isToggled?: boolean;
@@ -26,6 +29,7 @@ const InputField: React.FC<InputFieldProps> = ({
   isValid,
   errorMessage,
   showValidationButton,
+  showCodeCheck,
   showToggle,
   onToggle,
   isToggled,
@@ -52,6 +56,9 @@ const InputField: React.FC<InputFieldProps> = ({
             >
               <img src={isValid ? certifyAble : certifyUnable} alt="email validation" />
             </button>
+          )}
+          {showCodeCheck && (
+            <img src={isValid ? codeAble : codeUnable} alt="code verification" className="absolute right-[12px]" />
           )}
           {showToggle && (
             <button
