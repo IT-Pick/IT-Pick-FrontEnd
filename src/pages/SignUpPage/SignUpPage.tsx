@@ -84,7 +84,6 @@ const SignUpPage: React.FC = () => {
             placeholder="인증번호를 입력해주세요"
             maxLength={6}
             isValid={isVerificationCodeValid}
-            errorMessage="인증번호는 숫자 6자 형태입니다."
             showCodeCheck={true}
           />
         </div>
