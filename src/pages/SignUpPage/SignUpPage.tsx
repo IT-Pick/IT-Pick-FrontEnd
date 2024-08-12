@@ -60,7 +60,7 @@ const SignUpPage: React.FC = () => {
         <span className="text-point500">회원가입</span>을 위한<p>정보를 입력해주세요.</p>
       </h1>
       {step >= 1 && (
-        <div className="mt-9 mb-4">
+        <div className="mt-6 mb-4">
           <label className="block font-pretendard font-bold text-[16px] text-black ml-8">이메일</label>
           <InputField
             type="email"
@@ -123,7 +123,7 @@ const SignUpPage: React.FC = () => {
         </div>
       )}
       {step < 4 ? (
-        <div className="w-[352px] mx-auto mt-[85px]" style={{ position: 'absolute', bottom: '46px', left: '0', right: '0' }}>
+        <div className="w-[352px] mx-auto" style={{ position: 'absolute', bottom: '46px', left: '0', right: '0' }}>
           <button
             className={`w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
             onClick={handleNextStep}
