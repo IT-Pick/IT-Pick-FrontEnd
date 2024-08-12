@@ -48,7 +48,11 @@ const SignUpPage: React.FC = () => {
     }
   };
 
-  const isFormValid = isEmailValid && isPasswordValid && password === confirmPassword;
+  const isFormValid =
+    (step === 1 && isEmailValid) ||
+    (step === 2 && isVerificationCodeValid) ||
+    (step === 3 && isPasswordValid) ||
+    (step === 4 && password === confirmPassword);
 
   return (
     <div className="w-[390px] h-screen bg-background mx-auto pt-[72px]">
@@ -120,11 +124,11 @@ const SignUpPage: React.FC = () => {
         </div>
       )}
       {step < 4 ? (
-        <div className="w-[352px] mx-auto mb-[46px]" style={{ position: 'absolute', bottom: '12px', left: '0', right: '0' }}>
+        <div className="w-[352px] mx-auto" style={{ position: 'absolute', bottom: '46px', left: '0', right: '0' }}>
           <button
-            className="w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white bg-point500"
+            className={`w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
             onClick={handleNextStep}
-            disabled={step === 1 && !isEmailValid || step === 2 && verificationCode.length < 6 || step === 3 && !isPasswordValid}
+            disabled={step === 1 && !isEmailValid || step === 2 && !isVerificationCodeValid || step === 3 && !isPasswordValid}
             style={{ border: 'none', padding: 0, borderRadius: '12px' }}
           >
             {step === 1 && '인증 요청하기'}
@@ -133,7 +137,7 @@ const SignUpPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div className="w-[352px] mx-auto mb-[46px]" style={{ position: 'absolute', bottom: '12px', left: '0', right: '0' }}>
+        <div className="w-[352px] mx-auto" style={{ position: 'absolute', bottom: '46px', left: '0', right: '0' }}>
           <button
             className={`w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
             disabled={!isFormValid}
