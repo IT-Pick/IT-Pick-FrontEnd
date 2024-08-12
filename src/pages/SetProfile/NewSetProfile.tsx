@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Inputter from './Keypad';
+import { useNavigate } from 'react-router-dom';
 
 const NewSetProfile: React.FC = () => {
   const [nickname, setNickname] = useState('');
@@ -8,6 +9,7 @@ const NewSetProfile: React.FC = () => {
   const [birthdateError, setBirthdateError] = useState(false);
   const birthdateRef = useRef<HTMLInputElement>(null);
   const keypadRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(event.target.value);
@@ -16,6 +18,10 @@ const NewSetProfile: React.FC = () => {
   const handleBirthdateChange = (value: string) => {
     setBirthdate(value);
   };
+
+  const handleClick = () => {
+    navigate('/interest');
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -85,6 +91,7 @@ const NewSetProfile: React.FC = () => {
           </div>
 
           <button
+          onClick={handleClick}
             type="submit"
             className={`absolute bottom-[100px] w-[352px] h-[48px]  ${
               isFormValid
