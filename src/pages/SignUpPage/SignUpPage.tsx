@@ -55,7 +55,7 @@ const SignUpPage: React.FC = () => {
     (step === 4 && password === confirmPassword);
 
   return (
-    <div className="w-[390px] min-h-screen bg-background mx-auto pt-[72px]">
+    <div className="w-[390px] min-h-screen bg-background mx-auto pt-[60px]">
       <h1 className="text-2xl font-pretendard font-bold ml-6">
         <span className="text-point500">회원가입</span>을 위한<p>정보를 입력해주세요.</p>
       </h1>
