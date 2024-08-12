@@ -8,7 +8,7 @@ const CategorySlider: React.FC = () => {
   return (
     <div className="relative">
       <div
-        className="flex overflow-x-auto whitespace-nowrap bg-background p-4 mt-6"
+        className="flex overflow-x-auto whitespace-nowrap bg-background p-4"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -16,7 +16,6 @@ const CategorySlider: React.FC = () => {
       >
         <style>
           {`
-            /* Hide scrollbar for Chrome, Safari, Edge, and Opera */
             .category-slider::-webkit-scrollbar {
               display: none;
             }

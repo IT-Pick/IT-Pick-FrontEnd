@@ -8,7 +8,7 @@ interface MenuSelectorProps {
 const MenuSelector: React.FC<MenuSelectorProps> = ({ menuType, setMenuType }) => {
   return (
     <div className="p-4 bg-background flex flex-col ">
-      <div className="flex space-x-3 mb-2">
+      <div className="flex space-x-3">
         <button
           className={`px-4 py-2 ${menuType === 'realTime' ? 'text-black font-bold' : 'text-gray-400'}`}
           onClick={() => setMenuType('realTime')}

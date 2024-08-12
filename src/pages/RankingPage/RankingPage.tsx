@@ -74,7 +74,7 @@ const RankingPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-background w-[390px] h-[36px] mx-auto font-pretendard">
+    <div className="bg-background w-[390px] mx-auto font-pretendard">
       <MenuSelector menuType={menuType} setMenuType={setMenuType} />
       <CategorySlider />
       {menuType !== 'realTime' && (
