@@ -55,7 +55,7 @@ const SignUpPage: React.FC = () => {
     (step === 4 && password === confirmPassword);
 
   return (
-    <div className="w-[390px] h-screen bg-background mx-auto pt-[72px]">
+    <div className="w-[390px] min-h-screen bg-background mx-auto pt-[72px]">
       <h1 className="text-2xl font-pretendard font-bold ml-6">
         <span className="text-point500">회원가입</span>을 위한<p>정보를 입력해주세요.</p>
       </h1>
@@ -76,7 +76,7 @@ const SignUpPage: React.FC = () => {
 
       {step >= 2 && (
         <div className="mb-4">
-          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[39px]">인증번호</label>
+          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[25px]">인증번호</label>
           <InputField
             type="verificationCode"
             value={verificationCode}
@@ -91,7 +91,7 @@ const SignUpPage: React.FC = () => {
 
       {step >= 3 && (
         <div className="mb-4">
-          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[39px]">비밀번호</label>
+          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[25px]">비밀번호</label>
           <InputField
             type="password"
             value={password}
@@ -108,7 +108,7 @@ const SignUpPage: React.FC = () => {
 
       {step >= 4 && (
         <div className="mb-4">
-          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[39px]">비밀번호 확인</label>
+          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[25px]">비밀번호 확인</label>
           <InputField
             type="password"
             value={confirmPassword}
