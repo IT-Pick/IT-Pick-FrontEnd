@@ -76,7 +76,7 @@ const SignUpPage: React.FC = () => {
 
       {step >= 2 && (
         <div className="mb-4">
-          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[25px]">인증번호</label>
+          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[20px]">인증번호</label>
           <InputField
             type="verificationCode"
             value={verificationCode}
@@ -91,7 +91,7 @@ const SignUpPage: React.FC = () => {
 
       {step >= 3 && (
         <div className="mb-4">
-          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[25px]">비밀번호</label>
+          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[20px]">비밀번호</label>
           <InputField
             type="password"
             value={password}
@@ -108,7 +108,7 @@ const SignUpPage: React.FC = () => {
 
       {step >= 4 && (
         <div className="mb-4">
-          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[25px]">비밀번호 확인</label>
+          <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[20px]">비밀번호 확인</label>
           <InputField
             type="password"
             value={confirmPassword}
@@ -123,7 +123,7 @@ const SignUpPage: React.FC = () => {
         </div>
       )}
       {step < 4 ? (
-        <div className="w-[352px] mx-auto" style={{ position: 'absolute', bottom: '46px', left: '0', right: '0' }}>
+        <div className="w-[352px] mx-auto mt-[85px]" style={{ position: 'absolute', bottom: '46px', left: '0', right: '0' }}>
           <button
             className={`w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
             onClick={handleNextStep}
