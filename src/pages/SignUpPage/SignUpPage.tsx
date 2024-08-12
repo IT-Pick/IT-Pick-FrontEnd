@@ -11,7 +11,7 @@ const SignUpPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  
   const navigate = useNavigate();
 
   const isEmailValid = useMemo(() => validateEmail(email), [email]);

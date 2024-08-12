@@ -31,7 +31,7 @@ const Login: React.FC = () => {
     const isFormValid = email.length > 0 && password.length > 0;
 
     return (
-        <div className="bg-background flex w-[390px] h-[800px] mt-[70px] justify-center min-h-screen mx-auto">
+        <div className="bg-background flex w-[390px] h-[800px] pt-[70px] justify-center min-h-screen mx-auto">
             <div className="w-auto max-w-md p-8 rounded-lg">
                 <h1 className="text-[24px] font-[700] mb-[52px]">
                     <div>안녕하세요 :)</div>
@@ -87,14 +87,14 @@ const Login: React.FC = () => {
                         </button>
                     </div>
                 </form>
-                <div className="w-[350px] flex justify-around items-center text-[14px] font-[500] text-[#9EAAB5]">
-                    <Link to="/signup" className="hover:underline px-[24px] py-[12px]">
+                <div className="w-[350px] flex justify-around items-center pt-[12px] text-[14px] font-[500] text-[#9EAAB5]">
+                    <Link to="/signup" className="hover:underline ">
                         회원가입
                     </Link>
-                    <Link to="/find-id" className="hover:underline px-[24px] py-[12px]">
+                    <Link to="/find-id" className="hover:underline ">
                         아이디 찾기
                     </Link>
-                    <Link to="/find-password" className="hover:underline px-[24px] py-[12px]">
+                    <Link to="/find-password" className="hover:underline">
                         비밀번호 찾기
                     </Link>
                 </div>
