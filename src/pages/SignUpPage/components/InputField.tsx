@@ -15,6 +15,7 @@ interface InputFieldProps {
   showToggle?: boolean;
   onToggle?: () => void;
   isToggled?: boolean;
+  maxLength?: number;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -28,6 +29,7 @@ const InputField: React.FC<InputFieldProps> = ({
   showToggle,
   onToggle,
   isToggled,
+  maxLength,
 }) => {
   return (
     <div className="mb-4">
@@ -38,6 +40,7 @@ const InputField: React.FC<InputFieldProps> = ({
             value={value}
             onChange={onChange}
             placeholder={placeholder}
+            maxLength={maxLength}
             className="flex-grow h-[54px] pt-[12px] pb-[12px] pl-[20px] bg-gray1 rounded-[8px] focus:outline-none text-black placeholder-gray3 text-[18px] font-pretendard font-medium"
             style={{ appearance: 'none', boxShadow: 'none' }}
           />

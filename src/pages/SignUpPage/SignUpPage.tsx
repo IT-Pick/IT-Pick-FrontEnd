@@ -4,6 +4,7 @@ import { validateEmail, validatePassword } from './utils/validation';
 
 const SignUpPage: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -14,6 +15,12 @@ const SignUpPage: React.FC = () => {
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
+  };
+
+  const handleVerificationCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value.length <= 6) {
+      setVerificationCode(event.target.value);
+    }
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +48,16 @@ const SignUpPage: React.FC = () => {
           isValid={isEmailValid}
           errorMessage="이메일 주소를 정확하게 입력해주세요."
           showValidationButton={true}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[39px]">인증번호</label>
+        <InputField
+          type="verificationCode"
+          value={verificationCode}
+          onChange={handleVerificationCodeChange}
+          placeholder="인증번호를 입력해주세요"
+          maxLength={6}
         />
       </div>
       <div className="mb-4">
