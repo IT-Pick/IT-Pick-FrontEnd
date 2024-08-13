@@ -12,7 +12,7 @@ const MenuSelector: React.FC<MenuSelectorProps> = ({ menuType, setMenuType }) =>
       <div className="flex space-x-3">
         <div className="flex flex-col items-center">
           <button
-            className={`px-4 py-2 ${menuType === 'realTime' ? 'text-black font-bold' : 'text-gray-400'}`}
+            className={`px-4 py-2 ${menuType === 'realTime' ? 'text-black font-bold' : 'text-gray3'}`}
             onClick={() => setMenuType('realTime')}
           >
             실시간
@@ -25,7 +25,7 @@ const MenuSelector: React.FC<MenuSelectorProps> = ({ menuType, setMenuType }) =>
         </div>
         <div className="flex flex-col items-center">
           <button
-            className={`px-4 py-2 ${menuType === 'daily' ? 'text-black font-bold' : 'text-gray-400'}`}
+            className={`px-4 py-2 ${menuType === 'daily' ? 'text-black font-bold' : 'text-gray3'}`}
             onClick={() => setMenuType('daily')}
           >
             일간
@@ -49,11 +49,6 @@ const MenuSelector: React.FC<MenuSelectorProps> = ({ menuType, setMenuType }) =>
               className={`pl-[2px] mt-1 ${menuType === 'weekly' ? 'visible' : 'invisible'}`}
             />
         </div>
-      </div>
-      <div className="relative w-full flex justify-center">
-        <div
-        //   className={`absolute ${menuType === 'realTime' ? 'left-0' : menuType === 'daily' ? 'left-1/2 transform -translate-x-1/2' : 'right-0'} bottom-[-8px] bg-purple-500 h-2 w-2 rounded-full`} 
-        />
       </div>
     </div>
   );
