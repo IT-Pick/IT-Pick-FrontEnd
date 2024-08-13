@@ -1,17 +1,13 @@
 import React from 'react';
 import tag_ico_right from "../../../assets/images/16x16/tag_ico_right.svg";
 import namuwiki from '../../../assets/images/CommunityLogo/namuwiki.svg';
-import twitter from '../../../assets/images/CommunityLogo/twitter.svg';
 import dcinside from '../../../assets/images/CommunityLogo/dcinside.svg';
 import naver from '../../../assets/images/CommunityLogo/naver.svg';
-import daumcafe from '../../../assets/images/CommunityLogo/daumcafe.svg';
 
 const rankings = [
-  { name: '나무위키', tag: '#김현주_열애설', icon: namuwiki },
-  { name: '트위터', tag: '#김현주_연애', icon: twitter },
-  { name: '디시인사이드', tag: '#김현주_남자친구', icon: dcinside },
-  { name: '네이버', tag: '#김현주_결혼', icon: naver },
-  { name: '다음카페', tag: '#김현주_공개연애', icon: daumcafe },
+  { name: '네이버', tag: '#김현주_열애설', icon: namuwiki },
+  { name: '네이트', tag: '#김현주_연애', icon: naver },
+  { name: '줌', tag: '#김현주_남자친구', icon: dcinside },
 ];
 
 const CommunityRanking: React.FC = () => {
