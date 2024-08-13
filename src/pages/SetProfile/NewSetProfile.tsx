@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useSignUpContext } from '../../context/SignUpContext';
 
 const NewSetProfile: React.FC = () => {
-  // const [nickname, setNickname] = useState('');
-  // const [birthdate, setBirthdate] = useState('');
   const { nickname, setNickname, birthDate, setBirthDate } = useSignUpContext();
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [birthdateError, setBirthdateError] = useState(false);
@@ -18,13 +16,14 @@ const NewSetProfile: React.FC = () => {
   };
 
   const handleBirthdateChange = (value: string) => {
-    const formattedDate = value.substring(2);
-    setBirthDate(formattedDate);
+    setBirthDate(value);
   };
 
   const handleClick = () => {
+    const formattedDate = birthDate.substring(2);
+    setBirthDate(formattedDate);
     navigate('/interest');
-  }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,7 +34,7 @@ const NewSetProfile: React.FC = () => {
         !keypadRef.current.contains(event.target as Node)
       ) {
         setIsKeyboardVisible(false);
-        if (birthDate.length !== 6) { // 8 -> 6 수정
+        if (birthDate.length !== 8) {
           setBirthdateError(true);
         } else {
           setBirthdateError(false);
@@ -49,7 +48,7 @@ const NewSetProfile: React.FC = () => {
     };
   }, [birthDate]);
 
-  const isFormValid = nickname.length > 0 && birthDate.length === 6; // 8 -> 6 수정
+  const isFormValid = nickname.length > 0 && birthDate.length === 8;
 
   return (
     <div className="flex w-[390px] h-[800px] mt-[70px] justify-center min-h-screen mx-auto">
@@ -87,7 +86,7 @@ const NewSetProfile: React.FC = () => {
               placeholder="8자리 숫자로 입력해주세요"
             />
             {birthdateError && (
-              <span className="text-red-500 text-[14px]">
+              <span className="text-errorpoint text-[14px]">
                 생년월일을 확인해주세요.
               </span>
             )}

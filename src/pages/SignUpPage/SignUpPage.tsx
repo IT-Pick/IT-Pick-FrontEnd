@@ -7,9 +7,7 @@ import { useSignUpContext } from '../../context/SignUpContext';
 const SignUpPage: React.FC = () => {
   const { email, setEmail, password, setPassword } = useSignUpContext();
   const [step, setStep] = useState(1);
-  // const [email, setEmail] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
-  // const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
