@@ -21,9 +21,11 @@ import MyAlarm from './pages/MyAlarmPage/MyAlarmPage';
 import UploadedPage from './pages/UploadedVotePage/UploadedPage';
 import DebateCreatePage from './pages/WritePostPage/DebateCreatePage';
 import InterestPage from './pages/InterestPage/InterestPage';
+import { SignUpProvider } from './context/SignUpContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
+  <SignUpProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -49,5 +51,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
+  </SignUpProvider>
+    
   // </React.StrictMode>
 );

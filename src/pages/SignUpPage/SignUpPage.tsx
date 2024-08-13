@@ -2,12 +2,14 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputField from './components/InputField';
 import { validateEmail, validateVerificationCode, validatePassword } from './utils/validation';
+import { useSignUpContext } from '../../context/SignUpContext';
 
 const SignUpPage: React.FC = () => {
+  const { email, setEmail, password, setPassword } = useSignUpContext();
   const [step, setStep] = useState(1);
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
-  const [password, setPassword] = useState('');
+  // const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
