@@ -1,6 +1,8 @@
 import React from 'react';
 import certifyUnable from '../../../assets/images/ic_btn_certify_unable.svg';
 import certifyAble from '../../../assets/images/ic_btn_certify_able.svg';
+import codeUnable from '../../../assets/images/24x24/ico_code_roundcheck_unable.svg';
+import codeAble from '../../../assets/images/24x24/ico_code_roundcheck_unable.svg';
 import hideIcon from '../../../assets/images/ic_icon_hide.svg';
 import showIcon from '../../../assets/images/ic_icon_show.svg';
 
@@ -12,9 +14,11 @@ interface InputFieldProps {
   isValid?: boolean;
   errorMessage?: string;
   showValidationButton?: boolean;
+  showCodeCheck?: boolean;
   showToggle?: boolean;
   onToggle?: () => void;
   isToggled?: boolean;
+  maxLength?: number;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -25,9 +29,11 @@ const InputField: React.FC<InputFieldProps> = ({
   isValid,
   errorMessage,
   showValidationButton,
+  showCodeCheck,
   showToggle,
   onToggle,
   isToggled,
+  maxLength,
 }) => {
   return (
     <div className="mb-4">
@@ -38,6 +44,7 @@ const InputField: React.FC<InputFieldProps> = ({
             value={value}
             onChange={onChange}
             placeholder={placeholder}
+            maxLength={maxLength}
             className="flex-grow h-[54px] pt-[12px] pb-[12px] pl-[20px] bg-gray1 rounded-[8px] focus:outline-none text-black placeholder-gray3 text-[18px] font-pretendard font-medium"
             style={{ appearance: 'none', boxShadow: 'none' }}
           />
@@ -49,6 +56,9 @@ const InputField: React.FC<InputFieldProps> = ({
             >
               <img src={isValid ? certifyAble : certifyUnable} alt="email validation" />
             </button>
+          )}
+          {showCodeCheck && (
+            <img src={isValid ? codeAble : codeUnable} alt="code verification" className="absolute right-[12px]" />
           )}
           {showToggle && (
             <button

@@ -8,10 +8,6 @@ const ProfileEditPage: React.FC = () => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const navigate = useNavigate();
 
-    const handleNameChange = (event: React.FocusEvent<HTMLHeadingElement>) => {
-        setName(event.currentTarget.textContent || '김잇픽');
-    };
-
     const handleChangePasswordClick = () => {
         navigate('/change-password');
     };
@@ -20,10 +16,26 @@ const ProfileEditPage: React.FC = () => {
         setIsDeleteModalOpen(true);
     };
 
+    const formatDate = (dateString: string) => {
+        if (dateString.length !== 8) return dateString;
+        return `${dateString.slice(0, 4)}/${dateString.slice(4, 6)}/${dateString.slice(6, 8)}`;
+    };
+
+    const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if (event.target.value.length > 10) {
+            event.target.value = event.target.value.slice(0, 10);
+        }
+        setName(event.target.value);
+    };
+
     const confirmDeleteAccount = () => {
         // 탈퇴 로직 추가
         navigate('/');
     };
+
+    const handleInterest = () => {
+        navigate('/interest');
+    }
 
     return (
         <div className="w-[390px] flex flex-col items-center mx-auto">
@@ -33,15 +45,15 @@ const ProfileEditPage: React.FC = () => {
             </header>
             <div className="flex flex-col items-center mt-5 text-center">
                 <img src={profile} alt="profile_image" className="w-20 h-20" />
-                <h2
-                    className="w-[352px] h-[54px] pt-[12px] pb-[12px] pl-[20px] mt-6 bg-gray1 rounded-[8px] focus:outline-none text-black placeholder-gray3 text-[18px] font-pretendard font-medium"
+                <textarea
+                    className="w-[352px] h-[54px] pt-[12px] pb-[12px] pl-[20px] mt-6 bg-gray1 rounded-[8px] focus:outline-none text-black placeholder-gray3 text-[18px] font-pretendard font-medium resize-none"
                     contentEditable
                     suppressContentEditableWarning
-                    onBlur={handleNameChange}
+                    onChange={handleInput}
                     style={{ textAlign: 'left' }}
                 >
                     {name}
-                </h2>
+                </textarea>
             </div>
             <div className="w-full h-3 bg-gray1 mt-8"></div>
             <div className="w-full">
@@ -49,10 +61,10 @@ const ProfileEditPage: React.FC = () => {
                     <h3 className="text-[16px] text-black font-pretendard font-bold py-3">프로필</h3>
                     <div className="flex justify-between py-3">
                         <p className="text-[16px] text-black font-pretendard font-normal">생년월일</p>
-                        <p className="text-[14px] text-gray3 font-pretendard font-normal">20020927</p>
+                        <p className="text-[14px] text-gray3 font-pretendard font-normal">{formatDate('20020927')}</p>
                     </div>
                     <div className="flex justify-between py-3">
-                        <p className="text-[16px] text-black font-pretendard font-normal">관심 주제 설정</p>
+                        <button onClick={handleInterest} className="text-[16px] text-black font-pretendard font-normal">관심 주제 설정</button>
                         <p className="text-[14px] text-gray3 font-pretendard font-normal">여행, 연예</p>
                     </div>
                 </div>
