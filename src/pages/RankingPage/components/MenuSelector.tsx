@@ -8,7 +8,7 @@ interface MenuSelectorProps {
 
 const MenuSelector: React.FC<MenuSelectorProps> = ({ menuType, setMenuType }) => {
   return (
-    <div className="p-4 bg-background flex flex-col ">
+    <div className="px-4 pt-5 pb-2 bg-background flex flex-col">
       <div className="flex space-x-3">
         <div className="flex flex-col items-center">
           <button
@@ -20,7 +20,7 @@ const MenuSelector: React.FC<MenuSelectorProps> = ({ menuType, setMenuType }) =>
           <img
               src={selectedDot}
               alt="dot"
-              className={`pl-[2px] mt-1 ${menuType === 'realTime' ? 'visible' : 'invisible'}`}
+              className={`pl-[2px] mt-[2px] ${menuType === 'realTime' ? 'visible' : 'invisible'}`}
             />
         </div>
         <div className="flex flex-col items-center">
@@ -33,7 +33,7 @@ const MenuSelector: React.FC<MenuSelectorProps> = ({ menuType, setMenuType }) =>
           <img
               src={selectedDot}
               alt="dot"
-              className={`pl-[2px] mt-1 ${menuType === 'daily' ? 'visible' : 'invisible'}`}
+              className={`pl-[2px] mt-[2px] ${menuType === 'daily' ? 'visible' : 'invisible'}`}
             />
         </div>
         <div className="flex flex-col items-center">
@@ -46,7 +46,7 @@ const MenuSelector: React.FC<MenuSelectorProps> = ({ menuType, setMenuType }) =>
           <img
               src={selectedDot}
               alt="dot"
-              className={`pl-[2px] mt-1 ${menuType === 'weekly' ? 'visible' : 'invisible'}`}
+              className={`pl-[2px] mt-[2px] ${menuType === 'weekly' ? 'visible' : 'invisible'}`}
             />
         </div>
       </div>

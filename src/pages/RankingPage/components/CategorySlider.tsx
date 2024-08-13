@@ -8,7 +8,7 @@ const CategorySlider: React.FC = () => {
   return (
     <div className="relative">
       <div
-        className="flex overflow-x-auto whitespace-nowrap bg-background p-2"
+        className="flex overflow-x-auto whitespace-nowrap bg-background pt-2 px-5"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -26,7 +26,7 @@ const CategorySlider: React.FC = () => {
             key={index}
             className={`px-4 py-1.5 rounded-full cursor-pointer text-sm border ${
               index === activeIndex ? 'bg-point500 text-white' : 'bg-white text-gray3 border-gray2'
-            } transition-all duration-300 mx-2`}
+            } transition-all duration-300 mx-1`}
             onClick={() => setActiveIndex(index)}
           >
             {category}
