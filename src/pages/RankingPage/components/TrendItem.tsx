@@ -11,10 +11,10 @@ const TrendItem: React.FC<TrendItemProps> = ({ rank, name, tags }) => {
   const rankColor = rank === 1 || rank === 2 || rank === 3 ? 'text-point500' : 'text-gray3';
 
   return (
-    <div className="flex flex-col font-pretendard justify-between p-4 border-b">
+    <div className="flex flex-col font-pretendard justify-between pt-[10px] pb-[12px] border-b">
       <div className="flex items-center">
-        <span className={`text-lg font-bold ${rankColor}`}>{rank}</span>
-        <span className="ml-4 text-lg">{name}</span>
+        <span className={`text-[20px] font-bold ${rankColor}`}>{rank}</span>
+        <span className="ml-4 text-[16px]">{name}</span>
       </div>
       <div className=" space-x-2">
         {tags.map((tag, index) => (

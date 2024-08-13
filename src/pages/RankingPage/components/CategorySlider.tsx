@@ -8,7 +8,7 @@ const CategorySlider: React.FC = () => {
   return (
     <div className="relative">
       <div
-        className="flex overflow-x-auto whitespace-nowrap bg-background p-4"
+        className="flex overflow-x-auto whitespace-nowrap bg-background p-2"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',

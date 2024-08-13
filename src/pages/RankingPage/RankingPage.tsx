@@ -3,6 +3,8 @@ import CategorySlider from './components/CategorySlider';
 import TrendList from './components/TrendList';
 import { useTrendStore } from '../../store/trendStore';
 import MenuSelector from './components/MenuSelector';
+import leftArrow from '../../assets/images/24x24/ico_left_arrow_gray2.svg';
+import rightArrow from '../../assets/images/24x24/ico_right_arrow_gray2.svg';
 
 const RankingPage: React.FC = () => {
   const { menuType, setMenuType, date, setDate, fetchTrends } = useTrendStore();
@@ -78,14 +80,18 @@ const RankingPage: React.FC = () => {
       <MenuSelector menuType={menuType} setMenuType={setMenuType} />
       <CategorySlider />
       {menuType !== 'realTime' && (
-        <div className="flex justify-between items-center h-[36px] mt-4">
-          <button onClick={() => handleDateChange('prev')}>&lt;</button>
+        <div className="flex justify-between items-center h-[36px] mt-4 mx-5">
+          <button onClick={() => handleDateChange('prev')}>
+            <img src={leftArrow} alt="left arrow" />
+          </button>
           <span className="font-pretendard font-semibold text-[16px] text-black">
-            {menuType === 'daily'
+          {menuType === 'daily'
               ? formatDate(new Date(date))
               : getWeeklyDateRange(date)}
           </span>
-          <button onClick={() => handleDateChange('next')}>&gt;</button>
+          <button onClick={() => handleDateChange('next')}>
+            <img src={rightArrow} alt="right arrow" />
+          </button>
         </div>
       )}
       {menuType === 'realTime' && (
