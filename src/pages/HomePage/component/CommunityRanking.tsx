@@ -12,10 +12,10 @@ const rankings = [
 
 const CommunityRanking: React.FC = () => {
   return (
-    <div className=" mt-[44px]  mb-[33px]">
+    <div className=" mt-[44px]  mb-[33px] ">
       <span className='ml-[24px]'>
         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">커뮤니티 별 랭킹</span>
-        <span className="text-xs text-gray-500 ml-[8px]">4월 1일 18:00 기준</span>
+        <span className="text-xs text-gray-400 ml-[8px]">4월 1일 18:00 기준</span>
       </span>
       <span className="ml-[43px]">
         <div className="inline-flex items-center justify-start">
@@ -28,7 +28,7 @@ const CommunityRanking: React.FC = () => {
         {rankings.map((item, index) => (
           <li key={index} className="flex mb-4">
             <img src={item.icon} alt={item.name} className="mr-4" />
-            <div className="ml-[12px] flex justify-between w-full">
+            <div className="ml-[12px] flex justify-between items-center w-full">
               <span className="font-bold text-[#1D2228] font-pretendard text-[16px]">{item.name}</span>
               <span className="text-gray-500 text-[16px] font-pretendard mr-[24px]">{item.tag}</span>
             </div>

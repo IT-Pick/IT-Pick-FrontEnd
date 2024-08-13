@@ -9,8 +9,8 @@ const rankingData = [
 ];
 
 const RankingItem = ({ rank, name, tags }) => (
-  <div className="flex flex-col w-full">
-    <div className="flex items-start gap-5 mb-4">
+  <div className="flex flex-col w-full ">
+    <div className="flex gap-5 mb-4 items-center ">
       <div className="w-5 text-center text-violet-700 text-xl font-bold">{rank}</div>
       <div className="flex flex-col gap-1">
         <div className="text-gray-800 text-base font-medium leading-tight">{name}</div>

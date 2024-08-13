@@ -31,7 +31,7 @@ const HomePage = () => {
       <IntegratedRanking />
       <LiveDiscussion />
       <img src={victory_banner} alt="victory_banner" className="w-[390px] mx-auto mt-[40px]" />
-      <CommunityRanking />
+      <CommunityRanking/>
     </div>
   );
 }
