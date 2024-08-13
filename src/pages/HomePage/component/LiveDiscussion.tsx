@@ -34,13 +34,13 @@ const formatNumber = (num) => {
 };
 
 const DiscussionCard = ({ image, hits, comments, title, link }) => (
-  <div className="w-[164px] h-[284px]">
-    <img src={image} alt={title} className="w-full h-[200px] rounded-lg" />
+  <div className=" h-[284px]">
+    <img src={image} alt={title} className="h-[200px] rounded-lg" />
     <div className="justify-start gap-2 inline-flex mt-[8px]">
       <div className="w-[65px] px-2 py-1 bg-purple-100 rounded-2xl justify-center items-center ">
         <div className="flex flex-row gap-[8px] text-violet-700 text-xs font-medium font-['Pretendard']"><img src={tag_ico_view} alt='tag_ico_view'/>{formatNumber(hits)}</div>
       </div>
-      <div className="w-[57px] px-2 py-1 bg-purple-100 rounded-2xl justify-center items-center gap-1 flex">
+      <div className="w-[70px] px-2 py-1 bg-purple-100 rounded-2xl justify-center items-center gap-1 flex">
         <div className="flex flex-row gap-[4px] text-violet-700 text-xs font-medium font-['Pretendard']"><img src={tag_ico_comment} width={16} height={16} alt='tag_ico_view'/>{formatNumber(comments)}</div>
       </div>
     </div>
