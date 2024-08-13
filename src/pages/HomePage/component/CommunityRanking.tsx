@@ -29,7 +29,7 @@ const CommunityRanking: React.FC = () => {
           <li key={index} className="flex mb-4">
             <img src={item.icon} alt={item.name} className="mr-4" />
             <div className="ml-[12px] flex justify-between items-center w-full">
-              <span className="font-bold text-[#1D2228] font-pretendard text-[16px]">{item.name}</span>
+              <span className="font-medium text-[#1D2228] font-pretendard text-[16px]">{item.name}</span>
               <span className="text-gray-500 text-[16px] font-pretendard mr-[24px]">{item.tag}</span>
             </div>
           </li>
