@@ -33,6 +33,7 @@ const SignUpPage: React.FC = () => {
       
       if (data.code === 1000) {
           setEmailValidationMessage('사용 가능한 이메일 입니다.');
+          console.log('사용 가능 이메일', data);
           setIsEmailValidated(true);
       } else {
           setEmailValidationMessage('사용 불가능한 이메일 입니다.');
@@ -60,7 +61,7 @@ const SignUpPage: React.FC = () => {
   };
 
   const handleNextStep = () => {
-    if (step === 1 && isEmailValid) setStep(2);
+    if (step === 1 && isEmailValid && isEmailValidated) setStep(2);
     if (step === 2 && isVerificationCodeValid) setStep(3);
     if (step === 3 && isPasswordValid) setStep(4);
   };

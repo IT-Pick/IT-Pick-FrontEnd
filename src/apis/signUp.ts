@@ -16,4 +16,4 @@ export const signUp = async (request: SignUpRequest) => {
   });
 
   return response.data;
-}
+};

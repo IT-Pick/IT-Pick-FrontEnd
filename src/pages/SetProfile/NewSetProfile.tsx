@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Inputter from './Keypad';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSignUpContext } from '../../context/SignUpContext';
+import { nicknameDuplicateCheck } from '../../apis/nicknameDuplicateCheck';
 
 const NewSetProfile: React.FC = () => {
   const { nickname, setNickname, birthDate, setBirthDate } = useSignUpContext();
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const [nicknameError, setNicknameError] = useState(false);
+  const [nicknameError, setNicknameError] = useState<string | null>(null);
   const [birthdateError, setBirthdateError] = useState(false);
   const birthdateRef = useRef<HTMLInputElement>(null);
   const keypadRef = useRef<HTMLDivElement>(null);
@@ -15,9 +17,9 @@ const NewSetProfile: React.FC = () => {
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.length > 10) {
-      setNicknameError(true);
+      setNicknameError('닉네임을 10자 이내로 작성해주세요.');
     } else {
-      setNicknameError(false);
+      setNicknameError(null);
       setNickname(value);
     }
   };
@@ -26,10 +28,28 @@ const NewSetProfile: React.FC = () => {
     setBirthDate(value);
   };
 
-  const handleClick = () => {
-    const formattedDate = birthDate.substring(2);
-    setBirthDate(formattedDate);
-    navigate('/interest');
+  const handleClick = async () => {
+    try {
+      const response = await nicknameDuplicateCheck(nickname);
+  
+      if (response.code === 1000) {
+        const formattedDate = birthDate.substring(2);
+        setBirthDate(formattedDate);
+        console.log('사용 가능 닉네임', response);
+        navigate('/interest');
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const response = error.response.data;
+  
+        if (response.code === 5002) {
+          setNicknameError('중복된 닉네임입니다.');
+          console.log('중복 닉네임');
+        }
+      } else {
+        console.error('닉네임 중복 검사 중 네트워크 오류 발생:', error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -55,7 +75,7 @@ const NewSetProfile: React.FC = () => {
     };
   }, [birthDate]);
 
-  const isFormValid = nickname.length > 0 && birthDate.length === 8;
+  const isFormValid = nickname.length > 0 && birthDate.length === 8 && !nicknameError;
 
   return (
     <div className="flex w-[390px] h-[800px] pt-[70px] justify-center min-h-screen mx-auto font-pretendard bg-background">
@@ -78,7 +98,7 @@ const NewSetProfile: React.FC = () => {
             />
             {nicknameError && (
               <span className="text-errorpoint text-[12px] font-medium ml-3">
-                닉네임을 10자 이내로 작성해주세요.
+                {nicknameError}
               </span>
             )}
           </div>
@@ -106,7 +126,7 @@ const NewSetProfile: React.FC = () => {
 
           <button
           onClick={handleClick}
-            type="submit"
+            type="button"
             className={`absolute bottom-[100px] w-[352px] h-[48px]  ${
               isFormValid
                 ? 'bg-[#7620E4] text-white'
