@@ -4,7 +4,15 @@ import LiveDiscussion2 from '@images/LiveDiscussion/LiveDiscussion2.png';
 import LiveDiscussion3 from '@images/LiveDiscussion/LiveDiscussion3.png';
 import DiscussionCard from '@components/DiscussionCard';
 
-const discussions = [
+interface Discussion {
+  image: string;
+  hits: number | null;
+  comments: number | null;
+  title: string;
+  link: string;
+}
+
+const discussions: Discussion[] = [
   {
     image: LiveDiscussion1,
     hits: 120,
@@ -28,6 +36,7 @@ const discussions = [
   },
 ];
 
+
 const formatNumber = (num) => {
   return new Intl.NumberFormat().format(num);
 };
@@ -35,11 +44,11 @@ const formatNumber = (num) => {
 
 const LiveDiscussion: React.FC = () => {
   return (
-    <div className="mt-[26px] ml-[24px]">
-      <div className="flex items-center">
+    <div className="mt-[26px] ml-[24px] overflow-hidden overflow-x-scroll scrollbar-hidden ">
+      <div className="flex ">
         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">실시간 토론 BEST 3</span>
       </div>
-      <div className="flex space-x-[12px] mt-[12px]">
+      <div className="flex  space-x-[12px] w-[500px] mt-[12px]">
       {discussions.map((discussion, index) => (
          <DiscussionCard 
          key={index}
@@ -59,35 +68,3 @@ const LiveDiscussion: React.FC = () => {
 export default LiveDiscussion;
 
 
-
-
-
-// import React from 'react';
-// import DiscussionCard from '@components/DiscussionCard';
-
-// interface DiscussionCardProps {
-//   image: string;
-//   hits: number;
-//   comments: number | null;
-//   title: string;
-//   link: string;
-// }
-
-
-// const LiveDiscussion: React.FC<{ discussions: DiscussionCardProps[] }> = ({ discussions }) => {
-//   return (
-//     <div className="mt-[26px] ml-[24px]">
-//       <div className="flex items-center">
-//         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">실시간 토론 BEST 3</span>
-//       </div>
-//       <div className="flex overflow-x-auto space-x-[12px] mt-[12px]">
-//         {discussions.map((discussion, index) => (
-//           <DiscussionCard key={index} {...discussion} />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-
-// export default LiveDiscussion;

@@ -8,25 +8,26 @@ interface DiscussionCardProps {
   comments: number | null;
   title: string;
   link: string;
+  className?: string; // 추가적인 클래스 이름을 위한 props
 }
 
-const formatNumber = (num) => {
-  return new Intl.NumberFormat().format(num);
+const formatNumber = (num: number | null) => {
+  return num !== null ? new Intl.NumberFormat().format(num) : '';
 };
 
-const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, title, link }) => (
-  <div className="font-pretendard">
-    <img src={image} alt={title} className="rounded-2xl mb-2" />
+const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, title, link, className }) => (
+  <div className={`font-pretendard ${className}`}>
+    <img src={image} alt={title} className="w-[164px] h-[200px]  rounded-2xl mb-2  " />
     <div className="flex justify-start items-center gap-2 mb-2">
       {hits !== null && (
         <div className="bg-point100 text-point500 rounded-2xl px-2 py-1 gap-[2px] flex items-center font-pretendard font-medium text-[12px]">
-        <img src={tag_ico_view} alt="tag_ico_view" /> 
-        {formatNumber(hits)}
-      </div>
+          <img src={tag_ico_view} alt="tag_ico_view" />
+          {formatNumber(hits)}
+        </div>
       )}
       {comments !== null && (
         <div className="bg-point100 text-point500 rounded-2xl px-2 py-1 gap-[2px] flex items-center font-pretendard font-medium text-[12px]">
-          <img src={tag_ico_comment} alt="tag_ico_comment" /> 
+          <img src={tag_ico_comment} alt="tag_ico_comment" />
           {formatNumber(comments)}
         </div>
       )}
