@@ -37,34 +37,32 @@ const discussions: Discussion[] = [
 ];
 
 
-const formatNumber = (num) => {
-  return new Intl.NumberFormat().format(num);
+const formatNumber = (num: number | null): string => {
+  return num !== null ? new Intl.NumberFormat().format(num) : '0';
 };
 
 
 const LiveDiscussion: React.FC = () => {
   return (
-    <div className="mt-[26px] ml-[24px] overflow-hidden overflow-x-scroll scrollbar-hidden ">
-      <div className="flex ">
+    <div className="mt-[26px] ml-[24px]">
+      <div className="flex-shrink-0">
         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">실시간 토론 BEST 3</span>
       </div>
-      <div className="flex  space-x-[12px] w-[500px] mt-[12px]">
-      {discussions.map((discussion, index) => (
-         <DiscussionCard 
-         key={index}
-         title={discussion.title}
-         image={discussion.image}  // Added image prop
-         hits={formatNumber(discussion.hits)}  // Formatted hits
-         comments={formatNumber(discussion.comments)}  // Formatted comments
-         link={discussion.link}  // Added link prop
-         className="w-[164px] h-[284px]"
-       />
-     ))}
-   </div>
- </div>
+      <div className="flex space-x-[12px] mt-[12px] overflow-x-scroll scrollbar-hidden w-auto">
+        {discussions.map((discussion, index) => (
+          <DiscussionCard 
+            key={index}
+            title={discussion.title}
+            image={discussion.image}
+            hits={formatNumber(discussion.hits)}
+            comments={formatNumber(discussion.comments)}
+            link={discussion.link}
+            className="w-[164px] h-[284px] flex-shrink-0"
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 
 export default LiveDiscussion;
-
-
