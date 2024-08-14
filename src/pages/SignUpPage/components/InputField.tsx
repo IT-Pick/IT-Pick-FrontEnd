@@ -17,6 +17,7 @@ interface InputFieldProps {
   showCodeCheck?: boolean;
   showToggle?: boolean;
   onToggle?: () => void;
+  onValidate?: () => void;
   isToggled?: boolean;
   maxLength?: number;
 }
@@ -32,9 +33,12 @@ const InputField: React.FC<InputFieldProps> = ({
   showCodeCheck,
   showToggle,
   onToggle,
+  onValidate,
   isToggled,
   maxLength,
 }) => {
+  const errorClass = errorMessage === '사용 가능한 이메일 입니다.' ? 'text-black' : 'text-errorpoint';
+
   return (
     <div className="mb-4">
       <div className="relative mx-5 mt-2">
@@ -52,6 +56,7 @@ const InputField: React.FC<InputFieldProps> = ({
             <button
               type="button"
               className="absolute right-[12px] h-[54px] flex items-center justify-center"
+              onClick={onValidate}
               disabled={!isValid}
             >
               <img src={isValid ? certifyAble : certifyUnable} alt="email validation" />
@@ -71,7 +76,9 @@ const InputField: React.FC<InputFieldProps> = ({
           )}
         </div>
         {isValid === false && value.length > 0 && (
-          <p className="text-[12px] text-errorpoint font-pretendard font-medium mt-1 ml-3">{errorMessage}</p>
+          <p className={`text-[12px] font-pretendard font-medium mt-1 ml-3 ${errorClass}`}>
+            {errorMessage}
+          </p>
         )}
       </div>
     </div>

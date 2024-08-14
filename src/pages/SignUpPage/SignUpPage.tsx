@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputField from './components/InputField';
+import axios from 'axios';
 import { validateEmail, validateVerificationCode, validatePassword } from './utils/validation';
 import { useSignUpContext } from '../../context/SignUpContext';
 
@@ -11,6 +12,7 @@ const SignUpPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [emailValidationMessage, setEmailValidationMessage] = useState<string | null>(null);
   
   const navigate = useNavigate();
 
@@ -20,7 +22,33 @@ const SignUpPage: React.FC = () => {
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
+    setEmailValidationMessage(null);
   };
+
+  const handleEmailValidation = async () => {
+    try {
+        const response = await axios.get(`/auth/email/check`, {
+            params: {
+                email: encodeURIComponent(email)
+            }
+        });
+        
+        if (response.data.code === 1000) {
+            console.log('사용 가능한 이메일 !');
+            setEmailValidationMessage('사용 가능한 이메일 입니다.');
+        } else {
+            console.log('사용 불가능한 이메일 ㅜㅜ');
+            setEmailValidationMessage('사용 불가능한 이메일 입니다.');
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.error('이메일 유효성 검사 중 오류 발생:', error.response.data);
+        } else {
+            console.error('이메일 유효성 검사 중 오류 발생:', error);
+        }
+        setEmailValidationMessage('사용 불가능한 이메일 입니다.');
+    }
+};
 
   const handleVerificationCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length <= 6) {
@@ -67,9 +95,10 @@ const SignUpPage: React.FC = () => {
             value={email}
             onChange={handleEmailChange}
             placeholder="이메일을 입력해주세요"
-            isValid={isEmailValid}
-            errorMessage="이메일 주소를 정확하게 입력해주세요."
+            isValid={emailValidationMessage ? false : isEmailValid}
+            errorMessage={emailValidationMessage || "이메일 주소를 정확하게 입력해주세요."}
             showValidationButton={true}
+            onValidate={handleEmailValidation}
           />
         </div>
       )}
