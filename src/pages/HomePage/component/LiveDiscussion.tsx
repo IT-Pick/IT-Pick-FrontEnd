@@ -48,7 +48,7 @@ const LiveDiscussion: React.FC = () => {
       <div className="flex-shrink-0">
         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">실시간 토론 BEST 3</span>
       </div>
-      <div className="flex space-x-[12px] mt-[12px] overflow-x-scroll scrollbar-hidden w-auto">
+      <div className="flex space-x-[12px] mt-[12px] overflow-x-scroll overflow-y-hidden scrollbar-hidden w-auto">
         {discussions.map((discussion, index) => (
           <DiscussionCard 
             key={index}
