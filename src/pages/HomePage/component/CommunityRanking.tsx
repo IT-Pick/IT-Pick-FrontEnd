@@ -26,15 +26,25 @@ const CommunityRanking: React.FC = () => {
 
       <ul className="ml-[24px] mt-[24px] space-y-4">
         {rankings.map((item, index) => (
-          <li key={index} className="flex mb-4">
-            <img src={item.icon} alt={item.name} className="mr-4" />
-            <div className="ml-[12px] flex justify-between items-center w-full">
-              <span className="font-medium text-[#1D2228] font-pretendard text-[16px]">{item.name}</span>
-              <span className="text-gray-500 text-[16px] font-pretendard mr-[24px]">{item.tag}</span>
-            </div>
-          </li>
+          <React.Fragment key={index}>
+            <li className="flex mb-4">
+              <img src={item.icon} alt={item.name} className="mr-4" />
+              <div className="ml-[12px] flex justify-between items-center w-full">
+                <span className="font-medium text-[#1D2228] font-pretendard text-[16px]">
+                  {item.name}
+                </span>
+                <span className="text-gray-500 text-[16px] font-pretendard mr-[24px]">
+                  {item.tag}
+                </span>
+              </div>
+            </li>
+            {index < rankings.length - 1 && (
+              <div className="h-[1px] bg-gray1 "/>
+            )}
+          </React.Fragment>
         ))}
       </ul>
+
     </div>
   );
 };

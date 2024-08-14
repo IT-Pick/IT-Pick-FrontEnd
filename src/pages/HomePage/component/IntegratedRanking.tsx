@@ -9,7 +9,7 @@ const rankingData = [
 ];
 
 const RankingItem = ({ rank, name, tags }) => (
-  <div className="flex flex-col w-full ">
+  <div className="flex flex-col w-full">
     <div className="flex gap-5 mb-4 items-center ">
       <div className="w-5 text-center text-violet-700 text-xl font-bold">{rank}</div>
       <div className="flex flex-col gap-1">
@@ -23,7 +23,8 @@ const RankingItem = ({ rank, name, tags }) => (
         </div>
       </div>
     </div>
-    <div className=" h-[2px] bg-[#EDF0F3] mt-[10px]" />
+    {/* <div className=" h-[2px] bg-[#EDF0F3] mt-[10px]" />  */}
+    {/* 최종 디자인에서 삭제 */}
   </div>
 );
 
@@ -39,7 +40,7 @@ const IntegratedRanking: React.FC = () => {
       <div className="flex justify-between items-center w-full mb-[16px]">
         <div className="flex items-center">
           <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">통합 랭킹</span>
-          <span className="text-xs text-gray-500 ml-[8px]">4월 1일 18:00 기준</span>
+          <span className="text-xs text-gray-400 ml-[8px]">4월 1일 18:00 기준</span>
         </div>
         <span className="ml-[43px] cursor-pointer" onClick={handleRankingClick}>
           <div className="inline-flex items-center justify-start mr-[24px]">

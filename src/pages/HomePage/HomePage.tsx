@@ -21,7 +21,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="bg-[#F8F9FC] w-[390px] mx-auto">
+    <div className="bg-background w-[390px] mx-auto">
       <Header />
       <GreetingMessage isLoggedIn={isLoggedIn} />
       <div className="flex items-center ml-[24px] mr-[24px] mt-4">
