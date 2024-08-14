@@ -13,6 +13,7 @@ const SignUpPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [emailValidationMessage, setEmailValidationMessage] = useState<string | null>(null);
+  const [isEmailValidated, setIsEmailValidated] = useState(false);
   
   const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const SignUpPage: React.FC = () => {
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     setEmailValidationMessage(null);
+    setIsEmailValidated(false);
   };
 
   const handleEmailValidation = async () => {
@@ -34,11 +36,11 @@ const SignUpPage: React.FC = () => {
         });
         
         if (response.data.code === 1000) {
-            console.log('사용 가능한 이메일 !');
             setEmailValidationMessage('사용 가능한 이메일 입니다.');
+            setIsEmailValidated(true);
         } else {
-            console.log('사용 불가능한 이메일 ㅜㅜ');
             setEmailValidationMessage('사용 불가능한 이메일 입니다.');
+            setIsEmailValidated(false);
         }
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
@@ -47,6 +49,7 @@ const SignUpPage: React.FC = () => {
             console.error('이메일 유효성 검사 중 오류 발생:', error);
         }
         setEmailValidationMessage('사용 불가능한 이메일 입니다.');
+        setIsEmailValidated(false);
     }
 };
 
@@ -77,7 +80,7 @@ const SignUpPage: React.FC = () => {
   };
 
   const isFormValid =
-    (step === 1 && isEmailValid) ||
+    (step === 1 && isEmailValid && isEmailValidated) ||
     (step === 2 && isVerificationCodeValid) ||
     (step === 3 && isPasswordValid) ||
     (step === 4 && password === confirmPassword);
