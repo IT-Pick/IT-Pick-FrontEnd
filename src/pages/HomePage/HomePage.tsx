@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from "./component/Header";
 import { useNavigate } from 'react-router-dom';
-import SearchBar from "../../components/SearchBar";
+import SearchBar from "@components/SearchBar";
 import IntegratedRanking from "./component/IntegratedRanking";
 import LiveDiscussion from "./component/LiveDiscussion";
 import CommunityRanking from "./component/CommunityRanking";
 import GreetingMessage from "./component/GreetingMessage";
-import logo from "../../assets/images/etc/logo.png";
-import victory_banner from "../../assets/images/victory_banner.png";
+import logo from "@images/etc/logo.png";
+import victory_banner from "@images/victory_banner.png";
 
 const HomePage = () => {
   // 여기에 실제 로그인 상태를 확인하는 로직을 추가해야 함

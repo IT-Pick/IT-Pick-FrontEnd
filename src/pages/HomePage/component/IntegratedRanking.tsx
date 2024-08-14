@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import tag_ico_right from "../../../assets/images/16x16/tag_ico_right.svg";
+import tag_ico_right from "@images/16x16/tag_ico_right.svg";
 
 const rankingData = [
   { rank: 1, name: '김현주', tags: ['나무위키 1등', '트위터 1등'] },

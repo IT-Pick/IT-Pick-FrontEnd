@@ -1,8 +1,8 @@
 import React from 'react';
-import tag_ico_right from "../../../assets/images/16x16/tag_ico_right.svg";
-import namuwiki from '../../../assets/images/CommunityLogo/namuwiki.svg';
-import dcinside from '../../../assets/images/CommunityLogo/dcinside.svg';
-import naver from '../../../assets/images/CommunityLogo/naver.svg';
+import tag_ico_right from "@images/16x16/tag_ico_right.svg";
+import namuwiki from '@images/CommunityLogo/namuwiki.svg';
+import dcinside from '@images/CommunityLogo/dcinside.svg';
+import naver from '@images/CommunityLogo/naver.svg';
 
 const rankings = [
   { name: '네이버', tag: '#김현주_열애설', icon: namuwiki },

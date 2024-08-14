@@ -1,9 +1,9 @@
 import React from 'react';
-import LiveDiscussion1 from '../../../assets/images/LiveDiscussion/LiveDiscussion1.png';
-import LiveDiscussion2 from '../../../assets/images/LiveDiscussion/LiveDiscussion2.png';
-import LiveDiscussion3 from '../../../assets/images/LiveDiscussion/LiveDiscussion3.png';
-import tag_ico_view from "../../../assets/images/16x16/tag_ico_view.svg";
-import tag_ico_comment from "../../../assets/images/16x16/tag_ico_comment.svg";
+import LiveDiscussion1 from '@images/LiveDiscussion/LiveDiscussion1.png';
+import LiveDiscussion2 from '@images/LiveDiscussion/LiveDiscussion2.png';
+import LiveDiscussion3 from '@images/LiveDiscussion/LiveDiscussion3.png';
+import tag_ico_view from "@images/16x16/tag_ico_view.svg";
+import tag_ico_comment from "@images/16x16/tag_ico_comment.svg";
 
 const discussions = [
   {
