@@ -6,13 +6,20 @@ import { useSignUpContext } from '../../context/SignUpContext';
 const NewSetProfile: React.FC = () => {
   const { nickname, setNickname, birthDate, setBirthDate } = useSignUpContext();
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const [nicknameError, setNicknameError] = useState(false);
   const [birthdateError, setBirthdateError] = useState(false);
   const birthdateRef = useRef<HTMLInputElement>(null);
   const keypadRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(event.target.value);
+    const value = event.target.value;
+    if (value.length > 10) {
+      setNicknameError(true);
+    } else {
+      setNicknameError(false);
+      setNickname(value);
+    }
   };
 
   const handleBirthdateChange = (value: string) => {
@@ -51,7 +58,7 @@ const NewSetProfile: React.FC = () => {
   const isFormValid = nickname.length > 0 && birthDate.length === 8;
 
   return (
-    <div className="flex w-[390px] h-[800px] mt-[70px] justify-center min-h-screen mx-auto">
+    <div className="flex w-[390px] h-[800px] pt-[70px] justify-center min-h-screen mx-auto font-pretendard bg-background">
       <div className="w-full max-w-md p-[20px] rounded-lg">
         <h1 className="text-[24px] font-[700] mb-[52px]">
           <div>잇픽에 필요한</div>{' '}
@@ -66,9 +73,14 @@ const NewSetProfile: React.FC = () => {
               id="nickname"
               value={nickname}
               onChange={handleNicknameChange}
-              className="w-[352px] h-[54px] pt-[12px] pb-[12px] pl-[20px] text-[18px] text-[black] font-[500] bg-[#F8F9FC] rounded-[8px] focus:outline-none"
+              className="w-[352px] h-[54px] pt-[12px] pb-[12px] pl-[20px] text-[18px] text-[black] font-[500] bg-gray1 rounded-[8px] focus:outline-none"
               placeholder="닉네임을 입력해주세요 (10자 이하)"
             />
+            {nicknameError && (
+              <span className="text-errorpoint text-[12px] font-medium ml-3">
+                닉네임을 10자 이내로 작성해주세요.
+              </span>
+            )}
           </div>
 
           <div className="space-y-3 relative">
@@ -82,11 +94,11 @@ const NewSetProfile: React.FC = () => {
               ref={birthdateRef}
               onFocus={() => setIsKeyboardVisible(true)}
               readOnly
-              className=" w-[352px] h-[54px] pt-[12px] pb-[12px] pl-[20px] text-[black] font-[500] text-[18px] bg-[#F8F9FC] rounded-[8px] focus:outline-none"
+              className=" w-[352px] h-[54px] pt-[12px] pb-[12px] pl-[20px] text-[black] font-[500] text-[18px] bg-gray1 rounded-[8px] focus:outline-none"
               placeholder="8자리 숫자로 입력해주세요"
             />
             {birthdateError && (
-              <span className="text-errorpoint text-[14px]">
+              <span className="text-errorpoint text-[12px] font-medium ml-3">
                 생년월일을 확인해주세요.
               </span>
             )}
