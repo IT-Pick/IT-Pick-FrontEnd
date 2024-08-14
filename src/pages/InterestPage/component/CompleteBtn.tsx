@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useSignUpContext } from '../../../context/SignUpContext';
+import { signUp } from '../../../apis/signUp';
 
 
 const CompleteBtn: React.FC = () => {
@@ -10,7 +10,7 @@ const CompleteBtn: React.FC = () => {
 
     const handleClick = async () => {
         try {
-            const requestData = {
+            const request = {
                 email,
                 password,
                 nickname,
@@ -18,11 +18,7 @@ const CompleteBtn: React.FC = () => {
                 likedTopics
             };
 
-            const response = await axios.post('/auth/signup', requestData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await signUp(request);
 
             if (response.data.code === 1000) {
                 // 요청 성공 시
