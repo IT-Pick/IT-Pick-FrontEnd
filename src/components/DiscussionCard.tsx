@@ -1,6 +1,6 @@
 import React from 'react';
-import tag_ico_view from '@images/16x16/tag_ico_view.svg';
-import tag_ico_comment from '@images/16x16/tag_ico_comment.svg';
+import tag_ico_view from '../assets/images/16x16/tag_ico_view.svg';
+import tag_ico_comment from '../assets/images/16x16/tag_ico_comment.svg';
 
 interface DiscussionCardProps {
   image: string;
