@@ -45,10 +45,10 @@ const formatNumber = (num: number | null): string => {
 const LiveDiscussion: React.FC = () => {
   return (
     <div className="mt-[26px] ml-[24px]">
-      <div className="flex-shrink-0">
+      <div className="flex flex-shrink-0">
         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">실시간 토론 BEST 3</span>
       </div>
-      <div className="flex space-x-[12px] mt-[12px] overflow-x-scroll overflow-y-hidden scrollbar-hidden w-auto">
+      <div className="flex flex-row space-x-[12px] mt-[12px] overflow-x-scroll overflow-y-hidden scrollbar-hidden w-auto h-[100%]]">
         {discussions.map((discussion, index) => (
           <DiscussionCard 
             key={index}
@@ -57,7 +57,7 @@ const LiveDiscussion: React.FC = () => {
             hits={formatNumber(discussion.hits)}
             comments={formatNumber(discussion.comments)}
             link={discussion.link}
-            className="w-[164px] h-[284px] flex-shrink-0"
+            className="w-[164px] h-[100%] flex-shrink-0"
           />
         ))}
       </div>
