@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputField from './components/InputField';
-import axios from 'axios';
 import { validateEmail, validateVerificationCode, validatePassword } from './utils/validation';
 import { useSignUpContext } from '../../context/SignUpContext';
+import { emailDuplicateCheck } from '../../apis/emailDuplicateCheck';
 
 const SignUpPage: React.FC = () => {
   const { email, setEmail, password, setPassword } = useSignUpContext();
@@ -29,27 +29,19 @@ const SignUpPage: React.FC = () => {
 
   const handleEmailValidation = async () => {
     try {
-        const response = await axios.get(`/auth/email/check`, {
-            params: {
-                email: encodeURIComponent(email)
-            }
-        });
-        
-        if (response.data.code === 1000) {
-            setEmailValidationMessage('사용 가능한 이메일 입니다.');
-            setIsEmailValidated(true);
-        } else {
-            setEmailValidationMessage('사용 불가능한 이메일 입니다.');
-            setIsEmailValidated(false);
-        }
+      const data = await emailDuplicateCheck(email);
+      
+      if (data.code === 1000) {
+          setEmailValidationMessage('사용 가능한 이메일 입니다.');
+          setIsEmailValidated(true);
+      } else {
+          setEmailValidationMessage('사용 불가능한 이메일 입니다.');
+          setIsEmailValidated(false);
+      }
     } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            console.error('이메일 유효성 검사 중 오류 발생:', error.response.data);
-        } else {
-            console.error('이메일 유효성 검사 중 오류 발생:', error);
-        }
-        setEmailValidationMessage('사용 불가능한 이메일 입니다.');
-        setIsEmailValidated(false);
+      console.error('이메일 유효성 검사 중 오류 발생:', error);
+      setEmailValidationMessage('사용 불가능한 이메일 입니다.');
+      setIsEmailValidated(false);
     }
 };
 
