@@ -5,10 +5,11 @@ import NonVisibility from '../../assets/images/non_visibility.svg';
 import Visibility from '../../assets/images/visibility.svg';
 
 const Login: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [isEmailValid, setIsEmailValid] = useState(false);
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState<string>(''); // 사용자가 입력한 이메일 상태 관리
+    const [isEmailValid, setIsEmailValid] = useState<boolean>(false); // 이메일 형식 유효성 상태 관리
+    const [password, setPassword] = useState<string>(''); // 사용자가 입력한 비밀번호 상태 관리
+    const [showPassword, setShowPassword] = useState<boolean>(false); // 비밀번호 표시/숨김 상태 관리
+    const [errorMessage, setErrorMessage] = useState<string>(''); // 오류 메시지 상태 관리
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newEmail = event.target.value;
