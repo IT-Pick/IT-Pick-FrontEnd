@@ -106,6 +106,8 @@ const SignUpPage: React.FC = () => {
     }
   };
 
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
   const isFormValid =
     (step === 1 && isEmailValid && isEmailValidated) ||
     (step === 2 && isVerificationCodeValid && verificationCode.length === 6) ||
@@ -191,8 +193,9 @@ const SignUpPage: React.FC = () => {
                 handleEmailVerification(); // step이 1일 때 handleEmailVerification 호출
                 handleNextStep();
               } else if (step === 2) {
-                handleCodeVerification();
-                handleNextStep();
+                handleCodeVerification().then(() => {
+                  delay(500).then(handleNextStep);
+                });
               } else {
                 handleNextStep(); // 그 외의 경우는 기존의 handleNextStep 호출
               }
