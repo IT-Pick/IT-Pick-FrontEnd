@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios'; //api 연결을 위한 axios 설치
 import NonVisibility from '../../assets/images/non_visibility.svg';
 import Visibility from '../../assets/images/visibility.svg';
 
@@ -29,6 +30,51 @@ const Login: React.FC = () => {
     };
 
     const isFormValid = email.length > 0 && password.length > 0;
+
+    // Function to handle form submission (when the user clicks the "로그인" button)
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault(); // Prevents the default form submission behavior
+
+        try {
+            // Send a POST request to the login API with the user's email and password
+            const response = await axios.post('API_ENDPOINT_URL', {
+                email,
+                password,
+            });
+
+            // Check the response code to determine the result of the login request
+            if (response.data.code === 1000) {
+                // Login successful
+                console.log('로그인 성공:', response.data.result);
+                localStorage.setItem('accessToken', response.data.result.jwt.accessToken);
+                localStorage.setItem('refreshToken', response.data.result.jwt.refreshToken);
+                
+                // Here you can redirect the user to another page or update the application state
+            } else {
+                // Handle known error codes by displaying an appropriate message to the user
+                handleErrorResponse(response.data.code);
+            }
+        } catch (error) {
+            // Handle any errors that occur during the API request
+            console.error('로그인 요청 중 오류 발생:', error);
+            setErrorMessage('로그인 요청 중 오류가 발생했습니다.');
+        }
+    };
+    const handleErrorResponse = (code: number) => {
+        switch (code) {
+            case 5000:
+                setErrorMessage('잘못된 값이 포함되어 있습니다.'); // Invalid format error
+                break;
+            case 5004:
+                setErrorMessage('잘못된 비밀번호입니다.'); // Incorrect password error
+                break;
+            case 5006:
+                setErrorMessage('존재하지 않는 이메일입니다.'); // Email not found error
+                break;
+            default:
+                setErrorMessage('알 수 없는 오류가 발생했습니다.'); // General error message for unexpected codes
+        }
+    };
 
     return (
         <div className="bg-background flex w-[390px] h-[800px] pt-[70px] justify-center min-h-screen mx-auto">
