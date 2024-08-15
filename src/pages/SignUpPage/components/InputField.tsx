@@ -2,7 +2,7 @@ import React from 'react';
 import certifyUnable from '../../../assets/images/ic_btn_certify_unable.svg';
 import certifyAble from '../../../assets/images/ic_btn_certify_able.svg';
 import codeUnable from '../../../assets/images/24x24/ico_code_roundcheck_unable.svg';
-import codeAble from '../../../assets/images/24x24/ico_code_roundcheck_unable.svg';
+import codeAble from '../../../assets/images/24x24/ico_code_roundcheck_able.svg';
 import hideIcon from '../../../assets/images/ic_icon_hide.svg';
 import showIcon from '../../../assets/images/ic_icon_show.svg';
 
@@ -12,6 +12,7 @@ interface InputFieldProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   isValid?: boolean;
+  isCodeValid?: boolean;
   errorMessage?: string;
   showValidationButton?: boolean;
   showCodeCheck?: boolean;
@@ -28,6 +29,7 @@ const InputField: React.FC<InputFieldProps> = ({
   onChange,
   placeholder,
   isValid,
+  isCodeValid,
   errorMessage,
   showValidationButton,
   showCodeCheck,
@@ -63,7 +65,7 @@ const InputField: React.FC<InputFieldProps> = ({
             </button>
           )}
           {showCodeCheck && (
-            <img src={isValid ? codeAble : codeUnable} alt="code verification" className="absolute right-[12px]" />
+            <img src={isCodeValid ? codeAble : codeUnable} alt="code verification" className="absolute right-[12px]" />
           )}
           {showToggle && (
             <button
