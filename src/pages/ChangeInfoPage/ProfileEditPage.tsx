@@ -38,7 +38,7 @@ const ProfileEditPage: React.FC = () => {
     }
 
     return (
-        <div className="w-[390px] flex flex-col items-center mx-auto">
+        <div className="w-[390px] h-screen flex flex-col items-center mx-auto bg-background">
             <header className="w-full flex justify-between items-center py-4">
                 <h1 className="text-[20px] text-black font-pretendard font-bold leading-[28px] ml-6">프로필 편집</h1>
                 <button className="mr-6 font-pretendard font-medium text-[14px] text-point400">완료</button>
@@ -59,7 +59,7 @@ const ProfileEditPage: React.FC = () => {
             </div>
             <div className="w-full h-3 bg-gray1 mt-8"></div>
             <div className="w-full">
-                <div className="ml-6 my-2">
+                <div className="mx-6 my-2">
                     <h3 className="text-[16px] text-black font-pretendard font-bold py-3">프로필</h3>
                     <div className="flex justify-between py-3">
                         <p className="text-[16px] text-black font-pretendard font-normal">생년월일</p>
@@ -71,7 +71,7 @@ const ProfileEditPage: React.FC = () => {
                     </div>
                 </div>
                 <div className="w-full h-0.5 bg-gray1"></div>
-                <div className="ml-6 mt-2">
+                <div className="mx-6 mt-2">
                     <p className="text-[16px] text-black font-pretendard font-bold py-3">회원정보</p>
                     <div className="flex justify-between py-3">
                         <p className="text-[16px] text-black font-pretendard font-normal">이메일</p>
