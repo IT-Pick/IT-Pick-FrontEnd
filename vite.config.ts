@@ -11,4 +11,14 @@ export default defineConfig({
       '@utils': '/src/utils',
     }
   }
+  server: {
+    proxy: {
+      '/auth': {
+        target: 'https://itpick.store',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/auth/, '/auth')
+      },
+    },
+  },
 })

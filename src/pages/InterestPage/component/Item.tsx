@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSignUpContext } from "../../../context/SignUpContext";
 import travel from "../../../assets/images/40x40/ico_travel.svg";
 import politics from "../../../assets/images/40x40/ico_lightbulb.svg";
 import economics from "../../../assets/images/40x40/ico_money.svg";
@@ -22,18 +23,24 @@ const Items: {topic: string; icon: string}[] = [
 ];
 
 const Item: React.FC = () => {
+    const { setLikedTopics } = useSignUpContext();
     const [selectedIndexes, setSelectedIndexes] = useState<boolean[]>(Array(Items.length).fill(false));
 
     const handleSelect = (index: number) => {
         const newSelectedIndexes = [...selectedIndexes];
         newSelectedIndexes[index] = !newSelectedIndexes[index];
         setSelectedIndexes(newSelectedIndexes);
+
+        const selectedTopics = Items.filter((_, i) => newSelectedIndexes[i]).map(item => item.topic);
+        setLikedTopics(selectedTopics);
+        // setLikedTopics(Items.filter((_, i) => newSelectedIndexes[i]).map(item => item.topic));
     }
 
     return (
         <div className="grid grid-cols-3 gap-[20px] pt-[48px]">
             {Items.map((item, index) => (
                 <button 
+                    key={index}
                     onClick={() => handleSelect(index)} 
                     className="flex flex-col justify-center items-center gap-[4px]"
                 >
