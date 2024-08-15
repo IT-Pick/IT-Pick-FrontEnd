@@ -5,11 +5,6 @@ import AlarmButton from '@components/AlarmButton';
 
 const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const navigate = useNavigate();
-  // 여기에 실제 로그인 상태를 확인하는 로직을 추가해야 함
-  // const isLoggedIn = false; 
-  // const isLoggedIn = true;
-
-
   
   const handleProfileClick = () => {
     if (isLoggedIn) {
@@ -24,7 +19,7 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   return (
     <header className="flex justify-end mt-[8px] mb-[8px]">
       <div className="flex">
-        <AlarmButton/>
+        <AlarmButton isLoggedIn={isLoggedIn}/>
         <img 
           src={ico_mypage} 
           alt="Profile" 
