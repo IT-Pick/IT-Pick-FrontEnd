@@ -44,7 +44,9 @@ const ProfileEditPage: React.FC = () => {
                 <button className="mr-6 font-pretendard font-medium text-[14px] text-point400">완료</button>
             </header>
             <div className="flex flex-col items-center mt-5 text-center">
-                <img src={profile} alt="profile_image" className="w-20 h-20" />
+                <button>
+                    <img src={profile} alt="profile_image" className="w-20 h-20" />
+                </button>
                 <textarea
                     className="w-[352px] h-[54px] pt-[12px] pb-[12px] pl-[20px] mt-6 bg-gray1 rounded-[8px] focus:outline-none text-black placeholder-gray3 text-[18px] font-pretendard font-medium resize-none"
                     contentEditable
