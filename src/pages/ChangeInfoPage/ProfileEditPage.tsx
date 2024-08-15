@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import profile from '../../assets/images/ic_profile.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
+import { editProfileImage } from '../../apis/editProfileImage';
 
 const ProfileEditPage: React.FC = () => {
     const [name, setName] = useState('김잇픽');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [profileImage, setProfileImage] = useState(profile);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const navigate = useNavigate();
 
     const handleChangePasswordClick = () => {
@@ -46,6 +48,24 @@ const ProfileEditPage: React.FC = () => {
                 setProfileImage(reader.result as string);
             };
             reader.readAsDataURL(file);
+            setSelectedFile(file);
+        }
+    };
+
+    const handleProfileImageSubmit = async () => {
+        if (selectedFile) {
+            try {
+                const data = await editProfileImage(selectedFile);
+                if (data.code === 1000) {
+                    console.log('이미지 업로드 성공: ', data.result.url);
+                    setProfileImage(data.result.url);
+                } else {
+                    console.log('이미지 업로드 실패:', data.message);
+                }
+            } catch (error) {
+                console.error('이미지 업로드 중 오류 발생:', error);
+            }
+            console.log('이미지 로그', selectedFile);
         }
     };
 
@@ -53,7 +73,12 @@ const ProfileEditPage: React.FC = () => {
         <div className="w-[390px] h-screen flex flex-col items-center mx-auto bg-background">
             <header className="w-full flex justify-between items-center py-4">
                 <h1 className="text-[20px] text-black font-pretendard font-bold leading-[28px] ml-6">프로필 편집</h1>
-                <button className="mr-6 font-pretendard font-medium text-[14px] text-point400">완료</button>
+                <button 
+                    className="mr-6 font-pretendard font-medium text-[14px] text-point400" 
+                    onClick={handleProfileImageSubmit}
+                >
+                    완료
+                </button>
             </header>
             <div className="flex flex-col items-center mt-5 text-center">
                 <label htmlFor="profileImageInput" className="cursor-pointer">
