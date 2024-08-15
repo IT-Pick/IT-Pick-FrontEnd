@@ -4,6 +4,7 @@ import InputField from './components/InputField';
 import { validateEmail, validateVerificationCode, validatePassword } from './utils/validation';
 import { useSignUpContext } from '../../context/SignUpContext';
 import { emailDuplicateCheck } from '../../apis/emailDuplicateCheck';
+import { sendEmailVerification } from '../../apis/sendEmailVerification';
 
 const SignUpPage: React.FC = () => {
   const { email, setEmail, password, setPassword } = useSignUpContext();
@@ -44,6 +45,20 @@ const SignUpPage: React.FC = () => {
       setEmailValidationMessage('사용 불가능한 이메일 입니다.');
       setIsEmailValidated(false);
     }
+};
+
+const handleEmailVerification = async () => {
+  try {
+    const data = await sendEmailVerification(email);
+
+    if(data.code === 1000){
+      console.log('인증 요청 성공');
+    }
+  }
+  catch(error){
+    console.log('인증 요청 실패', error);
+
+  }
 };
 
   const handleVerificationCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,7 +166,14 @@ const SignUpPage: React.FC = () => {
         <div className="w-[352px] mx-auto" style={{ position: 'absolute', bottom: '46px', left: '0', right: '0' }}>
           <button
             className={`w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
-            onClick={handleNextStep}
+            onClick={() => {
+              if (step === 1) {
+                handleEmailVerification(); // step이 1일 때 handleEmailVerification 호출
+                handleNextStep();
+              } else {
+                handleNextStep(); // 그 외의 경우는 기존의 handleNextStep 호출
+              }
+            }}
             disabled={step === 1 && !isEmailValid || step === 2 && !isVerificationCodeValid || step === 3 && !isPasswordValid}
             style={{ border: 'none', padding: 0, borderRadius: '12px' }}
           >
