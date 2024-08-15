@@ -8,11 +8,15 @@ const AlarmIcon = () => (
   </svg>
 );
 
-const AlarmButton: React.FC = () => {
+const AlarmButton: React.FC <{isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/my-alarm');
+    if (isLoggedIn) {
+      navigate('/alarm');  // 로그인된 경우 알람 페이지로 이동
+    } else {
+      navigate('/login');  // 로그인되지 않은 경우 로그인 페이지로 이동
+    }
   };
 
   return (
