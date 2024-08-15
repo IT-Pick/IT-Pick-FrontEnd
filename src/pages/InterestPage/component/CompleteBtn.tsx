@@ -20,16 +20,13 @@ const CompleteBtn: React.FC = () => {
 
             const response = await signUp(request);
 
-            if (response && response.data.code === 1000) {
+            if (response.data.code === 1000) {
                 // 요청 성공 시
                 console.log('회원가입 성공:', response.data);
                 navigate('/');
-            } else if (response && response.message) {
-                // 요청 실패 시
-                console.error('회원가입 실패:', response.message);
             } else {
-                // 예기치 않은 응답 형식
-                console.error('예기치 않은 응답:', response);
+                // 요청 실패 시
+                console.error('회원가입 실패:', response.data.message);
             }
         } catch (error) {
             console.error('회원가입 중 오류 발생:', error);
