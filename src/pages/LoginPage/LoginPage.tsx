@@ -124,6 +124,11 @@ const Login: React.FC = () => {
                             <img src={showPassword ? Visibility : NonVisibility} alt="toggle password visibility" />
                         </button>
                     </div>
+                    {errorMessage && (
+                        <p className="text-[12px] text-errorpoint font-pretendard font-medium mt-1 ml-2">
+                            {errorMessage}
+                        </p>
+                    )}
                     <div>
                         <button
                             type="submit"
