@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import InputField from './components/InputField';
 import { validateEmail, validateVerificationCode, validatePassword } from './utils/validation';
 import { useSignUpContext } from '../../context/SignUpContext';
+import { emailDuplicateCheck } from '../../apis/emailDuplicateCheck';
+import { sendEmailVerification } from '../../apis/sendEmailVerification';
+import { getEmailVerficiation } from '../../apis/getEmailVerification';
 
 const SignUpPage: React.FC = () => {
   const { email, setEmail, password, setPassword } = useSignUpContext();
@@ -11,6 +14,9 @@ const SignUpPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [emailValidationMessage, setEmailValidationMessage] = useState<string | null>(null);
+  const [isEmailValidated, setIsEmailValidated] = useState(false);
+  const [isCodeValidated, setIsCodeValidated] = useState(false);
   
   const navigate = useNavigate();
 
@@ -20,7 +26,59 @@ const SignUpPage: React.FC = () => {
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
+    setEmailValidationMessage(null);
+    setIsEmailValidated(false);
   };
+
+  const handleEmailValidation = async () => {
+    try {
+      const data = await emailDuplicateCheck(email);
+      
+      if (data.code === 1000) {
+          setEmailValidationMessage('사용 가능한 이메일 입니다.');
+          console.log('사용 가능 이메일', data);
+          setIsEmailValidated(true);
+      } else {
+          setEmailValidationMessage('사용 불가능한 이메일 입니다.');
+          setIsEmailValidated(false);
+      }
+    } catch (error) {
+      console.error('이메일 유효성 검사 중 오류 발생:', error);
+      setEmailValidationMessage('사용 불가능한 이메일 입니다.');
+      setIsEmailValidated(false);
+    }
+  };
+
+  const handleEmailVerification = async () => {
+    try {
+      const data = await sendEmailVerification(email);
+
+      if (data.code === 1000) {
+        console.log('인증 요청 성공');
+      } else {
+        console.log("실패", data.message);
+      }
+    } catch (error) {
+      console.log('인증 요청 실패:', error.response.data.message);
+    }
+  };
+
+  const handleCodeVerification = async () => {
+    try {
+      const data = await getEmailVerficiation(email, verificationCode);
+
+      if (data.code === 1000) {
+        console.log('인증 성공', data);
+        setIsCodeValidated(true);
+      } else {
+        console.log('인증 실패:', data.message);
+        setIsCodeValidated(false);
+      }
+    } catch (error) {
+      console.error('인증 번호 확인 중 오류 발생:', error);
+      setIsCodeValidated(false);
+    }
+  }
 
   const handleVerificationCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length <= 6) {
@@ -37,7 +95,7 @@ const SignUpPage: React.FC = () => {
   };
 
   const handleNextStep = () => {
-    if (step === 1 && isEmailValid) setStep(2);
+    if (step === 1 && isEmailValid && isEmailValidated) setStep(2);
     if (step === 2 && isVerificationCodeValid) setStep(3);
     if (step === 3 && isPasswordValid) setStep(4);
   };
@@ -48,9 +106,11 @@ const SignUpPage: React.FC = () => {
     }
   };
 
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
   const isFormValid =
-    (step === 1 && isEmailValid) ||
-    (step === 2 && isVerificationCodeValid) ||
+    (step === 1 && isEmailValid && isEmailValidated) ||
+    (step === 2 && isVerificationCodeValid && verificationCode.length === 6) ||
     (step === 3 && isPasswordValid) ||
     (step === 4 && password === confirmPassword);
 
@@ -67,9 +127,10 @@ const SignUpPage: React.FC = () => {
             value={email}
             onChange={handleEmailChange}
             placeholder="이메일을 입력해주세요"
-            isValid={isEmailValid}
-            errorMessage="이메일 주소를 정확하게 입력해주세요."
+            isValid={emailValidationMessage ? false : isEmailValid}
+            errorMessage={emailValidationMessage || "이메일 주소를 정확하게 입력해주세요."}
             showValidationButton={true}
+            onValidate={handleEmailValidation}
           />
         </div>
       )}
@@ -84,6 +145,7 @@ const SignUpPage: React.FC = () => {
             placeholder="인증번호를 입력해주세요"
             maxLength={6}
             isValid={isVerificationCodeValid}
+            isCodeValid={isCodeValidated}
             showCodeCheck={true}
           />
         </div>
@@ -126,7 +188,18 @@ const SignUpPage: React.FC = () => {
         <div className="w-[352px] mx-auto" style={{ position: 'absolute', bottom: '46px', left: '0', right: '0' }}>
           <button
             className={`w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
-            onClick={handleNextStep}
+            onClick={() => {
+              if (step === 1) {
+                handleEmailVerification(); // step이 1일 때 handleEmailVerification 호출
+                handleNextStep();
+              } else if (step === 2) {
+                handleCodeVerification().then(() => {
+                  delay(500).then(handleNextStep);
+                });
+              } else {
+                handleNextStep(); // 그 외의 경우는 기존의 handleNextStep 호출
+              }
+            }}
             disabled={step === 1 && !isEmailValid || step === 2 && !isVerificationCodeValid || step === 3 && !isPasswordValid}
             style={{ border: 'none', padding: 0, borderRadius: '12px' }}
           >
