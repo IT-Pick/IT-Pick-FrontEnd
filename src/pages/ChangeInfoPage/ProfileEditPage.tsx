@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import profile from '../../assets/images/bear.png';
+import profile from '../../assets/images/ic_profile.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
 
 const ProfileEditPage: React.FC = () => {
