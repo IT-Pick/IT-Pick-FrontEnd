@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { loginUser } from '@apis/loginUser';
 import NonVisibility from '../../assets/images/non_visibility.svg';
 import Visibility from '../../assets/images/visibility.svg';
@@ -10,6 +10,7 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState<string>(''); // 사용자가 입력한 비밀번호 상태 관리
     const [showPassword, setShowPassword] = useState<boolean>(false); // 비밀번호 표시/숨김 상태 관리
     const [errorMessage, setErrorMessage] = useState<string>(''); // 오류 메시지 상태 관리
+    const navigate = useNavigate();
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newEmail = event.target.value;
@@ -43,6 +44,7 @@ const Login: React.FC = () => {
                 console.log('로그인 성공:', response.result);
                 localStorage.setItem('accessToken', response.result.jwt.accessToken);
                 localStorage.setItem('refreshToken', response.result.jwt.refreshToken);
+                navigate('/');
 
             } else {
                 handleErrorResponse(response.data.code);
@@ -76,8 +78,7 @@ const Login: React.FC = () => {
                     <span className="text-[#7620E4]">잇픽</span>
                     입니다.
                 </h1>
-                <form className="space-y-4">
-                    <div className="space-y-3 relative">
+                <form className="space-y-4" onSubmit={handleSubmit}>                     <div className="space-y-3 relative">
                         <label htmlFor="email" className="text-[16px] text-black font-[700]">
                             이메일
                         </label>
