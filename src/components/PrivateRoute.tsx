@@ -1,6 +1,6 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // AuthContext를 사용한다고 가정
+import { Route, Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; 
 
 const PrivateRoute = ({ element: Component, ...rest }) => {
   const { isLoggedIn } = useAuth(); // 로그인 상태 확인
@@ -8,13 +8,7 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(props) =>
-        isLoggedIn ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
+      element={isLoggedIn ? Component : <Navigate to="/login" />}
     />
   );
 };
