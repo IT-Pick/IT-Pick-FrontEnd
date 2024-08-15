@@ -36,17 +36,14 @@ const Login: React.FC = () => {
         event.preventDefault(); 
 
         try {
-            const response = await axios.post('API_ENDPOINT_URL', {
-                email,
-                password,
-            });
+            const response = await loginUser(email, password);
 
-            if (response.data.code === 1000) {
+            if (response.code === 1000) {
                 // Login successful
-                console.log('로그인 성공:', response.data.result);
-                localStorage.setItem('accessToken', response.data.result.jwt.accessToken);
-                localStorage.setItem('refreshToken', response.data.result.jwt.refreshToken);
-                
+                console.log('로그인 성공:', response.result);
+                localStorage.setItem('accessToken', response.result.jwt.accessToken);
+                localStorage.setItem('refreshToken', response.result.jwt.refreshToken);
+
             } else {
                 handleErrorResponse(response.data.code);
             }
