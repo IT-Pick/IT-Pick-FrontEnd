@@ -1,8 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignUpContext } from '../../../context/SignUpContext';
-// import { signUp } from '../../../apis/signUp';
-import axios from 'axios';
+import { signUp } from '../../../apis/signUp';
 
 
 const CompleteBtn: React.FC = () => {
@@ -11,7 +10,7 @@ const CompleteBtn: React.FC = () => {
 
     const handleClick = async () => {
         try {
-            const requestData = {
+            const request = {
                 email,
                 password,
                 nickname,
@@ -19,19 +18,15 @@ const CompleteBtn: React.FC = () => {
                 likedTopics
             };
 
-            const response = await axios.post('/auth/signup', requestData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await signUp(request);
 
-            if (response.data.code === 1000) {
+            if (response.code === 1000) {
                 // 요청 성공 시
-                console.log('회원가입 성공:', response.data);
+                console.log('회원가입 성공:', response);
                 navigate('/');
             } else {
                 // 요청 실패 시
-                console.error('회원가입 실패:', response.data.message);
+                console.error('회원가입 실패:', response.message);
             }
         } catch (error) {
             console.error('회원가입 중 오류 발생:', error);
