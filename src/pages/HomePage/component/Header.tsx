@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import ico_mypage from "../../../assets/images/ico_mypage.svg";
-import AlarmButton from '../../../components/AlarmButton';
+import ico_mypage from "@images/ico_mypage.svg";
+import AlarmButton from '@components/AlarmButton';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
