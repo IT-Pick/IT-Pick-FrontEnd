@@ -10,7 +10,7 @@ export default defineConfig({
       '@components': '/src/components',
       '@utils': '/src/utils',
     }
-  }
+  },
   server: {
     proxy: {
       '/auth': {
