@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; //api 연결을 위한 axios 설치
+import { loginUser } from '@apis/loginUser';
 import NonVisibility from '../../assets/images/non_visibility.svg';
 import Visibility from '../../assets/images/visibility.svg';
 
