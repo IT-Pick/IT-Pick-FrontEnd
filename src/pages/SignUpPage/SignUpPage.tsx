@@ -51,13 +51,19 @@ const handleEmailVerification = async () => {
   try {
     const data = await sendEmailVerification(email);
 
-    if(data.code === 1000){
+    if (data.code === 1000) {
       console.log('인증 요청 성공');
+    } else {
+      console.log("실패", data.message);
     }
-  }
-  catch(error){
-    console.log('인증 요청 실패', error);
-
+  } catch (error) {
+    if (error.message === 'Network Error') {
+      console.log('네트워크 오류: 서버에 접근할 수 없습니다.');
+    } else if (error.response) {
+      console.log('인증 요청 실패:', error.response.data.message);
+    } else {
+      console.log('알 수 없는 오류 발생:', error.message);
+    }
   }
 };
 
