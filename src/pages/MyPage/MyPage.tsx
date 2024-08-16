@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AlarmButton from '../../components/AlarmButton';
 import profile from '../../assets/images/ic_profile.svg';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,14 @@ import LogoutModal from '../../components/Modal/LogoutModal';
 const MyPage: React.FC = () => {
     const navigate = useNavigate();
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [profileImage, setProfileImage] = useState(profile);
+
+    useEffect(() => {
+      const storedProfileImage = localStorage.getItem('profileImage');
+      if (storedProfileImage) {
+        setProfileImage(storedProfileImage);
+      }
+    }, []);
 
     const handleProfileEditClick = () => {
       navigate('/profile-edit');
@@ -37,7 +45,7 @@ const MyPage: React.FC = () => {
               <AlarmButton />
             </header>
             <div className="flex flex-col items-center mt-5 text-center">
-                <img src={profile} alt="profile_image" className="w-20 h-20" />
+                <img src={profileImage} alt="profile_image" className="w-20 h-20 rounded-full object-cover"/>
                 <h2 className="text-[20px] text-black font-pretendard font-bold leading-[24px] mt-3">김잇픽</h2>
                 <p className="text-[14px] text-gray3 mt-1">kimitpick@gmail.com</p>
                 <div className="flex gap-8 mt-5">

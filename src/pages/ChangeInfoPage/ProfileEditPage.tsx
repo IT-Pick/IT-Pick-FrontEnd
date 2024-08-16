@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import profile from '../../assets/images/ic_profile.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
@@ -10,6 +10,13 @@ const ProfileEditPage: React.FC = () => {
     const [profileImage, setProfileImage] = useState(profile);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedProfileImage = localStorage.getItem('profileImage');
+        if (storedProfileImage) {
+            setProfileImage(storedProfileImage);
+        }
+    }, []);
 
     const handleChangePasswordClick = () => {
         navigate('/change-password');
@@ -59,6 +66,7 @@ const ProfileEditPage: React.FC = () => {
                 if (data.code === 1000) {
                     console.log('이미지 업로드 성공: ', data.result.url);
                     setProfileImage(data.result.url);
+                    localStorage.setItem('profileImage', data.result.url);
                 } else {
                     console.log('이미지 업로드 실패:', data.message);
                 }
