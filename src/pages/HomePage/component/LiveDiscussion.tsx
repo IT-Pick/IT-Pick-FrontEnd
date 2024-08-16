@@ -1,14 +1,21 @@
 import React from 'react';
-import LiveDiscussion1 from '../../../assets/images/LiveDiscussion/LiveDiscussion1.png';
-import LiveDiscussion2 from '../../../assets/images/LiveDiscussion/LiveDiscussion2.png';
-import LiveDiscussion3 from '../../../assets/images/LiveDiscussion/LiveDiscussion3.png';
-import tag_ico_view from "../../../assets/images/16x16/tag_ico_view.svg";
-import tag_ico_comment from "../../../assets/images/16x16/tag_ico_comment.svg";
+import LiveDiscussion1 from '@images/LiveDiscussion/LiveDiscussion1.png';
+import LiveDiscussion2 from '@images/LiveDiscussion/LiveDiscussion2.png';
+import LiveDiscussion3 from '@images/LiveDiscussion/LiveDiscussion3.png';
+import DiscussionCard from '@components/DiscussionCard';
 
-const discussions = [
+interface Discussion {
+  image: string;
+  hits: number | null;
+  comments: number | null;
+  title: string;
+  link: string;
+}
+
+const discussions: Discussion[] = [
   {
     image: LiveDiscussion1,
-    hits: 1210,
+    hits: 120,
     comments: 123,
     title: "김현주 열애설 어떻게 생각함?",
     link: "/Post1",
@@ -29,36 +36,29 @@ const discussions = [
   },
 ];
 
-const formatNumber = (num) => {
-  return new Intl.NumberFormat().format(num);
+
+const formatNumber = (num: number | null): string => {
+  return num !== null ? new Intl.NumberFormat().format(num) : '0';
 };
 
-const DiscussionCard = ({ image, hits, comments, title, link }) => (
-  <div className="p-2 flex-shrink-0">
-    <img src={image} alt={title} className="w-[164px] h-[200px] rounded-lg mb-2" />
-    <div className="w-[130px] h-6 justify-start items-start gap-2 inline-flex">
-      <div className="w-[65px] px-2 py-1 bg-purple-100 rounded-2xl justify-center items-center gap-1 flex">
-        <div className="flex flex-row gap-[4px] text-violet-700 text-xs font-medium font-['Pretendard']"><img src={tag_ico_view} alt='tag_ico_view'/>{formatNumber(hits)}</div>
-      </div>
-      <div className="w-[57px] px-2 py-1 bg-purple-100 rounded-2xl justify-center items-center gap-1 flex">
-        <div className="flex flex-row gap-[4px] text-violet-700 text-xs font-medium font-['Pretendard']"><img src={tag_ico_comment} width={16} height={16} alt='tag_ico_view'/>{formatNumber(comments)}</div>
-      </div>
-    </div>
-    <a href={link} className="block text-[#1D2228] font-pretendard font-bold text-[16px] leading-[22.4px] no-underline text-center mt-2">
-      {title}
-    </a>
-  </div>
-);
 
 const LiveDiscussion: React.FC = () => {
   return (
-    <div className="mt-[44px] ml-[24px]">
-      <div className="flex items-center">
+    <div className="mt-[26px] ml-[24px]">
+      <div className="flex flex-shrink-0">
         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">실시간 토론 BEST 3</span>
       </div>
-      <div className="flex overflow-x-auto space-x-3 mt-[13px]">
-      {discussions.map((discussion, index) => (
-          <DiscussionCard key={index} {...discussion} />
+      <div className="flex flex-row space-x-[12px] mt-[12px] overflow-x-scroll overflow-y-hidden scrollbar-hidden w-auto h-[100%]]">
+        {discussions.map((discussion, index) => (
+          <DiscussionCard 
+            key={index}
+            title={discussion.title}
+            image={discussion.image}
+            hits={formatNumber(discussion.hits)}
+            comments={formatNumber(discussion.comments)}
+            link={discussion.link}
+            className="w-[164px] h-[100%] flex-shrink-0"
+          />
         ))}
       </div>
     </div>

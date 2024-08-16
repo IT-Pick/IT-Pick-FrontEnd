@@ -5,7 +5,8 @@ const GreetingMessage: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
       <div className="text-[#2E333B] font-pretendard text-[20px] font-bold ml-[24px]">
         {isLoggedIn ? (
           <>
-            <span className="block">현주님,</span>
+            {/* 닉네임 받아오기 */}
+            <span className="block">유저님,</span>
             <span className="block">
               오늘의 <span className="text-[#7620E4]">연예</span> 소식을 확인해보세요!
             </span>

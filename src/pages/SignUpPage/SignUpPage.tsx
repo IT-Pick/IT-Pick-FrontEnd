@@ -5,6 +5,7 @@ import { validateEmail, validateVerificationCode, validatePassword } from './uti
 import { useSignUpContext } from '../../context/SignUpContext';
 import { emailDuplicateCheck } from '../../apis/emailDuplicateCheck';
 import { sendEmailVerification } from '../../apis/sendEmailVerification';
+import { getEmailVerficiation } from '../../apis/getEmailVerification';
 
 const SignUpPage: React.FC = () => {
   const { email, setEmail, password, setPassword } = useSignUpContext();
@@ -15,6 +16,7 @@ const SignUpPage: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [emailValidationMessage, setEmailValidationMessage] = useState<string | null>(null);
   const [isEmailValidated, setIsEmailValidated] = useState(false);
+  const [isCodeValidated, setIsCodeValidated] = useState(false);
   
   const navigate = useNavigate();
 
@@ -45,27 +47,38 @@ const SignUpPage: React.FC = () => {
       setEmailValidationMessage('사용 불가능한 이메일 입니다.');
       setIsEmailValidated(false);
     }
-};
+  };
 
-const handleEmailVerification = async () => {
-  try {
-    const data = await sendEmailVerification(email);
+  const handleEmailVerification = async () => {
+    try {
+      const data = await sendEmailVerification(email);
 
-    if (data.code === 1000) {
-      console.log('인증 요청 성공');
-    } else {
-      console.log("실패", data.message);
-    }
-  } catch (error) {
-    if (error.message === 'Network Error') {
-      console.log('네트워크 오류: 서버에 접근할 수 없습니다.');
-    } else if (error.response) {
+      if (data.code === 1000) {
+        console.log('인증 요청 성공');
+      } else {
+        console.log("실패", data.message);
+      }
+    } catch (error) {
       console.log('인증 요청 실패:', error.response.data.message);
-    } else {
-      console.log('알 수 없는 오류 발생:', error.message);
+    }
+  };
+
+  const handleCodeVerification = async () => {
+    try {
+      const data = await getEmailVerficiation(email, verificationCode);
+
+      if (data.code === 1000) {
+        console.log('인증 성공', data);
+        setIsCodeValidated(true);
+      } else {
+        console.log('인증 실패:', data.message);
+        setIsCodeValidated(false);
+      }
+    } catch (error) {
+      console.error('인증 번호 확인 중 오류 발생:', error);
+      setIsCodeValidated(false);
     }
   }
-};
 
   const handleVerificationCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length <= 6) {
@@ -93,9 +106,11 @@ const handleEmailVerification = async () => {
     }
   };
 
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
   const isFormValid =
     (step === 1 && isEmailValid && isEmailValidated) ||
-    (step === 2 && isVerificationCodeValid) ||
+    (step === 2 && isVerificationCodeValid && verificationCode.length === 6) ||
     (step === 3 && isPasswordValid) ||
     (step === 4 && password === confirmPassword);
 
@@ -130,6 +145,7 @@ const handleEmailVerification = async () => {
             placeholder="인증번호를 입력해주세요"
             maxLength={6}
             isValid={isVerificationCodeValid}
+            isCodeValid={isCodeValidated}
             showCodeCheck={true}
           />
         </div>
@@ -176,6 +192,10 @@ const handleEmailVerification = async () => {
               if (step === 1) {
                 handleEmailVerification(); // step이 1일 때 handleEmailVerification 호출
                 handleNextStep();
+              } else if (step === 2) {
+                handleCodeVerification().then(() => {
+                  delay(500).then(handleNextStep);
+                });
               } else {
                 handleNextStep(); // 그 외의 경우는 기존의 handleNextStep 호출
               }
