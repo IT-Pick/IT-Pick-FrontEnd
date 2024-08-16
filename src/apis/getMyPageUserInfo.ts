@@ -16,5 +16,3 @@ export const getMyPageUserInfo = async () => {
     throw error;
   }
 };
-// 마이페이지의 profileImg, nickname, email은 이걸로 get 해옴
-// 일단 홈화면의 nickname은 getUserNickname 써서 get 구현해놓음
