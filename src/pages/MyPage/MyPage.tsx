@@ -3,17 +3,32 @@ import AlarmButton from '../../components/AlarmButton';
 import profile from '../../assets/images/ic_profile.svg';
 import { useNavigate } from 'react-router-dom';
 import LogoutModal from '../../components/Modal/LogoutModal';
+import { getMyPageUserInfo } from '@apis/getMyPageUserInfo';
 
 const MyPage: React.FC = () => {
     const navigate = useNavigate();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [profileImage, setProfileImage] = useState(profile);
+    const [nickname, setNickname] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
 
     useEffect(() => {
-      const storedProfileImage = localStorage.getItem('profileImage');
-      if (storedProfileImage) {
-        setProfileImage(storedProfileImage);
-      }
+      // const storedProfileImage = localStorage.getItem('profileImage');
+      // if (storedProfileImage) {
+      //   setProfileImage(storedProfileImage);
+      // }
+      const fetchUserInfo = async () => {
+        try {
+            const userInfo = await getMyPageUserInfo();
+            setProfileImage(userInfo.profileImg);
+            setNickname(userInfo.nickname);
+            setEmail(userInfo.email);
+        } catch (error) {
+            console.error('마이페이지 정보 불러오기 실패:', error);
+        }
+    };
+
+    fetchUserInfo();
     }, []);
 
     const handleProfileEditClick = () => {
@@ -46,8 +61,8 @@ const MyPage: React.FC = () => {
             </header>
             <div className="flex flex-col items-center mt-5 text-center">
                 <img src={profileImage} alt="profile_image" className="w-20 h-20 rounded-full object-cover"/>
-                <h2 className="text-[20px] text-black font-pretendard font-bold leading-[24px] mt-3">김잇픽</h2>
-                <p className="text-[14px] text-gray3 mt-1">kimitpick@gmail.com</p>
+                <h2 className="text-[20px] text-black font-pretendard font-bold leading-[24px] mt-3">{nickname}</h2>
+                <p className="text-[14px] text-gray3 mt-1">{email}</p>
                 <div className="flex gap-8 mt-5">
                     <button className="bg-point500 text-[16px] text-white font-pretendard font-semibold px-12 py-3 rounded-xl cursor-pointer" onClick={handleProfileEditClick}>프로필 편집</button>
                     <button className="bg-point100 text-[16px] text-point500 font-pretendard font-semibold px-12 py-3 rounded-xl cursor-pointer" onClick={handleLogoutClick}>로그아웃</button> 
