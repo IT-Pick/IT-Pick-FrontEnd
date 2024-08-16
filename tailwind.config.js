@@ -16,6 +16,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'custom-purple': '0px 0px 10px 0px rgba(118, 32, 228, 0.40)',
+      },
       fontFamily: {
         'pretendard': ['Pretendard', 'sans-serif']
       },
@@ -37,5 +40,17 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-hide': {
+          '-ms-overflow-style': 'none', /* IE and Edge */
+          'scrollbar-width': 'none', /* Firefox */
+          '&::-webkit-scrollbar': {
+            display: 'none', /* Chrome, Safari, Opera */
+          },
+        },
+      });
+    },
+  ],
 }

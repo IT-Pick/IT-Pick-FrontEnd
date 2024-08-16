@@ -1,6 +1,5 @@
 import React from 'react';
-import DiscussionCard from './DiscussionCard';
-
+import DiscussionCard from '../../../components/DiscussionCard';
 interface DiscussionCardProps {
   image: string;
   hits: number;
