@@ -19,6 +19,23 @@ const customStyles = {
   }
 };
 
+const voteModalStyles = {
+  content: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '390px',
+    height: '844px',
+    borderRadius: '24px'
+  },
+  overlay: {
+    backgroundColor: 'rgba(29, 34, 40, 0.32)',
+    backdropFilter: 'blur(4px)'
+  }
+};
+
 interface CommonModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -28,6 +45,7 @@ interface CommonModalProps {
   message: string | React.ReactNode;
   confirmText: string;
   contentLabel: string;
+  isVoteModal?: boolean; // 투표 모달인지 여부를 구분하기 위한 prop 추가
 }
 
 const DialogModal: React.FC<CommonModalProps> = ({
@@ -38,13 +56,14 @@ const DialogModal: React.FC<CommonModalProps> = ({
   title,
   message,
   confirmText,
-  contentLabel
+  contentLabel,
+  isVoteModal = false // 기본값은 false로 설정
 }) => {
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      style={customStyles}
+      style={isVoteModal ? voteModalStyles : customStyles} // 투표 모달이면 voteModalStyles 사용
       contentLabel={contentLabel}
       className="flex flex-col items-center bg-[#ffffff] rounded-[24px] shadow-lg"
     >

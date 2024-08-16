@@ -13,4 +13,4 @@ const VoteComponentTestPage: React.FC = () => {
 export default VoteComponentTestPage;
 
 
-//투표 API 까지 마치면 삭제하셔도 됩니다
+//테스트 페이지 이므로 투표 API 까지 마치면 삭제하셔도 됩니다

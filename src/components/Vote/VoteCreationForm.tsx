@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import VoteOption from './VoteOption';
-
+import React, { useState, useEffect } from 'react';
+import VoteCreationForm from './VoteCreationForm';
+import VoteResult from './VoteResult';
+import ico_vote from '../../assets/images/16x16/tag_ico_vote.svg';
 
 interface VoteOption {
   id: number;
@@ -9,89 +10,96 @@ interface VoteOption {
   votes: number;
 }
 
-interface VoteCreationFormProps {
-  onSubmit: (options: VoteOption[], isMultipleChoice: boolean) => void;
+interface Vote {
+  options: VoteOption[];
+  isMultipleChoice: boolean;
+  totalVotes: number;
 }
 
-const VoteCreationForm: React.FC<VoteCreationFormProps> = ({ onSubmit }) => {
-  const [voteOptions, setVoteOptions] = useState<VoteOption[]>([
-    { id: 1, text: '', votes: 0 },
-    { id: 2, text: '', votes: 0 },
-  ]);
-  const [isMultipleChoice, setIsMultipleChoice] = useState(false);
+const VoteCreationComponent = () => {
+  const [showVoteCreation, setShowVoteCreation] = useState(false);
+  const [postContent, setPostContent] = useState('');
+  const [createdVote, setCreatedVote] = useState<Vote | null>(null);
+  const [modalImage, setModalImage] = useState<string | null>(null);
 
-  const addVoteOption = () => {
-    const newId = Math.max(...voteOptions.map(option => option.id), 0) + 1;
-    setVoteOptions([...voteOptions, { id: newId, text: '', votes: 0 }]);
+  useEffect(() => {
+    if (createdVote) {
+      const totalVotes = createdVote.options.reduce((sum, option) => sum + option.votes, 0);
+      setCreatedVote({ ...createdVote, totalVotes });
+    }
+  }, [createdVote?.options]);
+
+  const handleVoteCreation = (options: VoteOption[], isMultipleChoice: boolean) => {
+    setCreatedVote({
+      options,
+      isMultipleChoice,
+      totalVotes: 0,
+    });
+    setShowVoteCreation(false);
   };
 
-  const removeVoteOption = (id: number) => {
-    if (voteOptions.length > 2) {
-      setVoteOptions(voteOptions.filter(option => option.id !== id));
+  const handleVote = (optionId: number) => {
+    if (createdVote) {
+      const updatedOptions = createdVote.options.map(option =>
+        option.id === optionId ? { ...option, votes: option.votes + 1 } : option
+      );
+      setCreatedVote({ ...createdVote, options: updatedOptions });
     }
   };
 
-  const handleOptionChange = (id: number, text: string) => {
-    setVoteOptions(voteOptions.map(option =>
-      option.id === id ? { ...option, text } : option
-    ));
+  const openImageModal = (imageUrl: string) => {
+    setModalImage(imageUrl);
   };
 
-  const handleImageUpload = (id: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setVoteOptions(voteOptions.map(option =>
-          option.id === id ? { ...option, imageUrl: reader.result as string } : option
-        ));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = () => {
-    onSubmit(voteOptions, isMultipleChoice);
+  const closeImageModal = () => {
+    setModalImage(null);
   };
 
   return (
-    <div className="mt-4 p-4 border rounded bg-gray-100">
-      <h3 className="text-lg font-semibold mb-2">투표 만들기</h3>
-      {voteOptions.map((option, index) => (
-        <VoteOption
-          key={option.id}
-          option={option}
-          handleOptionChange={handleOptionChange}
-          handleImageUpload={handleImageUpload}
-          removeVoteOption={removeVoteOption}
-          showRemoveButton={voteOptions.length > 2}
-        />
-      ))}
+    <div className="w-[390px] flex flex-col items-center mx-auto">
+      <textarea
+        value={postContent}
+        onChange={(e) => setPostContent(e.target.value)}
+        placeholder="자유롭게 이야기 해보세요."
+        className="w-full p-2 border rounded mb-4"
+        rows={4}
+      />
       <button
-        onClick={addVoteOption}
-        className="mt-2 bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded w-full"
+        className="flex items-center justify-center w-[75px] h-[34px] bg-[#f8f9fc] hover:bg-gray2 text-gray3 font-bold border border-gray3 rounded-full"
+        onClick={() => setShowVoteCreation(true)}
       >
-        항목 추가
+        <img src={ico_vote} alt="투표 아이콘" className="mr-2" />
+        투표
       </button>
-      <div className="mt-4">
-        <label className="flex items-center justify-between">
-          복수 선택 가능
-          <input
-            type="checkbox"
-            checked={isMultipleChoice}
-            onChange={(e) => setIsMultipleChoice(e.target.checked)}
-            className="mr-2"
-          />
-        </label>
-      </div>
-      <button
-        onClick={handleSubmit}
-        className="mt-4 bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded w-full"
-      >
-        완료
-      </button>
+
+      {showVoteCreation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[350px]">
+            <h2 className="text-lg font-bold mb-4 text-purple-700">투표 만들기</h2>
+            <VoteCreationForm onSubmit={handleVoteCreation} />
+            <button
+              onClick={() => setShowVoteCreation(false)}
+              className="mt-4 text-gray-500 hover:text-gray-700"
+            >
+              취소
+            </button>
+          </div>
+        </div>
+      )}
+
+      {createdVote && (
+        <VoteResult vote={createdVote} onVote={handleVote} openImageModal={openImageModal} />
+      )}
+
+      {modalImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={closeImageModal}>
+          <div className="max-w-3xl max-h-3xl">
+            <img src={modalImage} alt="확대된 이미지" className="max-w-full max-h-full" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default VoteCreationForm;
+export default VoteCreationComponent;

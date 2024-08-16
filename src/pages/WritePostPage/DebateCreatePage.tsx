@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import DebateIconBar from './components/DebateIconBar';
+import VoteCreationForm from '../../components/Vote/VoteCreationForm';
+import DialogModal from '@components/Modal/DialogModal';
+import Modal from 'react-modal';
+
+// Modal 설정: root element를 지정해야 합니다.
+Modal.setAppElement('#root'); // root id는 프로젝트의 root element id와 맞춰야 합니다.
+
+
 
 const DebateCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight); 
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  const [isVoteModalOpen, setIsVoteModalOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       const currentViewportHeight = visualViewport.height;
       setViewportHeight(currentViewportHeight);
-      
+
       if (window.visualViewport.height < window.innerHeight) {
         setIsKeyboardVisible(true);
       } else {
@@ -20,7 +29,7 @@ const DebateCreatePage: React.FC = () => {
     };
 
     window.visualViewport.addEventListener('resize', handleResize);
-    handleResize(); //초기화
+    handleResize(); // 초기화
     return () => {
       window.visualViewport.removeEventListener('resize', handleResize);
     };
@@ -34,7 +43,12 @@ const DebateCreatePage: React.FC = () => {
             <span className="text-point500">#김현주 열애설</span>
             <span className="text-black"> 토론 만들기</span>
           </div>
-          <button className="text-point400 font-pretendard font-medium text-[14px]">등록하기</button>
+          <button 
+            className="text-point400 font-pretendard font-medium text-[14px]"
+            onClick={() => setIsVoteModalOpen(true)}
+          >
+            투표 만들기
+          </button>
         </div>
         <input 
           type="text" 
@@ -52,9 +66,29 @@ const DebateCreatePage: React.FC = () => {
         />
       </div>
       <div className={`w-[390px] flex justify-center py-3 bg-white ${isKeyboardVisible ? 'fixed bottom-0' : 'absolute bottom-0'}`}
-      style={{ bottom: isKeyboardVisible ? `${window.innerHeight - viewportHeight}px` : '0' }}>
+        style={{ bottom: isKeyboardVisible ? `${window.innerHeight - viewportHeight}px` : '0' }}>
         <DebateIconBar />
       </div>
+
+      {isVoteModalOpen && (
+         <DialogModal
+         isOpen={isVoteModalOpen}
+         onRequestClose={() => setIsVoteModalOpen(false)}
+         onConfirm={() => setIsVoteModalOpen(false)}
+         icon="투표 아이콘 경로"
+         title="투표 만들기"
+         message={(
+           <VoteCreationForm onSubmit={(options, isMultipleChoice) => {
+             // 투표 생성을 처리하고, 모달을 닫음
+             console.log('투표 생성:', options, isMultipleChoice);
+             setIsVoteModalOpen(false);
+           }} />
+         )}
+         confirmText="확인"
+         contentLabel="Vote Modal"
+         isVoteModal={true} // 투표 모달이기 때문에 true로 설정
+       />
+      )}
     </div>
   );
 };

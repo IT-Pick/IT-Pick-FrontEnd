@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import VoteCreationForm from './VoteCreationForm';
 import VoteResult from './VoteResult';
-// import ico_vote from '@images/16x16/tag_ico_vote.svg';
-// import ico_vote from '../../assets/images/16x16/ico_vote.svg';
-import ico_vote from '../../assets/images/16x16/tag_ico_vote.svg'
+import ico_vote from '../../assets/images/16x16/tag_ico_vote.svg';
+
 interface VoteOption {
   id: number;
   text: string;
@@ -72,7 +71,6 @@ const VoteCreationComponent = () => {
         <img src={ico_vote} alt="투표 아이콘" />
         {showVoteCreation ? '투표 취소' : '투표'}
       </button>
-
 
       {showVoteCreation && <VoteCreationForm onSubmit={handleVoteCreation} />}
 
