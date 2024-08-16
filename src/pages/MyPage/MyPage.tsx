@@ -13,22 +13,22 @@ const MyPage: React.FC = () => {
     const [email, setEmail] = useState<string>('');
 
     useEffect(() => {
-      // const storedProfileImage = localStorage.getItem('profileImage');
-      // if (storedProfileImage) {
-      //   setProfileImage(storedProfileImage);
-      // }
+      const storedProfileImage = localStorage.getItem('profileImage');
+      if (storedProfileImage) {
+        setProfileImage(storedProfileImage);
+      }
       const fetchUserInfo = async () => {
         try {
             const userInfo = await getMyPageUserInfo();
-            setProfileImage(userInfo.profileImg);
+            // setProfileImage(userInfo.profileImg);
             setNickname(userInfo.nickname);
             setEmail(userInfo.email);
         } catch (error) {
             console.error('마이페이지 정보 불러오기 실패:', error);
         }
-    };
+      };
 
-    fetchUserInfo();
+      fetchUserInfo();
     }, []);
 
     const handleProfileEditClick = () => {
