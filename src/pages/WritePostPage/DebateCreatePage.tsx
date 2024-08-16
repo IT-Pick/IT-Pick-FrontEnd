@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import DebateIconBar from './components/DebateIconBar';
-import VoteCreationComponent from '@components/Vote/VoteCreationComponent';  // VoteCreationComponent를 import
-
 
 const DebateCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-  const [isVoteComponentVisible, setIsVoteComponentVisible] = useState(false); // 투표 컴포넌트 상태 추가
-
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight); 
 
   useEffect(() => {
     const handleResize = () => {
       const currentViewportHeight = visualViewport.height;
       setViewportHeight(currentViewportHeight);
-
+      
       if (window.visualViewport.height < window.innerHeight) {
         setIsKeyboardVisible(true);
       } else {
@@ -29,10 +25,6 @@ const DebateCreatePage: React.FC = () => {
       window.visualViewport.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  const toggleVoteComponent = () => {
-    setIsVoteComponentVisible(!isVoteComponentVisible);
-  };
 
   return (
     <div className="w-[390px] h-screen mx-auto flex flex-col items-center justify-between bg-background">
@@ -58,12 +50,10 @@ const DebateCreatePage: React.FC = () => {
           onChange={(e) => setContent(e.target.value)}
           className="w-[335px] flex-grow px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
         />
-        {isVoteComponentVisible && <VoteCreationComponent />}
-
       </div>
       <div className={`w-[390px] flex justify-center py-3 bg-white ${isKeyboardVisible ? 'fixed bottom-0' : 'absolute bottom-0'}`}
       style={{ bottom: isKeyboardVisible ? `${window.innerHeight - viewportHeight}px` : '0' }}>
-        <DebateIconBar onVoteClick={toggleVoteComponent} /> 
+        <DebateIconBar />
       </div>
     </div>
   );
