@@ -54,7 +54,7 @@ const Item: React.FC = () => {
                             </object>
                         </div>
                     </div>
-                    <div className="cursor-pointer">{item.topic}</div>
+                    <div className="cursor-pointer font-medium">{item.topic}</div>
                 </button>
             ))}
         </div>
