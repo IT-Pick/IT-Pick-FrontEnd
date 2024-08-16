@@ -5,7 +5,7 @@ import CompleteBtn from "./component/CompleteBtn";
 
 const InterestPage: React.FC = () => {
     return(
-        <div className="w-[390px] bg-background mx-auto px-[32px]">
+        <div className="w-[390px] h-screen bg-background mx-auto px-[32px] font-pretendard">
             <Header/>
             <Item/>
             <CompleteBtn/>
