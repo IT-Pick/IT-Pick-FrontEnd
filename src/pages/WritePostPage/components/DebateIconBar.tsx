@@ -4,12 +4,17 @@ import tagIcoPictureGray from '../../../assets/images/16x16/tag_ico_pic_gray.svg
 import tagIcoVotePoint from '../../../assets/images/16x16/tag_ico_vote.svg';
 import tagIcoPicturePoint from '../../../assets/images/16x16/tag_ico_pic.svg';
 
-const DebateIconBar: React.FC = () => {
+interface DebateIconBarProps {
+  onVoteClick: () => void;
+}
+
+const DebateIconBar: React.FC<DebateIconBarProps> = ({ onVoteClick }) => {
   const [voteActive, setVoteActive] = useState(false);
   const [pictureActive, setPictureActive] = useState(false);
 
   const handleVoteClick = () => {
     setVoteActive(!voteActive);
+    onVoteClick();
   };
 
   const handlePictureClick = () => {
