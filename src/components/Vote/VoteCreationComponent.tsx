@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import VoteCreationForm from './VoteCreationForm';
 import VoteResult from './VoteResult';
-import icoVote from '@images/16x16/tag-ico-vote.svg'; //ico-vote 입력시 syntax error 발생
-
+// import ico_vote from '@images/16x16/tag_ico_vote.svg';
+// import ico_vote from '../../assets/images/16x16/ico_vote.svg';
+import ico_vote from '../../assets/images/16x16/tag_ico_vote.svg'
 interface VoteOption {
   id: number;
   text: string;
@@ -64,14 +65,14 @@ const VoteCreationComponent = () => {
         className="w-full p-2 border rounded mb-4"
         rows={4}
       />
-
       <button
-       <img src={icoVote} alt="투표 아이콘">
         className="w-[75px] h-[34px] bg-[#f8f9fc] hover:bg-gray2 text-gray3 font-bold border-[1px] border-radius-[40px] border-gray3"
         onClick={() => setShowVoteCreation(!showVoteCreation)}
       >
+        <img src={ico_vote} alt="투표 아이콘" />
         {showVoteCreation ? '투표 취소' : '투표'}
       </button>
+
 
       {showVoteCreation && <VoteCreationForm onSubmit={handleVoteCreation} />}
 

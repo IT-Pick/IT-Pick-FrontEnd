@@ -18,11 +18,12 @@ import KeywordPage from './pages/KeywordPage/KeywordPage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import ErrorPage from './pages/ErrorPage/404ErrorPage';
 import MyAlarm from './pages/MyAlarmPage/MyAlarmPage';
-import VoteComponentTestPage from './pages/WritePostPage/VoteComponentTestPage';
 import UploadedPage from './pages/UploadedVotePage/UploadedPage';
 import DebateCreatePage from './pages/WritePostPage/DebateCreatePage';
 import InterestPage from './pages/InterestPage/InterestPage';
 import { SignUpProvider } from './context/SignUpContext';
+import VoteComponentTestPage from './pages/WritePostPage/VoteComponentTestPage';
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
@@ -46,10 +47,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='/keyword' element={<KeywordPage/>} />
         <Route path='/my-alarm' element={<MyAlarm />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/vote-test" element={<VoteComponentTestPage />} />
         <Route path="/create" element={<DebateCreatePage />} />
         <Route path='/interest' element={<InterestPage/>} />
         <Route path='/uploaded-debate' element={<UploadedPage/>} />
+        <Route path="/vote-test" element={<VoteComponentTestPage />} />
+
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>

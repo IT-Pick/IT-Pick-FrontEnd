@@ -1,5 +1,5 @@
 import React from 'react';
-import emptyPhoto from '@images/ico_empty_photo';
+import emptyPhoto from '../../assets/images/ico_empty_photo.svg';
 
 interface VoteOptionProps {
   option: {
