@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import profile from '../../assets/images/ic_profile.svg';
+import cameraIcon from '../../assets/images/ico_camera.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
 import { editProfileImage } from '../../apis/editProfileImage';
 
@@ -89,9 +90,13 @@ const ProfileEditPage: React.FC = () => {
                 </button>
             </header>
             <div className="flex flex-col items-center mt-5 text-center">
-                <label htmlFor="profileImageInput" className="cursor-pointer">
-                    <img src={profileImage} alt="profile_image" className="w-20 h-20 rounded-full object-cover" />
-                </label>
+                <div className="relative">
+                    <label htmlFor="profileImageInput" className="cursor-pointer">
+                        <img src={profileImage} alt="profile_image" className="w-20 h-20 rounded-full object-cover" />
+                    </label>
+                    <img src={cameraIcon} alt="camera_icon" className="absolute right-[-8px] bottom-[-8px]" />
+                </div>
+                
                 <input
                     id="profileImageInput"
                     type="file"
