@@ -22,8 +22,7 @@ import UploadedPage from './pages/UploadedVotePage/UploadedPage';
 import DebateCreatePage from './pages/WritePostPage/DebateCreatePage';
 import InterestPage from './pages/InterestPage/InterestPage';
 import { SignUpProvider } from './context/SignUpContext';
-import VoteComponentTestPage from './pages/WritePostPage/VoteComponentTestPage';
-
+import MakingVote from '@pages/WritePostPage/MakingVote';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
@@ -50,7 +49,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/create" element={<DebateCreatePage />} />
         <Route path='/interest' element={<InterestPage/>} />
         <Route path='/uploaded-debate' element={<UploadedPage/>} />
-        <Route path="/vote-test" element={<VoteComponentTestPage />} />
+        {/* <Route path="/vote-test" element={<VoteComponentTestPage />} /> */}
+        <Route path='/making-vote' element={<MakingVote/>} />
+       
 
         <Route path='*' element={<ErrorPage />} />
       </Routes>

@@ -3,6 +3,10 @@ import VoteCreationForm from './VoteCreationForm';
 import VoteResult from './VoteResult';
 import ico_vote from '../../assets/images/16x16/tag_ico_vote.svg';
 
+interface VoteCreationFormProps {
+  onSubmit: (options: VoteOption[], isMultipleChoice: boolean) => void;
+}
+
 interface VoteOption {
   id: number;
   text: string;

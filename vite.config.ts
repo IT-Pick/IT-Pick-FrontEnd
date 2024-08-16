@@ -10,6 +10,7 @@ export default defineConfig({
       '@components': '/src/components',
       '@utils': '/src/utils',
       '@apis': '/src/apis',
+      '@pages': '/src/pages',
     }
   },
   server: {
