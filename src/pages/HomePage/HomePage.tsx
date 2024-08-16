@@ -29,7 +29,7 @@ const HomePage = () => {
 
   return (
     <div className="bg-background w-[390px] mx-auto">
-      <Header isLoggedIn={isLoggedIn} />
+      <Header />
       <GreetingMessage isLoggedIn={isLoggedIn} />
       <div className="flex items-center ml-[24px] mr-[24px] mt-4">
         <img src={logo} alt="Logo Icon" className="w-8 h-8 mr-[14.79px]" />
