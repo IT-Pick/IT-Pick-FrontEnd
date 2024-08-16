@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; // AuthContext를 사용한다고 가정
 
 const PrivateRoute = ({ element: Component, ...rest }) => {
@@ -8,11 +8,11 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(props) =>
+      element={
         isLoggedIn ? (
-          <Component {...props} />
+          Component
         ) : (
-          <Redirect to="/login" />
+          <Navigate to="/login" replace />
         )
       }
     />
