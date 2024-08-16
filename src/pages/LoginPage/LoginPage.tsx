@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import { loginUser } from '@apis/loginUser';
 import NonVisibility from '../../assets/images/non_visibility.svg';
 import Visibility from '../../assets/images/visibility.svg';
 
 const Login: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [isEmailValid, setIsEmailValid] = useState(false);
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState<string>(''); // 사용자가 입력한 이메일 상태 관리
+    const [isEmailValid, setIsEmailValid] = useState<boolean>(false); // 이메일 형식 유효성 상태 관리
+    const [password, setPassword] = useState<string>(''); // 사용자가 입력한 비밀번호 상태 관리
+    const [showPassword, setShowPassword] = useState<boolean>(false); // 비밀번호 표시/숨김 상태 관리
+    const [errorMessage, setErrorMessage] = useState<string>(''); // 오류 메시지 상태 관리
+    const navigate = useNavigate();
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newEmail = event.target.value;
@@ -30,6 +33,43 @@ const Login: React.FC = () => {
 
     const isFormValid = email.length > 0 && password.length > 0;
 
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault(); 
+
+        try {
+            const response = await loginUser(email, password);
+
+            if (response.code === 1000) {
+                // Login successful
+                console.log('로그인 성공:', response.result);
+                localStorage.setItem('accessToken', response.result.jwt.accessToken);
+                localStorage.setItem('refreshToken', response.result.jwt.refreshToken);
+                navigate('/');
+
+            } else {
+                handleErrorResponse(response.data.code);
+            }
+        } catch (error) {
+            console.error('로그인 요청 중 오류 발생:', error);
+            setErrorMessage('로그인 요청 중 오류가 발생했습니다.');
+        }
+    };
+    const handleErrorResponse = (code: number) => {
+        switch (code) {
+            case 5000:
+                setErrorMessage('잘못된 값이 포함되어 있습니다.'); // Invalid format error
+                break;
+            case 5004:
+                setErrorMessage('잘못된 비밀번호입니다.'); // Incorrect password error
+                break;
+            case 5006:
+                setErrorMessage('존재하지 않는 이메일입니다.'); // Email not found error
+                break;
+            default:
+                setErrorMessage('알 수 없는 오류가 발생했습니다.'); // General error message for unexpected codes
+        }
+    };
+
     return (
         <div className="bg-background flex w-[390px] h-[800px] pt-[70px] justify-center min-h-screen mx-auto">
             <div className="w-auto max-w-md p-8 rounded-lg">
@@ -38,8 +78,7 @@ const Login: React.FC = () => {
                     <span className="text-[#7620E4]">잇픽</span>
                     입니다.
                 </h1>
-                <form className="space-y-4">
-                    <div className="space-y-3 relative">
+                <form className="space-y-4" onSubmit={handleSubmit}>                     <div className="space-y-3 relative">
                         <label htmlFor="email" className="text-[16px] text-black font-[700]">
                             이메일
                         </label>
@@ -77,6 +116,11 @@ const Login: React.FC = () => {
                             <img src={showPassword ? Visibility : NonVisibility} alt="toggle password visibility" />
                         </button>
                     </div>
+                    {errorMessage && (
+                        <p className="text-[12px] text-errorpoint font-pretendard font-medium mt-1 ml-2">
+                            {errorMessage}
+                        </p>
+                    )}
                     <div>
                         <button
                             type="submit"
