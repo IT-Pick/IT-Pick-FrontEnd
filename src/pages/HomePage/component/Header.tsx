@@ -18,7 +18,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="flex justify-end mt-[8px] mb-[8px]">
+    <header className="flex justify-end pt-[15px] mb-[8px]">
       <div className="flex">
         <AlarmButton />
         <img src={ico_mypage} alt="Profile" className="w-6 h-6 mr-[22px] cursor-pointer" onClick={handleProfileClick} />

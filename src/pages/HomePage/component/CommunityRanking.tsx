@@ -1,18 +1,22 @@
 import React from 'react';
 import tag_ico_right from "@images/16x16/tag_ico_right.svg";
 import namuwiki from '@images/CommunityLogo/namuwiki.svg';
-import dcinside from '@images/CommunityLogo/dcinside.svg';
 import naver from '@images/CommunityLogo/naver.svg';
+import google from '@images/CommunityLogo/google.svg';
+import nate from '@images/CommunityLogo/nate.svg';
+import zum from '@images/CommunityLogo/zum.svg';
 
 const rankings = [
-  { name: '네이버', tag: '#김현주_열애설', icon: namuwiki },
-  { name: '네이트', tag: '#김현주_연애', icon: naver },
-  { name: '줌', tag: '#김현주_남자친구', icon: dcinside },
+  { name: '네이트', tag: '#김현주_연애', icon: nate },
+  { name: '네이버', tag: '#김현주_열애설', icon: naver },
+  { name: '줌', tag: '#김현주_남자친구', icon: zum },
+  { name: '구글', tag: '#김현주_열애설', icon: google },
+  { name: '나무위키', tag: '#김현주_열애설', icon: namuwiki },
 ];
 
 const CommunityRanking: React.FC = () => {
   return (
-    <div className=" mt-[44px]  mb-[33px] ">
+    <div className=" pt-[44px]  pb-[33px] ">
       <span className='ml-[24px]'>
         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">커뮤니티 별 랭킹</span>
         <span className="text-xs text-gray-400 ml-[8px]">4월 1일 18:00 기준</span>
