@@ -5,9 +5,11 @@ import cameraIcon from '../../assets/images/ico_camera.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
 import { editProfileImage } from '../../apis/editProfileImage';
 import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
+import { useSignUpContext } from 'context/SignUpContext';
+import { patchNickname } from '@apis/patchNickname';
 
 const ProfileEditPage: React.FC = () => {
-    const [name, setName] = useState('김잇픽');
+    const {nickname, setNickname} = useSignUpContext();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [profileImage, setProfileImage] = useState(profile);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -22,9 +24,9 @@ const ProfileEditPage: React.FC = () => {
                 console.error('프로필 편집의 이미지 불러오기 실패:', error);
                 setProfileImage(profile);
             }
-          };
+        };
     
-          fetchUserInfo();
+        fetchUserInfo();
     }, []);
 
     const handleChangePasswordClick = () => {
@@ -40,22 +42,7 @@ const ProfileEditPage: React.FC = () => {
         return `${dateString.slice(0, 4)}/${dateString.slice(4, 6)}/${dateString.slice(6, 8)}`;
     };
 
-    const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        if (event.target.value.length > 10) {
-            event.target.value = event.target.value.slice(0, 10);
-        }
-        setName(event.target.value);
-    };
-
-    const confirmDeleteAccount = () => {
-        // 탈퇴 로직 추가
-        navigate('/');
-    };
-
-    const handleInterest = () => {
-        navigate('/interest');
-    };
-
+    //이미지 변경 반영
     const handleProfileImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -68,6 +55,7 @@ const ProfileEditPage: React.FC = () => {
         }
     };
 
+    //이미지 서버로 전송
     const handleProfileImageSubmit = async () => {
         if (selectedFile) {
             try {
@@ -82,11 +70,43 @@ const ProfileEditPage: React.FC = () => {
             } catch (error) {
                 console.error('이미지 업로드 중 오류 발생:', error);
             }
-            console.log('이미지 로그', selectedFile);
         }
-
-        navigate(-1);
     };
+
+    //닉네임 변경 반영
+    const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const value = event.target.value;
+        if (value.length > 10) {
+            event.target.value = value.slice(0, 10);
+        }
+        setNickname(event.target.value);
+    };
+
+    //새로운 닉네임 서버로 전송
+    const handleNicknameSubmit = async () => {
+        try {
+            const data = await patchNickname(nickname);
+            if (data.code === 1000) {
+                console.log('닉네임 변경 성공');
+            } else {
+                console.log('닉네임 변경 실패', data.message);
+            }
+        } catch (error) {
+            console.error('닉네임 변경 실패', error);
+        }
+    };
+
+    //완료 버튼 누를 시, 두 가지 실행
+    const handleSubmit = async () => {
+        await handleProfileImageSubmit();
+        await handleNicknameSubmit();
+        navigate(-1); // 또는 다른 페이지로 이동
+    };
+
+    //관심주제 변경
+    const handleInterest = async () => {
+        
+    }
 
     return (
         <div className="w-[390px] h-screen flex flex-col items-center mx-auto bg-background">
@@ -94,7 +114,7 @@ const ProfileEditPage: React.FC = () => {
                 <h1 className="text-[20px] text-black font-pretendard font-bold leading-[28px] ml-6">프로필 편집</h1>
                 <button 
                     className="mr-6 font-pretendard font-medium text-[14px] text-point400" 
-                    onClick={handleProfileImageSubmit}
+                    onClick={handleSubmit}
                 >
                     완료
                 </button>
@@ -121,7 +141,7 @@ const ProfileEditPage: React.FC = () => {
                     onChange={handleInput}
                     style={{ textAlign: 'left' }}
                 >
-                    {name}
+                    {nickname}
                 </textarea>
             </div>
             <div className="w-full h-3 bg-gray1 mt-8"></div>
