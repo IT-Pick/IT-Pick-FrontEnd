@@ -1,5 +1,5 @@
-const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-const URL = `${PROXY}/auth/login`;
+// const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+// const URL = `${PROXY}/auth/login`;
 
 import axios from 'axios';
 
