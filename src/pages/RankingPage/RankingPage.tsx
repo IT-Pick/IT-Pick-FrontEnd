@@ -6,7 +6,7 @@ import MenuSelector from './components/MenuSelector';
 import DateDisplay from './components/DateDisplay';
 
 const RankingPage: React.FC = () => {
-  const { menuType, setMenuType, fetchTrends } = useTrendStore();
+  const { menuType, setMenuType, communityType, setCommunityType, fetchTrends } = useTrendStore();
   const [dailyDate, setDailyDate] = useState(new Date().toISOString().split('T')[0]);
   const [weeklyDate, setWeeklyDate] = useState(new Date().toISOString().split('T')[0]);
   const [currentTime, setCurrentTime] = useState('');
@@ -20,7 +20,7 @@ const RankingPage: React.FC = () => {
 
       return () => clearInterval(interval);
     }
-  }, [menuType, dailyDate, weeklyDate]);
+  }, [menuType, communityType, dailyDate, weeklyDate]);
 
   const updateCurrentTime = () => {
     const now = new Date();
@@ -81,7 +81,7 @@ const RankingPage: React.FC = () => {
   return (
     <div className="bg-background w-[390px] mx-auto font-pretendard">
       <MenuSelector menuType={menuType} setMenuType={setMenuType} />
-      <CategorySlider />
+      <CategorySlider setCommunityType={setCommunityType} />
       <DateDisplay
         menuType={menuType}
         date={menuType === 'daily' ? dailyDate : weeklyDate}

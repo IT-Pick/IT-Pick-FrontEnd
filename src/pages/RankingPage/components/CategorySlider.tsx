@@ -2,8 +2,18 @@ import React, { useState } from 'react';
 
 const categories = ['통합', '네이트', '네이버', '줌', '구글', '나무위키'];
 
-const CategorySlider: React.FC = () => {
+interface CategorySliderProps {
+  // communityType: string;
+  setCommunityType: (type: string) => void;
+}
+
+const CategorySlider: React.FC<CategorySliderProps> = ({ setCommunityType }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleCategoryClick = (index: number) => {
+    setActiveIndex(index);
+    setCommunityType(categories[index].toLowerCase());
+  };
 
   return (
     <div className="relative">
@@ -27,7 +37,7 @@ const CategorySlider: React.FC = () => {
             className={`px-4 py-1.5 rounded-full cursor-pointer text-sm border ${
               index === activeIndex ? 'bg-point500 text-white' : 'bg-white text-gray3 border-gray2'
             } transition-all duration-300 mx-1`}
-            onClick={() => setActiveIndex(index)}
+            onClick={() => handleCategoryClick(index)}
           >
             {category}
           </div>
