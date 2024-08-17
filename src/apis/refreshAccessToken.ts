@@ -1,3 +1,6 @@
+const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+const URL = `${PROXY}/auth/login`;
+
 import axios from 'axios';
 
 export const refreshAccessToken = async (refreshToken: string) => {
