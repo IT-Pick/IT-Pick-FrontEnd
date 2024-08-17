@@ -8,6 +8,7 @@ import ErrorPage from './components/405ErrorPage';
 import LiveDiscussion1 from '../../assets/images/LiveDiscussion/LiveDiscussion1.png';
 import LiveDiscussion2 from '../../assets/images/LiveDiscussion/LiveDiscussion2.png';
 import LiveDiscussion3 from '../../assets/images/LiveDiscussion/LiveDiscussion3.png';
+import { getKeyword } from '@apis/getKeyword';
 
 const discussions = [
   {
@@ -54,15 +55,19 @@ const discussions = [
   },
 ];
 
-const initialSearchResults = [
-  { title: '김현주 열애설', sources: ['나무위키 1등', '트위터 1등'] },
-  { title: '김현주', sources: ['나무위키 2등', '네이버 1등'] },
-  { title: '김윤서 차은우', sources: ['네이버 2등', '트위터 2등'] },
-  { title: '김현주 결혼', sources: ['줌 1등'] },
-  { title: '김윤서 결혼' },
-  { title: '김현주 결혼', sources: ['나무위키 1등', '나무위키 1등'] },
-  { title: '김윤서 결혼', sources: ['줌 5등', '나무위키 5등'] },
-];
+//여기!!!
+// const initialSearchResults = [
+  // { title: '김현주 열애설', sources: ['나무위키 1등', '트위터 1등'] },
+  // { title: '김현주', sources: ['나무위키 2등', '네이버 1등'] },
+  // { title: '김윤서 차은우', sources: ['네이버 2등', '트위터 2등'] },
+  // { title: '김현주 결혼', sources: ['줌 1등'] },
+  // { title: '김윤서 결혼' },
+  // { title: '김현주 결혼', sources: ['나무위키 1등', '나무위키 1등'] },
+  // { title: '김윤서 결혼', sources: ['줌 5등', '나무위키 5등'] },
+
+// ];
+
+
 
 const SearchPage: React.FC = () => {
   const [tags, setTags] = useState([
@@ -73,7 +78,7 @@ const SearchPage: React.FC = () => {
 
   const [isSearchActive, setIsSearchActive] = useState(false);
 
-  const [searchResults, setSearchResults] = useState(initialSearchResults);
+  const [searchResults, setSearchResults] = useState<{ title: string; sources?: string[] }[]>([]);
 
   const [noResults, setNoResults] = useState(false);
 
@@ -96,18 +101,70 @@ const SearchPage: React.FC = () => {
     '김현주',
   ];
 
-  const handleSearch = (term: string) => {
+  interface KeywordResult {
+    keyword: string;
+    nateRank: number;
+    naverRank: number;
+    zumRank: number;
+    googleRank: number;
+    namuwikiRank: number;
+  }
+
+  const handleGetKeyword = async (term: string) => {
+    try {
+      const data = await getKeyword(term);
+      if (data.code === 1000) {
+        console.log("키워드 GET 성공");
+
+        // API 응답 데이터를 initialSearchResults에 맞게 변환하여 저장
+        const formattedResults = data.result.map((item: KeywordResult) => {
+          const sources: string[] = [];
+          if (item.naverRank !== -1) sources.push(`네이버 ${item.naverRank}등`);
+          if (item.nateRank !== -1) sources.push(`네이트 ${item.nateRank}등`);
+          if (item.zumRank !== -1) sources.push(`줌 ${item.zumRank}등`);
+          if (item.googleRank !== -1) sources.push(`구글 ${item.googleRank}등`);
+          if (item.namuwikiRank !== -1) sources.push(`나무위키 ${item.namuwikiRank}등`);
+
+          return { title: item.keyword, sources };
+        });
+
+        setSearchResults(formattedResults);
+      }
+    } catch (error) {
+      console.log("키워드 GET 실패:", error.response.data.message);
+    }
+  }
+
+  // const handleSearch = (term: string) => {
+  //   if (term === '') {
+  //     setSearchResults([]);
+  //     setIsSearchActive(false);
+  //     setNoResults(false);
+  //   } else {
+  //     const filteredResults = searchResults.filter(result => result.title.includes(term));
+  //     setSearchResults(filteredResults);
+  //     setIsSearchActive(true);
+  //     setNoResults(filteredResults.length === 0);
+  //   }
+  // };
+
+  const handleSearch = async (term: string) => {
     if (term === '') {
-      setSearchResults(initialSearchResults);
+      setSearchResults([]);
       setIsSearchActive(false);
       setNoResults(false);
     } else {
-      const filteredResults = initialSearchResults.filter(result => result.title.includes(term));
+      // API를 통해 검색 결과를 가져옴
+      await handleGetKeyword(term);
+  
+      // 검색어에 따라 검색 결과 필터링
+      const filteredResults = searchResults.filter(result => result.title.includes(term));
       setSearchResults(filteredResults);
       setIsSearchActive(true);
       setNoResults(filteredResults.length === 0);
     }
   };
+  
 
   return (
     <div className="w-[390px] mx-auto pt-[20px] bg-background min-h-screen">
@@ -137,3 +194,4 @@ const SearchPage: React.FC = () => {
 }
 
 export default SearchPage;
+

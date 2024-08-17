@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import hideIcon from '../../assets/images/ic_icon_hide.svg';
 import showIcon from '../../assets/images/ic_icon_show.svg';
+import { patchPwd } from '@apis/patchPwd';
 
 const PwdChangePage: React.FC = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -37,10 +38,25 @@ const PwdChangePage: React.FC = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+  const handleSubmitNewPwd = async () => {
+    try{
+      const data = await patchPwd(password);
+      if(data.code === 1000){
+        console.log("비번 변경 성공!");
+      }
+      else{
+        console.log("변경 실패", data.message);
+      }
+    }
+    catch(error){
+      console.log("비번 변경 실패!: ", error);
+    }
+  }
+
   const isFormValid = isPasswordValid && password === confirmPassword;
 
   return (
-    <div className="w-[390px] mx-auto pt-[72px]">
+    <div className="w-[390px] mx-auto pt-[72px] bg-background">
       <h1 className="text-2xl font-pretendard font-bold ml-6">
         <span className="text-black">비밀번호 변경</span>
       </h1>
@@ -109,6 +125,7 @@ const PwdChangePage: React.FC = () => {
       </div>
       <div className="mx-5 mt-[71px] mb-4">
         <button
+          onClick={handleSubmitNewPwd}
           className={`w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
           disabled={!isFormValid}
           style={{ border: 'none', padding: 0, borderRadius: '12px' }}
