@@ -65,7 +65,7 @@ const ProfileEditPage: React.FC = () => {
     };
 
     const handleInterest = () => {
-        navigate('/interest');
+        navigate('/interest-edit');
     };
 
     const handleProfileImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
