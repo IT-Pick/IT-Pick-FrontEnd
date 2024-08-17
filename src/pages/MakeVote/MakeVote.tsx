@@ -5,6 +5,7 @@ import MakeVoteBar from './component/MakeVoteBar';
 
 const MakeVote: React.FC = () => {
   const [items, setItems] = useState<number[]>([1, 2]);
+  const [itemNames, setItemNames] = useState<{ [key: number]: string }>({});
   const navigate = useNavigate(); // useNavigate 훅 사용
 
   // 항목 추가 함수
@@ -18,12 +19,20 @@ const MakeVote: React.FC = () => {
   const removeItem = (id: number) => {
     if (items.length > 2) {
       setItems((prevItems) => prevItems.filter((item) => item !== id));
+      const updatedNames = { ...itemNames };
+      delete updatedNames[id];
+      setItemNames(updatedNames);
     }
+  };
+
+  // 항목 이름 변경 함수
+  const handleNameChange = (id: number, name: string) => {
+    setItemNames({ ...itemNames, [id]: name });
   };
 
   // 완료 버튼 클릭 시 호출되는 함수
   const handleComplete = () => {
-    const voteItems = items.map((id) => `항목 ${id}`); // 예시로 항목 ID를 "항목 X"로 처리
+    const voteItems = items.map((id) => itemNames[id] || `항목 ${id}`);
     navigate('/create', { state: { voteItems } }); // 글쓰기 페이지로 리디렉션하며 투표 항목 데이터 전달
   };
 
@@ -45,7 +54,9 @@ const MakeVote: React.FC = () => {
             <ItemInput
               key={item}
               id={item}
+              name={itemNames[item] || ''}
               onRemove={removeItem}
+              onNameChange={handleNameChange}
               canRemove={items.length > 2}
             />
           ))}
