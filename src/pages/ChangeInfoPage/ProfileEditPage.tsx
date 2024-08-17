@@ -186,9 +186,8 @@ const ProfileEditPage: React.FC = () => {
                     suppressContentEditableWarning
                     onChange={handleInput}
                     style={{ textAlign: 'left' }}
-                >
-                    {nickname}
-                </textarea>
+                    value={nickname || ''}
+                />
             </div>
             <div className="w-full h-3 bg-gray1 mt-8"></div>
             <div className="w-full">
