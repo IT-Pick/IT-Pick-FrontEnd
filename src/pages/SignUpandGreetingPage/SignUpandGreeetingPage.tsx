@@ -16,10 +16,12 @@ const SignUpandGreetingPage: React.FC = () => {
             <div className="mt-[98px] flex items-center justify-center">
                 <img src={itpickWhiteLogo} alt="itpick white logo" className="w-[80px] h-[114px]"/>
             </div>
-
-            <div className="w-[352px] h-[48px] mt-[260px] px-[140px] py-3 bg-[#7620e4] rounded-xl flex justify-center items-center">
-                <div className="text-center text-white text-base font-bold font-pretendard leading-tight">로그인하기</div>
+            <div className="flex justify-center">
+                <div className="w-[352px] h-[48px] mt-[260px] px-[140px] py-3 bg-[#7620e4] rounded-xl flex justify-center items-center">
+                    <div className="text-center text-white text-base font-bold font-pretendard leading-tight">로그인하기</div>
+                </div>
             </div>
+            
         </div>
     );
 }
