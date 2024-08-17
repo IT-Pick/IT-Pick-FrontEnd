@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ico_vote_add_photo from "../../../assets/images/etc/ico_vote_add_photo.svg";
+import ico_vote_delete_item_active from "../../../assets/images/etc/ico_vote_delete_item_active.svg";
+import ico_vote_delete_item_unactive from "../../../assets/images/etc/ico_vote_delete_item_unactive.svg";
 
 interface ItemInputProps {
   id: number;
@@ -16,13 +18,17 @@ const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove }) => {
         <div className="flex justify-start items-center gap-3">
           <button
             className={`w-[18px] h-[18px] relative ${
-              canRemove ? 'text-red-500' : 'text-gray-300 cursor-not-allowed'
+              canRemove ? 'cursor-pointer' : 'cursor-not-allowed'
             }`}
             onClick={() => canRemove && onRemove(id)}
             disabled={!canRemove}
             aria-label="항목 삭제"
           >
-            ✕
+            <img
+              src={canRemove ? ico_vote_delete_item_active : ico_vote_delete_item_unactive}
+              alt="삭제 아이콘"
+              className="w-full h-full"
+            />
           </button>
           <input
             type="text"
