@@ -10,7 +10,7 @@ const KeywordPage: React.FC = () => {
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
-        navigate('/debate-create');
+        navigate('/create'); //라우팅 링크 typo 수정
     };
 
     return(
