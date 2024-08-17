@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import ActionButton from '../ActionButton';
-import { logoutUser } from '@apis/logoutUser';
+// import { logoutUser } from '@apis/logoutUser';
 
 const customStyles = {
   content: {
@@ -42,25 +42,25 @@ const DialogModal: React.FC<CommonModalProps> = ({
   contentLabel
 }) => {
 
-  const handleConfirm = async() => {
-    //로그아웃
-    if (confirmText === "로그아웃") {
-        try{
-          const data = await logoutUser();
-          if(data.code === 1000){
-            console.log("로그아웃 완료");
-            onConfirm(); 
-          }
-        }
-        catch(error){
-          console.log("로그아웃 실패");
-        }
-      //탈퇴하기
-    } else {
-      console.log("탈퇴 완료");
-      onConfirm(); 
-    }
-  };
+  // const handleConfirm = async() => {
+  //   //로그아웃
+  //   if (confirmText === "로그아웃") {
+  //       try{
+  //         const data = await logoutUser();
+  //         if(data.code === 1000){
+  //           console.log("로그아웃 완료");
+  //           onConfirm(); 
+  //         }
+  //       }
+  //       catch(error){
+  //         console.log("로그아웃 실패");
+  //       }
+  //     //탈퇴하기
+  //   } else {
+  //     console.log("탈퇴 완료");
+  //     onConfirm(); 
+  //   }
+  // };
 
   return (
     <Modal
@@ -83,7 +83,7 @@ const DialogModal: React.FC<CommonModalProps> = ({
         />
         <ActionButton
           text={confirmText}  //로그아웃 또는 탈퇴하기
-          onClick={handleConfirm} 
+          onClick={onConfirm} 
           bgColor="bg-point500"
           textColor="text-white"
         />
