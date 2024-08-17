@@ -7,6 +7,7 @@ import { editProfileImage } from '../../apis/editProfileImage';
 import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
 import { patchNickname } from '@apis/patchNickname';
 import { getUserNickname } from '@apis/getUserNickname';
+import { getProfileEditUserInfo } from '@apis/getProfileEditPageUserInfo';
 
 const isLoggedIn = true;
 const ProfileEditPage: React.FC = () => {
@@ -14,6 +15,7 @@ const ProfileEditPage: React.FC = () => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [profileImage, setProfileImage] = useState(profile);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [LikedTopics, setLikedTopics] = useState<string[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -128,6 +130,20 @@ const ProfileEditPage: React.FC = () => {
         navigate(-1); // 또는 다른 페이지로 이동
     };
 
+    //관심주제 
+    useEffect(()=>{
+        const fetchLikedTopic = async () => {
+            try{
+                const userInfo = await getProfileEditUserInfo();
+                setLikedTopics(userInfo.likedTopicList);
+            }
+            catch(error){
+                console.error("관심주제 불러오기 실패:", error);
+            }
+        };
+        fetchLikedTopic();
+    },[]);
+
     return (
         <div className="w-[390px] h-screen flex flex-col items-center mx-auto bg-background">
             <header className="w-full flex justify-between items-center py-4">
@@ -174,7 +190,7 @@ const ProfileEditPage: React.FC = () => {
                     </div>
                     <div className="flex justify-between py-3">
                         <button onClick={handleInterest} className="text-[16px] text-black font-pretendard font-normal">관심 주제 설정</button>
-                        <p className="text-[14px] text-gray3 font-pretendard font-normal">여행, 연예</p>
+                        <p className="text-[14px] text-gray3 font-pretendard font-normal">{LikedTopics}</p>
                     </div>
                 </div>
                 <div className="w-full h-0.5 bg-gray1"></div>
