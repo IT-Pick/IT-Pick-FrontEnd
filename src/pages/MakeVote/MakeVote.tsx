@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ItemInput from './component/ItemInput';
+import MakeVoteBar from './component/MakeVoteBar';
 
 // 투표 만들기 컴포넌트 (MakingVote)
 const MakingVote: React.FC = () => {
@@ -51,7 +52,10 @@ const MakingVote: React.FC = () => {
             <div className={`text-center text-lg font-semibold font-pretendard text-white`}>
               항목 추가
             </div>
+
         </div>
+        <MakeVoteBar />
+
       </div>
     </div>
   );
