@@ -1,7 +1,13 @@
 import React from "react";
 import itpickWhiteLogo from '@images/itpickWhiteLogo.png';
+import { useNavigate } from "react-router-dom";
+
 
 const SignUpandGreetingPage: React.FC = () => {
+    const navigate = useNavigate();
+    const handleLoginPage = () => {
+        navigate('/login');
+    }
     return (
         <div className="w-[390px] h-screen mx-auto flex flex-col  bg-background">
             <div className="mt-[72px] ml-[32px] text-[20px] font-bold font-pretendards">
@@ -18,7 +24,7 @@ const SignUpandGreetingPage: React.FC = () => {
             </div>
             <div className="flex justify-center">
                 <div className="w-[352px] h-[48px] mt-[260px] px-[140px] py-3 bg-[#7620e4] rounded-xl flex justify-center items-center">
-                    <div className="text-center text-white text-base font-bold font-pretendard leading-tight">로그인하기</div>
+                    <button className="text-center text-white text-base font-bold font-pretendard leading-tight" onClick={handleLoginPage}>로그인하기</button>
                 </div>
             </div>
             
