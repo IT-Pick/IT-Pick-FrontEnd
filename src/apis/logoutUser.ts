@@ -3,6 +3,7 @@ import axios from "axios";
 export const logoutUser = async () => {
     try {
         const token = localStorage.getItem('refreshToken');
+        console.log(token);
         const response = await axios.patch(
             '/auth/logout',
             null,
