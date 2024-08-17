@@ -15,12 +15,16 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      // '/auth': {
+      //   target: 'https://itpick.store',
+      //   changeOrigin: true,
+      //   secure: false,
+      //   rewrite: (path) => path.replace(/^\/auth/, '/auth')
+      // },
       '/auth': {
-        target: 'https://itpick.store',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/auth/, '/auth')
-      },
+          target: 'https://itpick.store',
+          changeOrigin: true,
+        },
       '/user': {
         target: 'https://itpick.store',
         changeOrigin: true,
