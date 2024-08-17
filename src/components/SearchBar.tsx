@@ -10,19 +10,21 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch, onSearchAll }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = () => {
-    onSearch(searchTerm);
-  };
+  // const handleSearch = () => {
+  //   onSearch(searchTerm);
+  // };
 
+    //엔터 눌렀을 때 검색
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      handleSearch();
+      onSearch(searchTerm);
     }
   };
   
+  //돋보기 버튼 눌렀을 때 검색
   const handleClick = () => {
     if (onSearchAll) {
-      handleSearch();
+      onSearch(searchTerm);
     }
   };
   
@@ -40,7 +42,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch, onSearchAl
         onKeyPress={handleKeyPress}
         className="pl-4 pr-12 py-2 w-full rounded-full border border-transparent focus:outline-none placeholder-gray2 font-pretendard font-normal text-[16px]" 
       />
-      <button onClick={handleSearch} className="absolute right-4 top-1/2 transform -translate-y-1/2">
+      <button onClick={()=> onSearch(searchTerm)} className="absolute right-4 top-1/2 transform -translate-y-1/2">
         <img src={ico_search} alt="Search Icon" className="w-5 h-5" />
       </button>
     </div>
