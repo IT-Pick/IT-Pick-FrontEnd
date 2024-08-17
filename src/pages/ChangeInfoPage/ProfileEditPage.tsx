@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import profile from '../../assets/images/ico_profile_edit.svg';
+import profile from '../../assets/images/ico_profile_default.svg';
+import cameraIcon from '../../assets/images/ico_camera.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
+import { editProfileImage } from '../../apis/editProfileImage';
+import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
 
 const ProfileEditPage: React.FC = () => {
     const [name, setName] = useState('김잇픽');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [profileImage, setProfileImage] = useState(profile);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const userInfo = await getMyPageUserInfo();
+                setProfileImage(userInfo.profileImg || profile);
+            } catch (error) {
+                console.error('프로필 편집의 이미지 불러오기 실패:', error);
+                setProfileImage(profile);
+            }
+          };
+    
+          fetchUserInfo();
+    }, []);
 
     const handleChangePasswordClick = () => {
         navigate('/change-password');
@@ -35,18 +54,68 @@ const ProfileEditPage: React.FC = () => {
 
     const handleInterest = () => {
         navigate('/interest');
-    }
+    };
+
+    const handleProfileImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfileImage(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+            setSelectedFile(file);
+        }
+    };
+
+    const handleProfileImageSubmit = async () => {
+        if (selectedFile) {
+            try {
+                const data = await editProfileImage(selectedFile);
+                if (data.code === 1000) {
+                    console.log('이미지 업로드 성공: ', data.result.url);
+                    setProfileImage(data.result.url);
+                    localStorage.setItem('profileImage', data.result.url);
+                } else {
+                    console.log('이미지 업로드 실패:', data.message);
+                }
+            } catch (error) {
+                console.error('이미지 업로드 중 오류 발생:', error);
+            }
+            console.log('이미지 로그', selectedFile);
+        }
+
+        navigate(-1);
+    };
 
     return (
-        <div className="w-[390px] flex flex-col items-center mx-auto">
+        <div className="w-[390px] h-screen flex flex-col items-center mx-auto bg-background">
             <header className="w-full flex justify-between items-center py-4">
                 <h1 className="text-[20px] text-black font-pretendard font-bold leading-[28px] ml-6">프로필 편집</h1>
-                <button className="mr-6 font-pretendard font-medium text-[14px] text-point400">완료</button>
+                <button 
+                    className="mr-6 font-pretendard font-medium text-[14px] text-point400" 
+                    onClick={handleProfileImageSubmit}
+                >
+                    완료
+                </button>
             </header>
             <div className="flex flex-col items-center mt-5 text-center">
-                <img src={profile} alt="profile_image" className="w-20 h-20" />
+                <div className="relative">
+                    <label htmlFor="profileImageInput" className="cursor-pointer">
+                        <img src={profileImage} alt="profile_image" className="w-20 h-20 rounded-full object-cover" />
+                    </label>
+                    <img src={cameraIcon} alt="camera_icon" className="absolute right-[-8px] bottom-[-8px]" />
+                </div>
+                
+                <input
+                    id="profileImageInput"
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={handleProfileImageChange}
+                />
                 <textarea
-                    className="w-[352px] h-[54px] pt-[12px] pb-[12px] pl-[20px] mt-6 bg-gray1 rounded-[8px] focus:outline-none text-black placeholder-gray3 text-[18px] font-pretendard font-medium resize-none"
+                    className="w-[352px] h-[54px] pt-[12px] pb-[12px] px-[20px] mt-6 bg-gray1 rounded-[8px] focus:outline-none text-black placeholder-gray3 text-[18px] font-pretendard font-medium resize-none"
                     contentEditable
                     suppressContentEditableWarning
                     onChange={handleInput}
@@ -57,7 +126,7 @@ const ProfileEditPage: React.FC = () => {
             </div>
             <div className="w-full h-3 bg-gray1 mt-8"></div>
             <div className="w-full">
-                <div className="ml-6 my-2">
+                <div className="mx-6 my-2">
                     <h3 className="text-[16px] text-black font-pretendard font-bold py-3">프로필</h3>
                     <div className="flex justify-between py-3">
                         <p className="text-[16px] text-black font-pretendard font-normal">생년월일</p>
@@ -69,7 +138,7 @@ const ProfileEditPage: React.FC = () => {
                     </div>
                 </div>
                 <div className="w-full h-0.5 bg-gray1"></div>
-                <div className="ml-6 mt-2">
+                <div className="mx-6 mt-2">
                     <p className="text-[16px] text-black font-pretendard font-bold py-3">회원정보</p>
                     <div className="flex justify-between py-3">
                         <p className="text-[16px] text-black font-pretendard font-normal">이메일</p>

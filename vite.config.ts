@@ -21,6 +21,12 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/auth/, '/auth')
       },
+      '/user': {
+        target: 'https://itpick.store',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/user/, '/user')
+      },
     },
   },
 })
