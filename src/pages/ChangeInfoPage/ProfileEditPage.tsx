@@ -42,7 +42,17 @@ const ProfileEditPage: React.FC = () => {
         return `${dateString.slice(0, 4)}/${dateString.slice(4, 6)}/${dateString.slice(6, 8)}`;
     };
 
-    //이미지 변경 반영
+
+
+    const confirmDeleteAccount = async () => {
+        // 탈퇴 로직 추가
+        navigate('/');
+    };
+
+    const handleInterest = () => {
+        navigate('/interest');
+    };
+
     const handleProfileImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -102,11 +112,6 @@ const ProfileEditPage: React.FC = () => {
         await handleNicknameSubmit();
         navigate(-1); // 또는 다른 페이지로 이동
     };
-
-    //관심주제 변경
-    const handleInterest = async () => {
-
-    }
 
     return (
         <div className="w-[390px] h-screen flex flex-col items-center mx-auto bg-background">
@@ -181,7 +186,7 @@ const ProfileEditPage: React.FC = () => {
             <DeleteAccoutModal
                 isOpen={isDeleteModalOpen}
                 onRequestClose={() => setIsDeleteModalOpen(false)}
-                onConfirmDelete={confirmDeleteAccount}
+                onConfirmDeleteAccount={confirmDeleteAccount}
             />
         </div>
     );
