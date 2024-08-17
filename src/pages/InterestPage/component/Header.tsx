@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Header: React.FC = () => {
     const navigate = useNavigate();
     const handleSkip = () => {
-        navigate('/');
+        navigate('/welcome');
     }
     return(
         <div className="pt-[72px] flex justify-between items-end">

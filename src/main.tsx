@@ -23,6 +23,7 @@ import DebateCreatePage from './pages/WritePostPage/DebateCreatePage';
 import InterestPage from './pages/InterestPage/InterestPage';
 import { SignUpProvider } from './context/SignUpContext';
 import MakeVote from './pages/MakeVote/MakeVote';
+import SignUpandGreetingPage from './pages/SignUpandGreetingPage/SignUpandGreeetingPage';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
@@ -51,6 +52,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='/uploaded-debate' element={<UploadedPage/>} />
         {/* <Route path="/vote-test" element={<VoteComponentTestPage />} /> */}
         <Route path='/make-vote' element={<MakeVote/>} />
+        <Route path='/welcome' element={<SignUpandGreetingPage />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
