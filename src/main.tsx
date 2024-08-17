@@ -27,7 +27,7 @@ import MakeVote from './pages/MakeVote/MakeVote';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
   <SignUpProvider>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
