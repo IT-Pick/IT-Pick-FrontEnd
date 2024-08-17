@@ -33,7 +33,7 @@ const CommunityRanking: React.FC = () => {
           <React.Fragment key={index}>
             <li className="flex mb-4">
               <img src={item.icon} alt={item.name} className="mr-4" />
-              <div className="ml-[12px] flex justify-between items-center w-full">
+              <div className="flex justify-between items-center w-full">
                 <span className="font-medium text-[#1D2228] font-pretendard text-[16px]">
                   {item.name}
                 </span>
