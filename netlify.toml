@@ -1,5 +1,12 @@
 [[redirects]]
-  from = "/proxy/*"
-  to = "https://itpick.store/:splat"
+  from = "/auth/*"
+  to = "https://itpick.store/auth/:splat"
   status = 200
   force = true
+
+[[redirects]]
+  from = "/user/*"
+  to = "https://itpick.store/user/:splat"
+  status = 200
+  force = true
+
