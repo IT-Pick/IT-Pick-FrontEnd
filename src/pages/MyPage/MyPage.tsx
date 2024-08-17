@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AlarmButton from '../../components/AlarmButton';
-import profile from '../../assets/images/ic_profile.svg';
+import profile from '../../assets/images/ico_profile_default.svg';
 import { useNavigate } from 'react-router-dom';
 import LogoutModal from '../../components/Modal/LogoutModal';
-import { useSignUpContext } from '../../context/SignUpContext';
-import { patchNickname } from '@apis/patchNickname';
-import { nicknameDuplicateCheck } from '@apis/nicknameDuplicateCheck';
+import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
 
 const MyPage: React.FC = () => {
     const { nickname, setNickname } = useSignUpContext();
@@ -13,6 +11,25 @@ const MyPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [profileImage, setProfileImage] = useState(profile);
+    const [nickname, setNickname] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+
+    useEffect(() => {
+      const fetchUserInfo = async () => {
+        try {
+            const userInfo = await getMyPageUserInfo();
+            setProfileImage(userInfo.profileImg || profile);
+            setNickname(userInfo.nickname);
+            setEmail(userInfo.email);
+        } catch (error) {
+            console.error('마이페이지 정보 불러오기 실패:', error);
+            setProfileImage(profile);
+        }
+      };
+
+      fetchUserInfo();
+    }, []);
 
     const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -88,6 +105,9 @@ const MyPage: React.FC = () => {
                     placeholder="새 닉네임을 입력하세요 (10자 이하)"
                 />
                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                <img src={profileImage} alt="profile_image" className="w-20 h-20 rounded-full object-cover"/>
+                <h2 className="text-[20px] text-black font-pretendard font-bold leading-[24px] mt-3">{nickname}</h2>
+                <p className="text-[14px] text-gray3 mt-1">{email}</p>
                 <div className="flex gap-8 mt-5">
                     <button
                         className="bg-point500 text-[16px] text-white font-pretendard font-semibold px-12 py-3 rounded-xl cursor-pointer"

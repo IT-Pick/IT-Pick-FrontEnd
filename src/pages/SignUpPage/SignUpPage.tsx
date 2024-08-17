@@ -40,9 +40,11 @@ const SignUpPage: React.FC = () => {
           setIsEmailValidated(true);
       } else {
           setEmailValidationMessage('사용 불가능한 이메일 입니다.');
+          console.log('흠', data.message);
           setIsEmailValidated(false);
       }
     } catch (error) {
+      console.log('여기');
       console.error('이메일 유효성 검사 중 오류 발생:', error);
       setEmailValidationMessage('사용 불가능한 이메일 입니다.');
       setIsEmailValidated(false);
