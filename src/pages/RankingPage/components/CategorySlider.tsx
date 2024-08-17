@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const categories = ['통합', '나무위키', '트위터', '다음카페', '커뮤니티'];
+const categories = ['통합', '네이트', '네이버', '줌', '구글', '나무위키'];
 
 const CategorySlider: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
