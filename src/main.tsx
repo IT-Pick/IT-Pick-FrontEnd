@@ -22,7 +22,7 @@ import UploadedPage from './pages/UploadedVotePage/UploadedPage';
 // import DebateCreatePage from './pages/WritePostPage/DebateCreatePage';
 import InterestPage from './pages/InterestPage/InterestPage';
 import { SignUpProvider } from './context/SignUpContext';
-import MakingVote from './pages/WritePostPage/MakingVote';
+import MakingVote from './pages/MakingVote/MakingVote';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
