@@ -23,7 +23,7 @@ const CompleteBtn: React.FC = () => {
             if (response.code === 1000) {
                 // 요청 성공 시
                 console.log('회원가입 성공:', response);
-                navigate('/');
+                navigate('/welcome');
             } else {
                 // 요청 실패 시
                 console.error('회원가입 실패:', response.message);
