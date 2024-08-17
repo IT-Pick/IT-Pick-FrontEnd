@@ -42,8 +42,6 @@ const ProfileEditPage: React.FC = () => {
         return `${dateString.slice(0, 4)}/${dateString.slice(4, 6)}/${dateString.slice(6, 8)}`;
     };
 
-
-
     const confirmDeleteAccount = async () => {
         // 탈퇴 로직 추가
         navigate('/');
