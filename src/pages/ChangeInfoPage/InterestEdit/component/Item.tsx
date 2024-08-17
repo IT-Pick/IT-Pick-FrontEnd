@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { useSignUpContext } from "../../../context/SignUpContext";
-import travel from "../../../assets/images/40x40/ico_travel.svg";
-import politics from "../../../assets/images/40x40/ico_lightbulb.svg";
-import economics from "../../../assets/images/40x40/ico_money.svg";
-import social from "../../../assets/images/40x40/ico_world.svg";
-import culture from "../../../assets/images/40x40/ico_culture.svg";
-import entertain from "../../../assets/images/40x40/ico_music.svg";
-import sports from "../../../assets/images/40x40/ico_sports.svg";
-import food from "../../../assets/images/40x40/ico_food.svg";
-import love from "../../../assets/images/40x40/ico_letter.svg";
+import travel from "../../../../assets/images/40x40/ico_travel.svg";
+import politics from "../../../../assets/images/40x40/ico_lightbulb.svg";
+import economics from "../../../../assets/images/40x40/ico_money.svg";
+import social from "../../../../assets/images/40x40/ico_world.svg";
+import culture from "../../../../assets/images/40x40/ico_culture.svg";
+import entertain from "../../../../assets/images/40x40/ico_music.svg";
+import sports from "../../../../assets/images/40x40/ico_sports.svg";
+import food from "../../../../assets/images/40x40/ico_food.svg";
+import love from "../../../../assets/images/40x40/ico_letter.svg";
 
 const Items: {topic: string; icon: string}[] = [
     {topic: "정치", icon: politics},
@@ -22,8 +21,12 @@ const Items: {topic: string; icon: string}[] = [
     {topic: "연애", icon: love},
 ];
 
-const Item: React.FC = () => {
-    const { setLikedTopics } = useSignUpContext();
+interface ItemProps {
+    newLikedTopics: string[];
+    setNewLikedTopics: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const Item: React.FC<ItemProps> = ({setNewLikedTopics }) => {
     const [selectedIndexes, setSelectedIndexes] = useState<boolean[]>(Array(Items.length).fill(false));
 
     const handleSelect = (index: number) => {
@@ -32,7 +35,7 @@ const Item: React.FC = () => {
         setSelectedIndexes(newSelectedIndexes);
 
         const selectedTopics = Items.filter((_, i) => newSelectedIndexes[i]).map(item => item.topic);
-        setLikedTopics(selectedTopics);
+        setNewLikedTopics(selectedTopics);
     }
 
     return (
