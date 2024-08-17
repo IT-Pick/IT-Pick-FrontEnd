@@ -58,8 +58,8 @@ const ProfileEditPage: React.FC = () => {
         setIsDeleteModalOpen(true);
     };
 
-    const formatDate = (dateString: string | undefined) => {
-        if (!dateString || dateString.length !== 6) return dateString || '';
+    const formatDate = (dateString: string) => {
+        if (dateString.length !== 6) return dateString;
 
         const yearPrefix = parseInt(dateString.slice(0, 2), 10) >= 50 ? '19' : '20';
         const fullYear = `${yearPrefix}${dateString.slice(0, 2)}`;
@@ -200,7 +200,7 @@ const ProfileEditPage: React.FC = () => {
                     </div>
                     <div className="flex justify-between py-3">
                         <button onClick={handleInterest} className="text-[16px] text-black font-pretendard font-normal">관심 주제 설정</button>
-                        <p className="text-[14px] text-gray3 font-pretendard font-normal">{LikedTopics}</p>
+                        <p className="text-[14px] text-gray3 font-pretendard font-normal">{LikedTopics.join(', ')}</p>
                     </div>
                 </div>
                 <div className="w-full h-0.5 bg-gray1"></div>
