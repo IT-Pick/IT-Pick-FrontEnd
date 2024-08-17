@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 가져옵니다.
 import tagIcoVoteGray from '../../../assets/images/16x16/tag_ico_vote_gray.svg';
 import tagIcoPictureGray from '../../../assets/images/16x16/tag_ico_pic_gray.svg';
 import tagIcoVotePoint from '../../../assets/images/16x16/tag_ico_vote.svg';
@@ -7,9 +8,11 @@ import tagIcoPicturePoint from '../../../assets/images/16x16/tag_ico_pic.svg';
 const DebateIconBar: React.FC = () => {
   const [voteActive, setVoteActive] = useState(false);
   const [pictureActive, setPictureActive] = useState(false);
+  const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수를 생성합니다.
 
   const handleVoteClick = () => {
     setVoteActive(!voteActive);
+    navigate('/make-vote'); // 버튼 클릭 시 /make-vote로 이동합니다.
   };
 
   const handlePictureClick = () => {
