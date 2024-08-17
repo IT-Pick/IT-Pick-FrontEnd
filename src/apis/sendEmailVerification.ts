@@ -15,3 +15,4 @@ export const sendEmailVerification = async (email: string) => {
 
     return response.data;
   };
+
