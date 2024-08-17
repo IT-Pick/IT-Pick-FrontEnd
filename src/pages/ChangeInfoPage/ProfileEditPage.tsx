@@ -47,7 +47,7 @@ const ProfileEditPage: React.FC = () => {
         setName(event.target.value);
     };
 
-    const confirmDeleteAccount = () => {
+    const confirmDeleteAccount = async () => {
         // 탈퇴 로직 추가
         navigate('/');
     };
@@ -161,7 +161,7 @@ const ProfileEditPage: React.FC = () => {
             <DeleteAccoutModal
                 isOpen={isDeleteModalOpen}
                 onRequestClose={() => setIsDeleteModalOpen(false)}
-                onConfirmDelete={confirmDeleteAccount}
+                onConfirmDeleteAccount={confirmDeleteAccount}
             />
         </div>
     );
