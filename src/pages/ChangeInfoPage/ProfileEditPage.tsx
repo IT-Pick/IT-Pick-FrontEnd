@@ -5,11 +5,12 @@ import cameraIcon from '../../assets/images/ico_camera.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
 import { editProfileImage } from '../../apis/editProfileImage';
 import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
-import { useSignUpContext } from '../../context/SignUpContext';
 import { patchNickname } from '@apis/patchNickname';
+import { getUserNickname } from '@apis/getUserNickname';
 
+const isLoggedIn = true;
 const ProfileEditPage: React.FC = () => {
-    const {nickname, setNickname} = useSignUpContext();
+    const [nickname, setNickname] = useState<string | null>(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [profileImage, setProfileImage] = useState(profile);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -28,6 +29,22 @@ const ProfileEditPage: React.FC = () => {
     
         fetchUserInfo();
     }, []);
+    
+
+  useEffect(() => {
+    const fetchNickname = async () => {
+      try {
+        const fetchedNickname = await getUserNickname();
+        setNickname(fetchedNickname);
+      } catch (error) {
+        console.error('닉네임 불러오는 중 오류 발생:', error);
+      }
+    };
+
+    if (isLoggedIn) {
+      fetchNickname();
+    }
+  }, [isLoggedIn]);
 
     const handleChangePasswordClick = () => {
         navigate('/change-password');
@@ -42,8 +59,8 @@ const ProfileEditPage: React.FC = () => {
         return `${dateString.slice(0, 4)}/${dateString.slice(4, 6)}/${dateString.slice(6, 8)}`;
     };
 
+    //추후 탈퇴 로직 추가
     const confirmDeleteAccount = async () => {
-        // 탈퇴 로직 추가
         navigate('/');
     };
 
