@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import profile from '../../assets/images/ic_profile.svg';
+import profile from '../../assets/images/ico_profile_default.svg';
 import cameraIcon from '../../assets/images/ico_camera.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
 import { editProfileImage } from '../../apis/editProfileImage';
+import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
 
 const ProfileEditPage: React.FC = () => {
     const [name, setName] = useState('김잇픽');
@@ -13,10 +14,17 @@ const ProfileEditPage: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const storedProfileImage = localStorage.getItem('profileImage');
-        if (storedProfileImage) {
-            setProfileImage(storedProfileImage);
-        }
+        const fetchUserInfo = async () => {
+            try {
+                const userInfo = await getMyPageUserInfo();
+                setProfileImage(userInfo.profileImg || profile);
+            } catch (error) {
+                console.error('프로필 편집의 이미지 불러오기 실패:', error);
+                setProfileImage(profile);
+            }
+          };
+    
+          fetchUserInfo();
     }, []);
 
     const handleChangePasswordClick = () => {
@@ -76,6 +84,8 @@ const ProfileEditPage: React.FC = () => {
             }
             console.log('이미지 로그', selectedFile);
         }
+
+        navigate(-1);
     };
 
     return (
