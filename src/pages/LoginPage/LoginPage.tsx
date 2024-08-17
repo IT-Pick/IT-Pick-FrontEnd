@@ -71,15 +71,16 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="bg-background flex w-[390px] h-[800px] pt-[70px] justify-center min-h-screen mx-auto">
+        <div className="bg-background flex w-[390px] h-[800px] pt-[70px] justify-center min-h-screen mx-auto font-pretendard">
             <div className="w-auto max-w-md p-8 rounded-lg">
                 <h1 className="text-[24px] font-[700] mb-[52px]">
                     <div>안녕하세요 :)</div>
                     <span className="text-[#7620E4]">잇픽</span>
                     입니다.
                 </h1>
-                <form className="space-y-4" onSubmit={handleSubmit}>                     <div className="space-y-3 relative">
-                        <label htmlFor="email" className="text-[16px] text-black font-[700]">
+                <form className="space-y-4" onSubmit={handleSubmit}>                     
+                    <div className="space-y-3 relative">
+                        <label htmlFor="email" className="text-[16px] text-black font-[700] ml-3">
                             이메일
                         </label>
                         <input
@@ -97,7 +98,7 @@ const Login: React.FC = () => {
                         )}
                     </div>
                     <div className="space-y-3 relative">
-                        <label htmlFor="password" className="text-[16px] text-black font-[700]">
+                        <label htmlFor="password" className="text-[16px] text-black font-[700] ml-3">
                             비밀번호
                         </label>
                         <input
@@ -124,10 +125,10 @@ const Login: React.FC = () => {
                     <div>
                         <button
                             type="submit"
-                            className={`mt-[70px] w-[352px] h-[48px] ${isFormValid ? 'bg-[#7620E4] text-white' : 'bg-[#F1E6FF] text-[#7620E4]'} font-[700] py-[12px] px-[140px] rounded-md focus:outline-none`}
+                            className={`mt-[70px] w-[352px] h-[48px] ${isFormValid ? 'bg-[#7620E4] text-white' : 'bg-[#F1E6FF] text-[#7620E4]'} font-[700] py-[12px] px-[140px] rounded-xl focus:outline-none`}
                             disabled={!isFormValid}
                         >
-                            로그인
+                            로그인하기
                         </button>
                     </div>
                 </form>
