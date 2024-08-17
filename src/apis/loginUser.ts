@@ -1,3 +1,6 @@
+const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+const URL = `${PROXY}/auth/login`;
+
 import axios from 'axios';
 
 export const loginUser = async (email: string, password: string) => {
