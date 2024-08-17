@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const AgreementPage: React.FC = () => {
     const [isAllChecked, setIsAllChecked] = useState(false);
     const [isAgeChecked, setIsAgeChecked] = useState(false);
+    const [isInfoChecked, setIsInfoChecked] = useState(false);
     const [isAdChecked, setIsAdChecked] = useState(false);
     const navigate = useNavigate();
 
@@ -13,14 +14,21 @@ const AgreementPage: React.FC = () => {
         const newCheckState = !isAllChecked;
         setIsAllChecked(newCheckState);
         setIsAgeChecked(newCheckState);
+        setIsInfoChecked(newCheckState);
         setIsAdChecked(newCheckState);
     };
 
     const handleAgeCheck = () => {
         const newCheckState = !isAgeChecked;
         setIsAgeChecked(newCheckState);
-        setIsAllChecked(newCheckState && isAdChecked);
+        setIsAllChecked(newCheckState && isInfoChecked);
     };
+
+    const handleInfoCheck = () => {
+        const newCheckState = !isInfoChecked;
+        setIsInfoChecked(newCheckState);
+        setIsAllChecked(newCheckState && isInfoChecked);
+    }
 
     const handleAdCheck = () => {
         const newCheckState = !isAdChecked;
@@ -32,7 +40,7 @@ const AgreementPage: React.FC = () => {
         navigate('/new-set-profile');
     };
 
-    const isFormValid = isAgeChecked;
+    const isFormValid = isAgeChecked && isInfoChecked;
 
     return (
         <div className="w-[390px] h-screen mx-auto pt-[72px] bg-background font-pretendard">
@@ -51,7 +59,7 @@ const AgreementPage: React.FC = () => {
                     <div className="text-black text-[16px] font-[700] ml-2">아래 약관에 모두 동의합니다.</div>
                 </div>
 
-
+                
                 <div className="w-[334px] flex justify-between items-center ml-[8px]">
                     <div className="flex items-center justify-start gap-[12px]">
                         <img 
@@ -60,10 +68,24 @@ const AgreementPage: React.FC = () => {
                             className="cursor-pointer"
                             onClick={handleAgeCheck}
                         />
-                        <div className="text-black text-[14px] font-[500]">[필수] 만 14세 이상이며 모두 동의합니다.</div>
+                        <div className="text-black text-[14px] font-[500]">[필수] 만 14세 이상이며 이용 약관에 모두 동의합니다.</div>
                     </div>
                     <div className="text-gray3 text-[12px] font-[400] underline cursor-pointer">내용 보기</div>
                 </div>
+
+                <div className="w-[334px] flex justify-between items-center ml-[8px]">
+                    <div className="flex items-center justify-start gap-[12px]">
+                        <img 
+                            src={isInfoChecked ? ico_roundcheck_filled : ico_roundcheck_outline} 
+                            alt="check icon" 
+                            className="cursor-pointer"
+                            onClick={handleInfoCheck}
+                        />
+                        <div className="text-black text-[14px] font-[500]">[필수] 개인정보 처리방침에 동의합니다.</div>
+                    </div>
+                    <div className="text-gray3 text-[12px] font-[400] underline cursor-pointer">내용 보기</div>
+                </div>
+
 
 
                 <div className="w-[334px] flex justify-between items-center ml-[8px]">
@@ -74,7 +96,7 @@ const AgreementPage: React.FC = () => {
                             className="cursor-pointer"
                             onClick={handleAdCheck}
                         />
-                        <div className="text-black text-[14px] font-[500]">[선택] 광고성 정보 수신에 모두 동의합니다.</div>
+                        <div className="text-black text-[14px] font-[500]">[선택] 광고 및 마케팅 수선에 동의합니다.</div>
                     </div>
                     <div className="text-gray3 text-[12px] font-[400] underline cursor-pointer">내용 보기</div>
                 </div>
