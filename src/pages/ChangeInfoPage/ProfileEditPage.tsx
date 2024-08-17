@@ -5,7 +5,7 @@ import cameraIcon from '../../assets/images/ico_camera.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
 import { editProfileImage } from '../../apis/editProfileImage';
 import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
-import { useSignUpContext } from 'context/SignUpContext';
+import { useSignUpContext } from '../../context/SignUpContext';
 import { patchNickname } from '@apis/patchNickname';
 
 const ProfileEditPage: React.FC = () => {
@@ -105,7 +105,7 @@ const ProfileEditPage: React.FC = () => {
 
     //관심주제 변경
     const handleInterest = async () => {
-        
+
     }
 
     return (

@@ -1,13 +1,12 @@
 import axios from "axios";
 
-export const patchNickname = async (nickname: string) => {
+export const patchPwd = async (password: string) => {
     const response = await axios.patch(
-        '/user/nickname',
-        nickname,
-        {headers: {
+        '/user/password',
+        password,
+        {headers:{
             "Content-Type": 'application/json',
         }}
     )
     return response.data;
-        
 }
