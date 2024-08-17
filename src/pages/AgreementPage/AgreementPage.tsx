@@ -68,9 +68,11 @@ const AgreementPage: React.FC = () => {
                             className="cursor-pointer"
                             onClick={handleAgeCheck}
                         />
-                        <div className="text-black text-[14px] font-[500]">[필수] 만 14세 이상이며 이용 약관에 모두 동의합니다.</div>
+                        <div className="w-[241px] text-black text-[14px] font-[500]">[필수] 만 14세 이상이며 이용 약관에 모두 동의합니다.</div>
                     </div>
-                    <div className="text-gray3 text-[12px] font-[400] underline cursor-pointer">내용 보기</div>
+                    <div onClick={()=>
+                        window.open("https://emerald-server-298.notion.site/47a9e6d98af24d84a928a643f92cb930?pvs=4")
+                    }className="text-gray3 text-[12px] font-[400] underline cursor-pointer">내용 보기</div>
                 </div>
 
                 <div className="w-[334px] flex justify-between items-center ml-[8px]">
@@ -83,7 +85,9 @@ const AgreementPage: React.FC = () => {
                         />
                         <div className="text-black text-[14px] font-[500]">[필수] 개인정보 처리방침에 동의합니다.</div>
                     </div>
-                    <div className="text-gray3 text-[12px] font-[400] underline cursor-pointer">내용 보기</div>
+                    <div onClick={()=>
+                        window.open("https://emerald-server-298.notion.site/d2e2565ed7b34bbab37e78f7066c5e16?pvs=4")
+                    }className="text-gray3 text-[12px] font-[400] underline cursor-pointer">내용 보기</div>
                 </div>
 
 
@@ -96,9 +100,11 @@ const AgreementPage: React.FC = () => {
                             className="cursor-pointer"
                             onClick={handleAdCheck}
                         />
-                        <div className="text-black text-[14px] font-[500]">[선택] 광고 및 마케팅 수선에 동의합니다.</div>
+                        <div className="text-black text-[14px] font-[500]">[선택] 광고 및 마케팅 수신에 동의합니다.</div>
                     </div>
-                    <div className="text-gray3 text-[12px] font-[400] underline cursor-pointer">내용 보기</div>
+                    <div onClick={()=>
+                        window.open("https://emerald-server-298.notion.site/a2ec6bc8bf534cf3b6e76ee4f94e106b?pvs=4")
+                    }className="text-gray3 text-[12px] font-[400] underline cursor-pointer">내용 보기</div>
                 </div>
             </div>
             <button 
