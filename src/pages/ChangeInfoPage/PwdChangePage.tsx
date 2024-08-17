@@ -55,7 +55,7 @@ const PwdChangePage: React.FC = () => {
     catch(error){
       console.log("비번 변경 실패!: ", error);
     }
-  }
+  };
 
   const isFormValid = isPasswordValid && password === confirmPassword;
 
