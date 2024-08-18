@@ -22,20 +22,10 @@ interface DebateItemProps {
   toggleSelect: (id: number) => void;
 }
 
-// const Debates = [
-//     { id: 1, title: '김현주', about: "김현주 열애설", tags: [3025, 123], time: 30 },
-//     { id: 2, title: '김현주 열애설', about: "김현주 열애설", tags: [123, 18], time: 30 },
-//     { id: 3, title: '여러분 뉴진스 최애는?', about: "김현주 열애설", tags: [567, 398], time: 30 },
-//     { id: 4, title: '마라탕 먹고 싶다', about: "김현주 열애설", tags: [123, 290], time: 30 },
-//     { id: 5, title: '하니도 좋은데', about: "김현주 열애설", tags: [980, 1290], time: 30 },
-//     { id: 6, title: '저는 해린이요', about: "김현주 열애설", tags: [123], time: 30 },
-// ];
 
-
-
-const SortingDebates: React.FC<DebateItemProps> = ({ id, title, keyword, duration, hits, comments, editMode, selectedItems, toggleSelect }) => (
+const SortingDebates: React.FC<DebateItemProps & {className?: string}> = ({ id, title, keyword, duration, hits, comments, editMode, selectedItems, toggleSelect, className }) => (
     <div className="w-[390px] px-[20px] pt-6 bg-[#F8F9FC] justify-between items-center">
-        <div className="flex border-b-[1px] pb-[20px]">
+        <div className={`flex pb-[20px] ${className}`}>
         {editMode && (
             <button onClick={() => toggleSelect(id)} className="mr-4">
                 <img src={selectedItems.includes(id) ? ico_roundcheck : ico_rounduncheck} alt="select_icon" />
@@ -66,9 +56,6 @@ const SortingDebates: React.FC<DebateItemProps> = ({ id, title, keyword, duratio
 
 const Debate: React.FC = () => {
     const navigate = useNavigate();
-    const handleNoDebateClick = () => {
-        navigate('/debate-no-data');
-    }
     const [debates, setDebates] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
@@ -106,10 +93,10 @@ const Debate: React.FC = () => {
                 </p>
             </header>
 
-            {debates.map((item) => (
+            {debates.map((item, index) => (
                 <SortingDebates 
-                key={item.title} 
-                id={item.id}
+                key={index} 
+                id={index}
                 title={item.title}
                 keyword={item.keyword}
                 duration={item.duration}
@@ -118,10 +105,11 @@ const Debate: React.FC = () => {
                 editMode={isEditMode} 
                 selectedItems={selectedItems} 
                 toggleSelect={toggleSelect} 
+                className={index === debates.length - 1 ? '' : 'border-b-[1px]'}  // 마지막 아이템에만 border-b 제거
+
                 />
             ))}
-            
-                    </div>
+        </div>
         
     );
 }
