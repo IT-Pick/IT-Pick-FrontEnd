@@ -8,8 +8,6 @@ import ico_write from "../../assets/images/etc/ico_write.svg";
 
 const KeywordPage: React.FC = () => {
     const navigate = useNavigate();
-    const keywordId = 317; // 실제 키워드 ID 사용
-    const sort = 'popularity'; // 또는 'latest'
 
     const handleButtonClick = () => {
         navigate('/create'); //라우팅 링크 typo 수정
