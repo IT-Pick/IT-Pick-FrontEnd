@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 
-const categories = ['통합', '네이트', '네이버', '줌', '구글', '나무위키'];
+const categories = [
+  { name: '통합', value: 'total' },
+  { name: '네이트', value: 'nate' },
+  { name: '네이버', value: 'naver' },
+  { name: '줌', value: 'zum' },
+  { name: '구글', value: 'google' },
+  { name: '나무위키', value: 'namuwiki' }
+];
 
 interface CategorySliderProps {
   // communityType: string;
@@ -12,7 +19,7 @@ const CategorySlider: React.FC<CategorySliderProps> = ({ setCommunityType }) => 
 
   const handleCategoryClick = (index: number) => {
     setActiveIndex(index);
-    setCommunityType(categories[index].toLowerCase());
+    setCommunityType(categories[index].value); // communityType 설정
   };
 
   return (
@@ -39,7 +46,7 @@ const CategorySlider: React.FC<CategorySliderProps> = ({ setCommunityType }) => 
             } transition-all duration-300 mx-1`}
             onClick={() => handleCategoryClick(index)}
           >
-            {category}
+            {category.name}
           </div>
         ))}
       </div>

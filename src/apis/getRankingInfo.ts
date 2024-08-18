@@ -11,10 +11,14 @@ interface RankingItem {
 }
 
 interface RankingResult {
+  redisKey: string;
   rankingList: RankingItem[];
 }
 
 interface Response {
+  code: number;
+  status: number;
+  message: string;
   result: RankingResult;
 }
 
@@ -28,6 +32,8 @@ export const getRankingInfo = async (community: string, period: string, date: st
         date: date,
       },
     });
+
+    console.log('랭킹 API 응답 데이터 확인', response.data);
 
     const rankingList = response.data.result.rankingList.map((item: RankingItem) => {
       const tags = [
