@@ -33,7 +33,7 @@ const RecentSearches: React.FC<RecentSearchesProps> = ({ tags, removeTag, remove
           ))}
         </div>
       ) : (
-        <div className="flex justify-center items-center h-full text-gray2 text-[14px] font-pretendard font-medium">
+        <div className="flex justify-center items-center h-full text-gray3 text-[16px] font-pretendard font-medium">
           최근 검색어가 없어요
         </div>
       )}
