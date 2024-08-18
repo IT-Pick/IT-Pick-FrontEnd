@@ -55,7 +55,7 @@ const discussions = [
   },
 ];
 
-//여기!!!
+//여기!!!가 get한 검색 결과 dummy data
 // const initialSearchResults = [
   // { title: '김현주 열애설', sources: ['나무위키 1등', '트위터 1등'] },
   // { title: '김현주', sources: ['나무위키 2등', '네이버 1등'] },
