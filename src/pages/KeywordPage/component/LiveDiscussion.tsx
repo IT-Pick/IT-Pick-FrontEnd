@@ -16,7 +16,7 @@ const Tab = ({activeTab, label, onClick}) => (
 const TabContent = ({activeTab}) => {
     return(
         <div>
-             {activeTab === '인기순' && <RecentDiscussion/>}
+            {activeTab === '인기순' && <RecentDiscussion/>}
             {activeTab === '최신순' && <PopularDiscussion/>}
         </div>
     );
