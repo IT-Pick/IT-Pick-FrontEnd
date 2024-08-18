@@ -5,7 +5,7 @@ import './index.css';
 import HomePage from './pages/HomePage/HomePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import ParticipatedDebatesPage from './pages/HistoryPage/ParticipatedDebate';
+import ParticipatedDebates from './pages/HistoryPage/ParticipatedDebate';
 import DebatePage from './pages/HistoryPage/Debate';
 import RankingPage from './pages/RankingPage/RankingPage';
 import PwdChangePage from './pages/ChangeInfoPage/PwdChangePage';
@@ -35,7 +35,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/new-set-profile" element={<NewSetProfile />} />
-        <Route path="/participated-debates" element={<ParticipatedDebatesPage />} />
+        <Route path="/participated-debates" element={<ParticipatedDebates />} />
         <Route path="/debate" element={<DebatePage />} />
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/change-password" element={<PwdChangePage />} />
