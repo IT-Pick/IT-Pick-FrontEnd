@@ -1,14 +1,23 @@
 import axios from "axios";
 
 export const patchLikedTopics = async(likedTopicList: string[]) => {
-    const response = await axios.patch(
-        '/user/liked-topics',
-        likedTopicList,
-        {
-            headers: {
-                "Content-Type":'application/json',
+    try {
+        const token = localStorage.getItem('accessToken');
+        const response = await axios.patch(
+            '/user/liked-topics',
+            { likedTopicList },
+            {
+                headers: {
+                    "Content-Type":'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
             }
-        }
-    )
-    return response.data;
-}
+        );
+
+        return response.data;
+
+    } catch (error) {
+        console.error('관심 주제 patch 하는 중 오류 발생:', error);
+        throw error;
+    }
+};

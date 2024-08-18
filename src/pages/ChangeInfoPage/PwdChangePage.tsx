@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import hideIcon from '../../assets/images/ic_icon_hide.svg';
 import showIcon from '../../assets/images/ic_icon_show.svg';
 import { patchPwd } from '@apis/patchPwd';
@@ -11,6 +12,8 @@ const PwdChangePage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleCurrentPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentPassword(event.target.value);
@@ -43,6 +46,7 @@ const PwdChangePage: React.FC = () => {
       const data = await patchPwd(password);
       if(data.code === 1000){
         console.log("비번 변경 성공!");
+        navigate(-1);
       }
       else{
         console.log("변경 실패", data.message);
@@ -51,12 +55,12 @@ const PwdChangePage: React.FC = () => {
     catch(error){
       console.log("비번 변경 실패!: ", error);
     }
-  }
+  };
 
   const isFormValid = isPasswordValid && password === confirmPassword;
 
   return (
-    <div className="w-[390px] mx-auto pt-[72px] bg-background">
+    <div className="w-[390px] h-screen mx-auto pt-[72px] bg-background">
       <h1 className="text-2xl font-pretendard font-bold ml-6">
         <span className="text-black">비밀번호 변경</span>
       </h1>
