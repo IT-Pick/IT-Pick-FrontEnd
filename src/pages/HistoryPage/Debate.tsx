@@ -24,7 +24,7 @@ interface DebateItemProps {
 
 
 const SortingDebates: React.FC<DebateItemProps & {className?: string}> = ({ id, title, keyword, duration, hits, comments, editMode, selectedItems, toggleSelect, className }) => (
-    <div className="w-[390px] px-[20px] pt-6 bg-[#F8F9FC] justify-between items-center">
+    <div className="w-[390px] px-[20px] pt-6 justify-between items-center">
         <div className={`flex pb-[20px] ${className}`}>
         {editMode && (
             <button onClick={() => toggleSelect(id)} className="mr-4">
@@ -76,39 +76,41 @@ const Debate: React.FC = () => {
             const debateData = await getMyDebate();
 
             if(debateData.length === 0){
-                navigate('/debate-no-data');
+                navigate('/debate-no-data', {replace: true});
             }else{
                 setDebates(debateData);
             }
         };
         fetchDebates();
-    },[]);
+    },[navigate]);
 
     return (
-        <div className="w-[390px] mx-auto">
+        <div className="w-[390px] h-screen mx-auto">
             <header className="w-full flex justify-between items-center py-4">
                 <h1 className="text-[20px] text-black font-pretendard font-bold leading-[28px] ml-6">내가 만든 토론</h1>
                 <p onClick={toggleEditMode} className="text-point400 text-[14px] font-[500] mr-[24px] cursor-pointer">
                     {isEditMode ? '삭제' : '편집'}
                 </p>
             </header>
+            <div className="bg-background h-screen">
+                {debates.map((item, index) => (
+                    <SortingDebates 
+                    key={index} 
+                    id={index}
+                    title={item.title}
+                    keyword={item.keyword}
+                    duration={item.duration}
+                    hits={item.hits}
+                    comments={item.comments}
+                    editMode={isEditMode} 
+                    selectedItems={selectedItems} 
+                    toggleSelect={toggleSelect} 
+                    className={index === debates.length - 1 ? '' : 'border-b-[1px]'} 
 
-            {debates.map((item, index) => (
-                <SortingDebates 
-                key={index} 
-                id={index}
-                title={item.title}
-                keyword={item.keyword}
-                duration={item.duration}
-                hits={item.hits}
-                comments={item.comments}
-                editMode={isEditMode} 
-                selectedItems={selectedItems} 
-                toggleSelect={toggleSelect} 
-                className={index === debates.length - 1 ? '' : 'border-b-[1px]'} 
+                    />
+                ))}     
+            </div>
 
-                />
-            ))}
         </div>
         
     );
