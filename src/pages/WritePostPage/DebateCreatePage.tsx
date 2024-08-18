@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import DebateIconBar from './components/DebateIconBar';
 import VoteResult from './components/VoteResult';
 import { createDebate } from '@apis/WriteDebate/createDebate';
@@ -7,11 +7,12 @@ import { createDebate } from '@apis/WriteDebate/createDebate';
 const DebateCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const location = useLocation<{ voteItems: string[] }>();
   const voteItems = location.state?.voteItems || []; // 투표 데이터 가져오기
-  const navigate =useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,17 +32,31 @@ const DebateCreatePage: React.FC = () => {
       window.visualViewport.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = async () => {
+    if (!title || !content) {
+      alert('제목과 내용을 입력해주세요.');
+      return;
+    }
+
     try {
-      const payload = {
-        userId: 1, // 하드코딩된 유저 ID (나중에 실제 유저 ID로 대체해야 함)
-        keywordId: 1, // 키워드 ID는 적절히 설정해야 합니다.
+      const userId = '1'; // 하드코딩된 유저 ID (필요시 수정)
+      const keywordId = '231'; // 임영웅의 키워드 ID
+      await createDebate(
+        userId,
+        keywordId,
         title,
         content,
-        voteOptions: voteItems.map((item) => ({ optionText: item }))
-      };
+        imageFile || undefined,
+        voteItems.map((item) => ({ optionText: item }))
+      );
 
-      await createDebate(payload); // 글 작성 API 호출
       navigate('/keyword'); // 글 작성 후 홈으로 이동 (또는 원하는 페이지로 이동)
     } catch (error) {
       console.error('글 작성 중 오류가 발생했습니다.', error);
@@ -53,7 +68,7 @@ const DebateCreatePage: React.FC = () => {
       <div className="w-full h-full flex flex-col">
         <div className="flex justify-between items-center mb-6 py-4 px-6 bg-white">
           <div className="font-pretendard font-bold text-lg">
-            <span className="text-point500">#김현주 열애설</span>
+            <span className="text-point500">#임영웅</span>
             <span className="text-black"> 토론 만들기</span>
           </div>
           <button className="text-point400 font-pretendard font-medium text-[14px]" onClick={handleSubmit}>등록하기</button>
@@ -71,6 +86,12 @@ const DebateCreatePage: React.FC = () => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           className="w-[335px] flex-grow px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
+        />
+        <input 
+          type="file" 
+          accept="image/*,video/*"
+          onChange={handleFileChange}
+          className="w-[335px] mt-4"
         />
 
         {/* 투표 결과 표시 */}

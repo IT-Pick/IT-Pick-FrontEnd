@@ -7,7 +7,7 @@ import axios from 'axios';
 import tag_ico_view from "../../../assets/images/16x16/tag_ico_view.svg";
 import tag_ico_comment from "../../../assets/images/16x16/tag_ico_comment.svg";
 
-// 하드 코딩된 코드 삭제
+// 하드 코딩된 코드 삭제요망
 const discussions = [
   {
     image: LiveDiscussion1,
