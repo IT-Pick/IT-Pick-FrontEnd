@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 import DebateIconBar from './components/DebateIconBar';
 import VoteResult from './components/VoteResult';
+import { createDebate } from '@apis/WriteDebate/createDebate';
 
 const DebateCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -10,6 +11,7 @@ const DebateCreatePage: React.FC = () => {
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const location = useLocation<{ voteItems: string[] }>();
   const voteItems = location.state?.voteItems || []; // 투표 데이터 가져오기
+  const navigate =useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,6 +31,22 @@ const DebateCreatePage: React.FC = () => {
       window.visualViewport.removeEventListener('resize', handleResize);
     };
   }, []);
+  const handleSubmit = async () => {
+    try {
+      const payload = {
+        userId: 1, // 하드코딩된 유저 ID (나중에 실제 유저 ID로 대체해야 함)
+        keywordId: 1, // 키워드 ID는 적절히 설정해야 합니다.
+        title,
+        content,
+        voteOptions: voteItems.map((item) => ({ optionText: item }))
+      };
+
+      await createDebate(payload); // 글 작성 API 호출
+      navigate('/keyword'); // 글 작성 후 홈으로 이동 (또는 원하는 페이지로 이동)
+    } catch (error) {
+      console.error('글 작성 중 오류가 발생했습니다.', error);
+    }
+  };
 
   return (
     <div className="w-[390px] h-screen mx-auto flex flex-col items-center justify-between bg-background">
@@ -38,7 +56,7 @@ const DebateCreatePage: React.FC = () => {
             <span className="text-point500">#김현주 열애설</span>
             <span className="text-black"> 토론 만들기</span>
           </div>
-          <button className="text-point400 font-pretendard font-medium text-[14px]">등록하기</button>
+          <button className="text-point400 font-pretendard font-medium text-[14px]" onClick={handleSubmit}>등록하기</button>
         </div>
         <input 
           type="text" 
