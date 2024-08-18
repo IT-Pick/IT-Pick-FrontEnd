@@ -119,34 +119,34 @@ const SearchPage: React.FC = () => {
         // API 응답 데이터를 initialSearchResults에 맞게 변환하여 저장
         const formattedResults = data.result.map((item: KeywordResult) => {
           const sources: string[] = [];
-          if (item.naverRank !== -1) sources.push(`네이버 ${item.naverRank}등`);
-          if (item.nateRank !== -1) sources.push(`네이트 ${item.nateRank}등`);
-          if (item.zumRank !== -1) sources.push(`줌 ${item.zumRank}등`);
-          if (item.googleRank !== -1) sources.push(`구글 ${item.googleRank}등`);
-          if (item.namuwikiRank !== -1) sources.push(`나무위키 ${item.namuwikiRank}등`);
+          if (item.nateRank !== -1) {
+            sources.push(`네이트 ${item.nateRank}등`);
+          }
+          if (item.naverRank !== -1) {
+            sources.push(`네이버 ${item.naverRank}등`);
+          }
+          if (item.zumRank !== -1) {
+            sources.push(`줌 ${item.zumRank}등`);
+          }
+          if (item.googleRank !== -1) {
+            sources.push(`구글 ${item.googleRank}등`);
+          }
+          if (item.namuwikiRank !== -1) {
+            sources.push(`나무위키 ${item.namuwikiRank}등`);
+          }
 
           return { title: item.keyword, sources };
         });
 
-        setSearchResults(formattedResults);
+        return formattedResults;
+      } else {
+        return [];
       }
     } catch (error) {
       console.log("키워드 GET 실패:", error.response.data.message);
+      return [];
     }
   }
-
-  // const handleSearch = (term: string) => {
-  //   if (term === '') {
-  //     setSearchResults([]);
-  //     setIsSearchActive(false);
-  //     setNoResults(false);
-  //   } else {
-  //     const filteredResults = searchResults.filter(result => result.title.includes(term));
-  //     setSearchResults(filteredResults);
-  //     setIsSearchActive(true);
-  //     setNoResults(filteredResults.length === 0);
-  //   }
-  // };
 
   const handleSearch = async (term: string) => {
     if (term === '') {
@@ -155,17 +155,15 @@ const SearchPage: React.FC = () => {
       setNoResults(false);
     } else {
       // API를 통해 검색 결과를 가져옴
-      await handleGetKeyword(term);
-  
-      // 검색어에 따라 검색 결과 필터링
-      const filteredResults = searchResults.filter(result => result.title.includes(term));
-      setSearchResults(filteredResults);
+      const results = await handleGetKeyword(term);
+
+      setSearchResults(results);
       setIsSearchActive(true);
-      setNoResults(filteredResults.length === 0);
+      setNoResults(results.length === 0);
+      console.log('검색 결과 확인', results);
     }
   };
   
-
   return (
     <div className="w-[390px] mx-auto pt-[20px] bg-background min-h-screen">
       <div className="ml-[24px]">
