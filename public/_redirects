@@ -1,1 +1,3 @@
 /*  /index.html 200
+/auth/*         https://itpick.store/:splat  200
+/user/*         https://itpick.store/:splat  200
