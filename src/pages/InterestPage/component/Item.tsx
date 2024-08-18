@@ -33,7 +33,6 @@ const Item: React.FC = () => {
 
         const selectedTopics = Items.filter((_, i) => newSelectedIndexes[i]).map(item => item.topic);
         setLikedTopics(selectedTopics);
-        // setLikedTopics(Items.filter((_, i) => newSelectedIndexes[i]).map(item => item.topic));
     }
 
     return (
@@ -54,7 +53,7 @@ const Item: React.FC = () => {
                             </object>
                         </div>
                     </div>
-                    <div className="cursor-pointer">{item.topic}</div>
+                    <div className="cursor-pointer font-medium">{item.topic}</div>
                 </button>
             ))}
         </div>
