@@ -14,15 +14,13 @@ const CompleteBtn: React.FC<CompleteBtnProps> = ({ newLikedTopics }) => {
             const data = await patchLikedTopics(newLikedTopics);
             if(data.code === 1000){
                 console.log("관심주제 변경 성공!");
-                navigate('/profile-edit')
+                navigate(-1);
             }
         } catch (error) {
             console.log("관심주제 변경 실패");
             console.log(newLikedTopics);
         }
-        return
-
-    }
+    };
 
     return (
         <button 
