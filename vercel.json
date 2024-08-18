@@ -1,0 +1,13 @@
+{
+    "rewrites": [
+      {
+        "source": "/auth/:path*",
+        "destination": "https://itpick.store/auth/:path*"
+      },
+      {
+        "source": "/user/:path*",
+        "destination": "https://itpick.store/user/:path*"
+      }
+    ]
+  }
+  
