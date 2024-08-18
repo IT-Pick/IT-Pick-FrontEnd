@@ -112,41 +112,31 @@ const SearchPage: React.FC = () => {
 
   const handleGetKeyword = async (term: string) => {
     try {
-      const data = await getKeyword(term);
-      if (data.code === 1000) {
-        console.log("키워드 GET 성공");
+      const response = await getKeyword(term);
+      console.log('키워드 API 응답 데이터 확인', response);
 
-        // API 응답 데이터를 initialSearchResults에 맞게 변환하여 저장
-        const formattedResults = data.result.map((item: KeywordResult) => {
-          const sources: string[] = [];
-          if (item.nateRank !== -1) {
-            sources.push(`네이트 ${item.nateRank}등`);
-          }
-          if (item.naverRank !== -1) {
-            sources.push(`네이버 ${item.naverRank}등`);
-          }
-          if (item.zumRank !== -1) {
-            sources.push(`줌 ${item.zumRank}등`);
-          }
-          if (item.googleRank !== -1) {
-            sources.push(`구글 ${item.googleRank}등`);
-          }
-          if (item.namuwikiRank !== -1) {
-            sources.push(`나무위키 ${item.namuwikiRank}등`);
-          }
+      const keywordResults = response.result.map((item: KeywordResult) => {
+        const sources = [
+          item.nateRank !== -1 ? `네이트 ${item.nateRank}등` : '',
+          item.naverRank !== -1 ? `네이버 ${item.naverRank}등` : '',
+          item.zumRank !== -1 ? `줌 ${item.zumRank}등` : '',
+          item.googleRank !== -1 ? `구글 ${item.googleRank}등` : '',
+          item.namuwikiRank !== -1 ? `나무위키 ${item.namuwikiRank}등` : ''
+        ].filter(tag => tag !== ''); // 빈 문자열 제거
 
-          return { title: item.keyword, sources };
-        });
+        return {
+          title: item.keyword,
+          sources: sources.length > 0 ? sources : [],
+        };
+      });
 
-        return formattedResults;
-      } else {
-        return [];
-      }
+      return keywordResults;
     } catch (error) {
-      console.log("키워드 GET 실패:", error.response.data.message);
-      return [];
+      console.error('키워드 조회 중 오류:', error);
+      throw error;
     }
-  }
+  };
+
 
   const handleSearch = async (term: string) => {
     if (term === '') {
@@ -154,13 +144,16 @@ const SearchPage: React.FC = () => {
       setIsSearchActive(false);
       setNoResults(false);
     } else {
-      // API를 통해 검색 결과를 가져옴
-      const results = await handleGetKeyword(term);
-
-      setSearchResults(results);
-      setIsSearchActive(true);
-      setNoResults(results.length === 0);
-      console.log('검색 결과 확인', results);
+      try {
+        const results = await handleGetKeyword(term);
+        setSearchResults(results);
+        setIsSearchActive(true);
+        setNoResults(results.length === 0);
+        console.log('검색 결과 확인', results);
+      } catch (error) {
+        setNoResults(true);
+        setIsSearchActive(true);
+      }
     }
   };
   
