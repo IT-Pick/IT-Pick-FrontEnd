@@ -42,10 +42,16 @@ const MyPage: React.FC = () => {
           const data = await logoutUser();
           if(data.code === 1000){
             console.log("로그아웃 완료");
+
+            // 토큰 제거
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+
+            navigate('/');
           }
         }
         catch(error){
-          console.log("로그아웃 실패");
+          console.log("로그아웃 실패", error);
         }
       //탈퇴하기
       navigate('/');
