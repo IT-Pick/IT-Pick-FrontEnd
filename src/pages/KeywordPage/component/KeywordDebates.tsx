@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { fetchDebates } from '@apis/fetchDebates'; // 방금 작성한 fetchDebates 함수 임포트
+import axios from 'axios';
 
 const KeywordDebates: React.FC<{ keywordId: number, sort: 'latest' | 'popularity' }> = ({ keywordId, sort }) => {
   const [debates, setDebates] = useState([]);
 
   useEffect(() => {
-    const loadDebates = async () => {
-      const debatesData = await fetchDebates(keywordId, sort);
-      setDebates(debatesData);
+    const fetchDebates = async () => {
+      try {
+        const response = await axios.get(`/api/debates`, {
+          params: { keywordId, sort }
+        });
+        setDebates(response.data);
+      } catch (error) {
+        console.error('Error fetching debates:', error);
+        setDebates([]); // 실패한 경우 빈 배열로 설정
+      }
     };
 
-    loadDebates();
+    fetchDebates();
   }, [keywordId, sort]);
 
   return (
