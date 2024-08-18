@@ -34,8 +34,8 @@ const DebateCreatePage: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const payload = {
-        userId: 1, // 하드코딩된 유저 ID (나중에 실제 유저 ID로 대체해야 함)
-        keywordId: 1, // 키워드 ID는 적절히 설정해야 합니다.
+        userId: 4, // 하드코딩된 유저 ID (나중에 실제 유저 ID로 대체해야 함)
+        keywordId: 231, // 키워드 ID는 적절히 설정해야 합니다.
         title,
         content,
         voteOptions: voteItems.map((item) => ({ optionText: item }))
