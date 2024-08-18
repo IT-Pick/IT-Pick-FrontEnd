@@ -4,6 +4,7 @@ import profile from '../../assets/images/ico_profile_default.svg';
 import { useNavigate } from 'react-router-dom';
 import LogoutModal from '../../components/Modal/LogoutModal';
 import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
+import { logoutUser } from '@apis/logoutUser';
 
 const MyPage: React.FC = () => {
     const navigate = useNavigate();
@@ -36,10 +37,20 @@ const MyPage: React.FC = () => {
       setModalIsOpen(true); // 모달 열기
     };
 
-    const confirmLogout = () => {
-      // 로그아웃 로직 추가해야 함
+    const confirmLogout = async() => {
+        try{
+          const data = await logoutUser();
+          if(data.code === 1000){
+            console.log("로그아웃 완료");
+          }
+        }
+        catch(error){
+          console.log("로그아웃 실패");
+        }
+      //탈퇴하기
       navigate('/');
-    };
+    } 
+     
   
     const handleDebateClick = () => {
       navigate('/debate');

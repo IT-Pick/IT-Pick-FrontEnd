@@ -21,6 +21,7 @@ import MyAlarm from './pages/MyAlarmPage/MyAlarmPage';
 import UploadedPage from './pages/UploadedVotePage/UploadedPage';
 import DebateCreatePage from './pages/WritePostPage/DebateCreatePage';
 import InterestPage from './pages/InterestPage/InterestPage';
+import InterestEditPage from './pages/ChangeInfoPage/InterestEdit/InterestEditPage';
 import { SignUpProvider } from './context/SignUpContext';
 import MakeVote from './pages/MakeVote/MakeVote';
 import SignUpandGreetingPage from './pages/SignUpandGreetingPage/SignUpandGreeetingPage';
@@ -50,6 +51,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/create" element={<DebateCreatePage />} />
         <Route path='/interest' element={<InterestPage/>} />
         <Route path='/uploaded-debate' element={<UploadedPage/>} />
+        <Route path='/interest-edit' element={<InterestEditPage/>} />
         {/* <Route path="/vote-test" element={<VoteComponentTestPage />} /> */}
         <Route path='/make-vote' element={<MakeVote/>} />
         <Route path='/welcome' element={<SignUpandGreetingPage />} />
