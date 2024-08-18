@@ -20,18 +20,22 @@ const RecentSearches: React.FC<RecentSearchesProps> = ({ tags, removeTag, remove
         </button>
       )}
     </div>
-    <div className={`flex flex-wrap gap-2 ml-8 mr-8 ${tags.length === 0 ? 'h-[40px]' : ''}`}>
+    <div className="ml-8 mr-8" style={{ height: '30px' }}>
       {tags.length > 0 ? (
-        tags.map(tag => (
-          <div key={tag} className="flex items-center bg-gray1 font-pretendard font-normal text-[14px] text-black px-2 py-1 rounded-full">
-            <span>{tag}</span>
-            <button onClick={() => removeTag(tag)} className="ml-2">
-              <img src={ico_delete_black} alt="delete" />
-            </button>
-          </div>
-        ))
+        <div className="flex flex-wrap gap-2 h-full py-[2px]">
+          {tags.map(tag => (
+            <div key={tag} className="flex items-center bg-gray1 font-pretendard font-normal text-[14px] text-black px-2 py-1 rounded-full">
+              <span>{tag}</span>
+              <button onClick={() => removeTag(tag)} className="ml-2">
+                <img src={ico_delete_black} alt="delete" />
+              </button>
+            </div>
+          ))}
+        </div>
       ) : (
-        <div className="text-gray2 text-[14px] font-pretendard font-medium">최근 검색어가 없습니다.</div>
+        <div className="flex justify-center items-center h-full text-gray2 text-[14px] font-pretendard font-medium">
+          최근 검색어가 없어요
+        </div>
       )}
     </div>
   </div>
