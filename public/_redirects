@@ -1,1 +1,6 @@
 /*  /index.html 200
+/auth/*         https://itpick.store/:splat  200
+/user/*         https://itpick.store/:splat  200
+/keyword/*  https://itpick.store/:splat 200
+/rank/*  https://itpick.store/:splat 200
+/debate/*  https://itpick.store/:splat 200
