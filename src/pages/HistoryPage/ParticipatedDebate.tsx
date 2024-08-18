@@ -1,62 +1,87 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import tag_ico_comment from '../../assets/images/16x16/tag_ico_comment.svg'
 import tag_ico_view from "../../assets/images/16x16/tag_ico_view.svg"
 import { useNavigate } from "react-router-dom";
-
-const myParticipatedDebates = [
-    { id: 1, title: '김현주', about: "김현주 열애설", tags: [3025, 123], time: 30 },
-    { id: 2, title: '김현주 열애설', about: "김현주 열애설", tags: [123, 18], time: 30 },
-    { id: 3, title: '여러분 뉴진스 최애는?', about: "김현주 열애설", tags: [567, 398], time: 30 },
-    { id: 4, title: '마라탕 먹고 싶다', about: "김현주 열애설", tags: [123, 290], time: 30 },
-    { id: 5, title: '하니도 좋은데', about: "김현주 열애설", tags: [980, 1290], time: 30 },
-    { id: 6, title: '저는 해린이요', about: "김현주 열애설", tags: [123], time: 30 },
-];
+import { getInvolvedDebate } from "@apis/getInvolvedDebate";
 
 const formatNumber = (num) => {
     return new Intl.NumberFormat().format(num);
 };
 
-const SortingDebates = ({ title, about, tags, time }) => (
-    <div className="flex w-[390px] p-4 bg-[#F8F9FC] border-b-[2px] justify-between">
-        <div className="flex flex-col items-start mb-4 gap-[4px]">
+interface DebateItemProps {
+  title: string;
+  keyword: string;
+  duration: string;
+  hits: number;
+  comments: number;
+}
+
+
+const SortingDebates: React.FC<DebateItemProps & {className?: string}> = ({ title, keyword, duration, hits, comments, className }) => (
+    <div className="w-[390px] px-[20px] pt-6 bg-[#F8F9FC] justify-between items-center">
+        <div className={`flex pb-[20px] ${className}`}>
+        <div className="flex flex-col items-start flex-grow">
             <div className="text-center font-[600] text-[16px]">{title}</div>
             <div className="flex gap-[4px]">
-                <div className="text-[#9EAAB5] text-[12px] font-[400]">{time}분 전 |</div>
-                <div className="text-[#7620E4] text-[12px] font-[400]">#{about}</div>
+                <div className="text-[#9EAAB5] text-[12px] font-[400]">{duration} |</div>
+                <div className="text-[#7620E4] text-[12px] font-[400]">#{keyword}</div>
             </div>
         </div>
         <div className="flex items-center gap-[8px]">
-            {tags[0] && (
-                <div className="flex items-center gap-[4px] bg-purple-100 rounded-2xl px-2 py-1 text-xs text-violet-700 font-medium">
-                    <img src={tag_ico_view} alt="tag_ico_view"/>
-                    {formatNumber(tags[0])}
+        <div className="flex items-center gap-[4px] bg-purple-100 rounded-2xl px-2 py-1 text-xs text-violet-700 font-medium">
+                    <img src={tag_ico_view} alt="tag_ico_view" />
+                    {formatNumber(hits)}
                 </div>
-            )}
-            {tags[1] && (
                 <div className="flex items-center gap-[4px] bg-purple-100 rounded-2xl px-2 py-1 text-xs text-violet-700 font-medium">
                     <img src={tag_ico_comment} alt="tag_ico_comment" />
-                    {formatNumber(tags[1])}
+                    {formatNumber(comments)}
                 </div>
-            )}
         </div>
     </div>
+    </div>
+    
+
 );
 
 const ParticipatedDebates: React.FC = () => {
     const navigate = useNavigate();
-    const handleNoParticipatedDebateClick = () => {
-        navigate('/participated-debate-no-data');
-    }
+    const [debates, setDebates] = useState([]);
+    
+   
+
+    useEffect(() => {
+        const fetchDebates = async () =>{
+            const debateData = await getInvolvedDebate();
+
+            if(debateData.length === 0){
+                navigate('/participated-debate-no-data');
+            }else{
+                setDebates(debateData);
+            }
+        };
+        fetchDebates();
+    },[]);
+
     return (
         <div className="w-[390px] mx-auto">
             <header className="w-full flex justify-between items-center py-4">
                 <h1 className="text-[20px] text-black font-pretendard font-bold leading-[28px] ml-6">내가 참여한 토론</h1>
             </header>
-            {myParticipatedDebates.map((item) => (
-                <SortingDebates key={item.id} {...item} />
+
+            {debates.map((item, index) => (
+                <SortingDebates 
+                key={index} 
+                title={item.title}
+                keyword={item.keyword}
+                duration={item.duration}
+                hits={item.hits}
+                comments={item.comments}
+                className={index === debates.length - 1 ? '' : 'border-b-[1px]'}
+
+                />
             ))}
-            <button onClick={handleNoParticipatedDebateClick}>예외 페이지</button>
         </div>
+        
     );
 }
 

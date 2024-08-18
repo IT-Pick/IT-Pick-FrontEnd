@@ -105,7 +105,7 @@ const Debate: React.FC = () => {
                 editMode={isEditMode} 
                 selectedItems={selectedItems} 
                 toggleSelect={toggleSelect} 
-                className={index === debates.length - 1 ? '' : 'border-b-[1px]'}  // 마지막 아이템에만 border-b 제거
+                className={index === debates.length - 1 ? '' : 'border-b-[1px]'} 
 
                 />
             ))}
