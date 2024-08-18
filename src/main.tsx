@@ -50,7 +50,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/search" element={<SearchPage />} />
         <Route path="/create" element={<DebateCreatePage />} />
         <Route path='/interest' element={<InterestPage/>} />
-        <Route path='/debate' element={<UploadedPage/>} />
+        <Route path='/uploaded-debate' element={<UploadedPage/>} />
         <Route path='/interest-edit' element={<InterestEditPage/>} />
         {/* <Route path="/vote-test" element={<VoteComponentTestPage />} /> */}
         <Route path='/make-vote' element={<MakeVote/>} />
