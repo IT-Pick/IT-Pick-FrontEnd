@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DebateIconBar from './components/DebateIconBar';
 import VoteResult from './components/VoteResult';
 import { createDebate } from '@apis/WriteDebate/createDebate';
+import { refreshAccessToken } from '@apis/refreshAccessToken'; // 액세스 토큰 갱신 함수
 
 const DebateCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -11,7 +12,7 @@ const DebateCreatePage: React.FC = () => {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const location = useLocation<{ voteItems: string[] }>();
-  const voteItems = location.state?.voteItems || []; // 투표 데이터 가져오기
+  const voteItems = location.state?.voteItems || [];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,10 +47,21 @@ const DebateCreatePage: React.FC = () => {
     }
 
     try {
-      const userId = '1'; // 하드코딩된 유저 ID (필요시 수정)
+      let token = localStorage.getItem('accessToken');
+
+      if (!token) {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (refreshToken) {
+          token = await refreshAccessToken(refreshToken);
+          localStorage.setItem('accessToken', token);
+        } else {
+          throw new Error('로그인이 필요합니다.');
+        }
+      }
+
       const keywordId = '231'; // 임영웅의 키워드 ID
       await createDebate(
-        userId,
+        token,
         keywordId,
         title,
         content,
@@ -60,6 +72,7 @@ const DebateCreatePage: React.FC = () => {
       navigate('/keyword'); // 글 작성 후 홈으로 이동 (또는 원하는 페이지로 이동)
     } catch (error) {
       console.error('글 작성 중 오류가 발생했습니다.', error);
+      alert('글 작성 중 오류가 발생했습니다.');
     }
   };
 
