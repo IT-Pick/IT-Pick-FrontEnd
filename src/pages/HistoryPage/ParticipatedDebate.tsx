@@ -47,20 +47,19 @@ const ParticipatedDebates: React.FC = () => {
     const navigate = useNavigate();
     const [debates, setDebates] = useState([]);
     
-   
 
     useEffect(() => {
         const fetchDebates = async () =>{
             const debateData = await getInvolvedDebate();
 
             if(debateData.length === 0){
-                navigate('/participated-debate-no-data');
+                navigate('/participated-debate-no-data', {replace: true});
             }else{
                 setDebates(debateData);
             }
         };
         fetchDebates();
-    },[]);
+    },[navigate]);
 
     return (
         <div className="w-[390px] mx-auto">
