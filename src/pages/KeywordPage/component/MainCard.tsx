@@ -1,5 +1,5 @@
 import React from "react";
-import tag_right_chev from "../../../assets/images/16x16/tag_ico_right.svg"
+import tag_right_chev from "../../../assets/images/16x16/tag_ico_right.svg";
 
 const MainCard: React.FC = () =>{
     return (
