@@ -93,7 +93,7 @@ const MyPage: React.FC = () => {
                 <div className="ml-6 mt-2">
                     <p className="text-[16px] text-black font-pretendard font-bold py-3">공지사항</p>
                     <p className="text-[16px] text-black font-pretendard font-normal py-3">자주 묻는 질문</p>
-                    <p className="text-[16px] text-black font-pretendard font-normal py-3">약관 및 정책</p>
+                    <p onClick={()=> window.open("https://emerald-server-298.notion.site/47a9e6d98af24d84a928a643f92cb930?pvs=4")}className="text-[16px] text-black font-pretendard font-normal py-3 cursor-pointer">약관 및 정책</p>
                 </div>
             </div>
             <LogoutModal

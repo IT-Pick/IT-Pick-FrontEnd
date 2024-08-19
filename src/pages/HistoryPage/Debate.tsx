@@ -79,7 +79,7 @@ const Debate: React.FC = () => {
     };
 
     const handleDeleteClick = async () => {
-        console.log("Attempting to delete debate with ID:");
+        
         try {
             await Promise.all(selectedItems.map(id => deleteDebate(id)));
             setDebates(debates.filter(debate => !selectedItems.includes(debate.debateId)));
