@@ -17,7 +17,7 @@ export default defineConfig({
       '@images': '/src/assets/images',
       '@components': '/src/components',
       '@utils': '/src/utils',
-      '@apis': '/src/apis',
+      '@apis': '/src/apis',  
       '@pages': '/src/pages',
     }
   },

@@ -106,14 +106,14 @@ const DebateCreatePage: React.FC = () => {
           onChange={(e) => setContent(e.target.value)}
           className="w-[335px] flex-grow px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
         />
-        
+
         {/* 미리보기 이미지가 있을 경우 표시 */}
         {previewUrl && (
           <div className="w-[335px] mt-4">
             <img src={previewUrl} alt="미리보기" className="w-full h-auto rounded-lg shadow-md" />
           </div>
         )}
-
+        
         {voteItems.length > 0 && (
           <div className="mt-4">
             <VoteResult items={voteItems} />
