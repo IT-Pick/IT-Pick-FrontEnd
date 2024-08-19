@@ -74,6 +74,7 @@ const DebateCreatePage: React.FC = () => {
 
       navigate('/keyword'); // 글 작성 후 홈으로 이동 (또는 원하는 페이지로 이동)
     } catch (error) {
+      console.log('헐....');
       console.error('글 작성 중 오류가 발생했습니다.', error);
       alert('글 작성 중 오류가 발생했습니다.');
     }
