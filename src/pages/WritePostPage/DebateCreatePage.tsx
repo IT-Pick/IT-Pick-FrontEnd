@@ -8,7 +8,8 @@ import { refreshAccessToken } from '@apis/refreshAccessToken';
 const DebateCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null); // 선택된 파일을 저장하기 위한 상태
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 미리보기 URL 상태 추가
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const location = useLocation();
@@ -35,8 +36,13 @@ const DebateCreatePage: React.FC = () => {
   }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImageFile(e.target.files[0]); // 선택된 파일을 상태에 저장
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImageFile(file);
+
+      // 선택된 파일의 미리보기 URL을 생성하여 상태에 저장
+      const previewUrl = URL.createObjectURL(file);
+      setPreviewUrl(previewUrl);
     }
   };
 
@@ -100,6 +106,14 @@ const DebateCreatePage: React.FC = () => {
           onChange={(e) => setContent(e.target.value)}
           className="w-[335px] flex-grow px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
         />
+        
+        {/* 미리보기 이미지가 있을 경우 표시 */}
+        {previewUrl && (
+          <div className="w-[335px] mt-4">
+            <img src={previewUrl} alt="미리보기" className="w-full h-auto rounded-lg shadow-md" />
+          </div>
+        )}
+
         {voteItems.length > 0 && (
           <div className="mt-4">
             <VoteResult items={voteItems} />
