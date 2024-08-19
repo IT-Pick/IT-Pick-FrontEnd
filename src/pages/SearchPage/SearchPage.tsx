@@ -96,6 +96,7 @@ const SearchPage: React.FC = () => {
         <SearchBar placeholder="김현주 열애설" onSearch={handleSearch} />
       </div>
       
+      {/* 검색하지 않았고 결과가 존재할때 */}
       {!isSearchActive && !noResults && (
         <>
           <RecentSearches tags={tags} removeTag={removeTag} removeAllTags={removeAllTags} />
@@ -104,6 +105,7 @@ const SearchPage: React.FC = () => {
         </>
       )}
 
+      {/* 검색했고 결과가 존재할때 */}
       {isSearchActive && !noResults && (
         <div>
           {searchResults.map((result, index) => (
@@ -112,6 +114,7 @@ const SearchPage: React.FC = () => {
         </div>
       )}
 
+      {/* 결과가 없을때 */}
       {noResults && <ErrorPage />}
     </div>
   );
