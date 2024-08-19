@@ -1,11 +1,15 @@
 import axios from 'axios';
 
 export const getDebateDetails = async (debateId: number) => {
+  console.log("첫 줄입니다");
   const token = localStorage.getItem('accessToken');
 
   if (!token) {
     throw new Error('토큰이 없습니다!');
+    console.log("if 문 안입니다");
   }
+  console.log("if문 밖 입니다, 방금 나왔어요");
+  console.log(token);
 
   try {
     const response = await axios.get(`/debate/details`, {

@@ -4,11 +4,11 @@ import { getLiveDiscussionBest3 } from '@apis/getLiveDiscussionBest3';
 import PurpleBox from '@images/ico_purple_box.svg';
 
 interface Discussion {
-  image: string;
+  image: string | null;
   hits: number | null;
   comments: number | null;
   title: string;
-  link: string;
+  debateId: number; // debateId를 이곳에서 관리
 }
 
 interface Response {
@@ -31,7 +31,7 @@ const LiveDiscussion: React.FC = () => {
           hits: item.hit,
           image: item.mediaUrl || PurpleBox,
           comments: item.comment,
-          link: `/post/${item.debateId}`, // 링크를 debateId로 초기화
+          debateId: item.debateId, // debateId 추가
         }));
         setDiscussions(formattedDiscussions);
       } catch (error) {
@@ -55,7 +55,7 @@ const LiveDiscussion: React.FC = () => {
             image={discussion.image}
             hits={discussion.hits}
             comments={discussion.comments}
-            link={discussion.link}
+            debateId={discussion.debateId} // debateId를 props로 전달
             className="w-[164px] h-[100%] flex-shrink-0"
           />
         ))}
