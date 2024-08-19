@@ -16,10 +16,11 @@ interface KeywordResult {
     newsContent: string;
     newsLink: string;
     imageUrl: string;
-  }
+}
 
 const KeywordPage: React.FC = () => {
     const [keywordData, setKeywordData] = useState<KeywordResult | null>(null);
+    const [keywordId, setKeywordId] = useState<number | null>(null);
     const { selectedKeyword } = useKeywordState();
     const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ const KeywordPage: React.FC = () => {
           try {
             const result = await getKeywordRelatedData('total', 'realtime', selectedKeyword);
             setKeywordData(result);
+            setKeywordId(result.keywordId);
           } catch (error) {
             console.error('Error fetching keyword data:', error);
           }
@@ -60,7 +62,7 @@ const KeywordPage: React.FC = () => {
                     />
                 </>
             )}
-            <LiveDiscussion/>
+            {keywordId && <LiveDiscussion keywordId={keywordId} />} {/* keywordId를 전달 */}
             <button className="fixed bottom-[18px] right-0" onClick={handleButtonClick}>
                 <img src={ico_write} alt="add discussion icon"/>
             </button>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ico_eclipse from "../../../assets/images/etc/ico_eclipse.svg";
 import RecentDiscussion from "./RecentDiscussion";
 import PopularDiscussion from "./Popular";
+// import { getKeywordLiveDiscussion } from "@apis/getKeywordLiveDiscussion";
 
 const Tab = ({activeTab, label, onClick}) => (
     <button className={`text-[14px] ${activeTab === label ? 'font-[700]' : 'text-[#9EAAB5] font-[500'}`}  onClick={()=> onClick(label)}>
@@ -13,16 +14,17 @@ const Tab = ({activeTab, label, onClick}) => (
     </button>
 );
 
-const TabContent = ({activeTab}) => {
-    return(
-        <div>
-            {activeTab === '인기순' && <RecentDiscussion/>}
-            {activeTab === '최신순' && <PopularDiscussion/>}
-        </div>
-    );
+const TabContent = ({ activeTab, keywordId }) => {
+    if (activeTab === '인기순') {
+        return <RecentDiscussion keywordId={keywordId} />;
+      }
+      if (activeTab === '최신순') {
+        return <PopularDiscussion keywordId={keywordId} />;
+      }
+      return null;
 };
 
-const LiveDiscussion: React.FC = () => {
+const LiveDiscussion: React.FC<{ keywordId: number }> = ({ keywordId }) => {
     const [activeTab, setActiveTab] = useState('인기순')
     return(
         <div className="mt-[44px] mx-[24px]">
@@ -35,7 +37,7 @@ const LiveDiscussion: React.FC = () => {
                     <Tab activeTab={activeTab} label="최신순" onClick={setActiveTab}/>
                 </div>
              </div>
-            <TabContent activeTab={activeTab}/>
+            <TabContent activeTab={activeTab} keywordId={keywordId}/>
         </div>
         
     )
