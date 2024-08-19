@@ -57,6 +57,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         {/* <Route path="/vote-test" element={<VoteComponentTestPage />} /> */}
         <Route path='/make-vote' element={<MakeVote/>} />
         <Route path='/welcome' element={<SignUpandGreetingPage />} />
+        {/* <Route path='/debate/details?:debateId' element={<UploadedPage/>} /> */}
+        <Route path='/debate/details' element={<UploadedPage />} />
+
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>

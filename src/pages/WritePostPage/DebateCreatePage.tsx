@@ -49,10 +49,10 @@ const DebateCreatePage: React.FC = () => {
       alert('제목과 내용을 입력해주세요.');
       return;
     }
-  
+
     try {
       let token = localStorage.getItem('accessToken');
-  
+
       if (!token) {
         const refreshToken = localStorage.getItem('refreshToken');
         if (refreshToken) {
@@ -62,21 +62,16 @@ const DebateCreatePage: React.FC = () => {
           throw new Error('로그인이 필요합니다.');
         }
       }
-  
+
       const keywordId = 231;
-  
-      const formattedVoteItems = voteItems.map(item => ({
-        optionText: item.text,
-        imageFile: item.image || undefined
-      }));
-  
+
       await createDebate(
         token,
         keywordId.toString(),
         title,
         content,
         imageFile || undefined,
-        formattedVoteItems.length > 0 ? formattedVoteItems : undefined
+        voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
       );
       navigate('/keyword');
     } catch (error) {
@@ -84,10 +79,9 @@ const DebateCreatePage: React.FC = () => {
       alert('글 작성 중 오류가 발생했습니다.');
     }
   };
-  
 
   return (
-    <div className="w-[390px] h-screen mx-auto flex flex-col items-center justify-between bg-background">
+    <div className="w-[390px] h-full mx-auto flex flex-col items-center justify-between bg-background">
       <div className="w-full h-full flex flex-col">
         <div className="flex justify-between items-center mb-6 py-4 px-6 bg-white">
           <div className="font-pretendard font-bold text-lg">
@@ -108,7 +102,7 @@ const DebateCreatePage: React.FC = () => {
           placeholder="자유롭게 이야기해 보세요."
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-[335px] flex-grow px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
+          className="w-[335px] h-[200px] px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
         />
 
         {/* 투표 항목이 있을 경우 표시 */}
@@ -121,7 +115,7 @@ const DebateCreatePage: React.FC = () => {
         {/* 미리보기 이미지가 있을 경우 표시 */}
         {previewUrl && (
           <div className="w-[335px] mt-4">
-            <img src={previewUrl} alt="미리보기" className="w-full h-auto rounded-lg shadow-md" />
+            <img src={previewUrl} alt="미리보기" className="w-full h-full rounded-lg shadow-md" />
           </div>
         )}
       </div>
