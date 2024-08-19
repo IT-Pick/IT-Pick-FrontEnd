@@ -25,19 +25,9 @@ const CategorySlider: React.FC<CategorySliderProps> = ({ setCommunityType }) => 
   return (
     <div className="relative">
       <div
-        className="flex overflow-x-auto whitespace-nowrap bg-background pt-2 px-5"
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
+        className="flex overflow-x-auto whitespace-nowrap bg-background pt-2 px-5 scrollbar-hidden"
       >
-        <style>
-          {`
-            .category-slider::-webkit-scrollbar {
-              display: none;
-            }
-          `}
-        </style>
+
         {categories.map((category, index) => (
           <div
             key={index}
