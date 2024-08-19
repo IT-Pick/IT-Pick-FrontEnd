@@ -61,6 +61,15 @@ const DebateCreatePage: React.FC = () => {
       }
 
       const keywordId = '231'; // 임영웅의 키워드 ID
+      console.log('Submitting form with:', {
+        token,
+        keywordId,
+        title,
+        content,
+        imageFile,
+        voteItems,
+      });
+      
       await createDebate(
         token,
         keywordId,
