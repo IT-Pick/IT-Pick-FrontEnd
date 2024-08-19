@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tag_ico_right from "@images/16x16/tag_ico_right.svg";
 
@@ -30,6 +30,21 @@ const RankingItem = ({ rank, name, tags }) => (
 
 const IntegratedRanking: React.FC = () => {
   const navigate = useNavigate();
+  const [currentTime, setCurrentTime] = useState('');
+
+  const updateCurrentTime = () => {
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2);
+    const day = String(now.getDate()).padStart(2, '0');
+    const hour = String(now.getHours()).padStart(2, '0');
+    
+    const formattedTime = `${month}월 ${day}일 ${hour}:00 기준`;
+    setCurrentTime(formattedTime);
+  };
+
+  useEffect(() => {
+    updateCurrentTime();
+  }, []);
 
   const handleRankingClick = () => {
     navigate('/ranking');
@@ -40,7 +55,7 @@ const IntegratedRanking: React.FC = () => {
       <div className="flex justify-between items-center w-full mb-[16px]">
         <div className="flex items-center">
           <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">통합 랭킹</span>
-          <span className="text-xs text-gray-400 ml-[8px]">4월 1일 18:00 기준</span>
+          <span className="text-xs text-gray-400 ml-[8px]">{currentTime}</span>
         </div>
         <span className="ml-[43px] cursor-pointer" onClick={handleRankingClick}>
           <div className="inline-flex items-center justify-start mr-[24px]">
