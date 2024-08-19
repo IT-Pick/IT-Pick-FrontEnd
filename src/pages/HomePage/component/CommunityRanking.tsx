@@ -72,7 +72,9 @@ const CommunityRanking: React.FC = () => {
         {rankings.map((item, index) => (
           <React.Fragment key={index}>
             <li className="flex mb-4">
-              <img src={item.icon} alt={item.name} className="mr-4" />
+              <object data={item.icon} className="mr-4" type="image/svg+xml">
+                <img src={item.icon} alt={item.name}/>
+              </object>
               <div className="flex justify-between items-center w-full">
                 <span className="font-medium text-[#1D2228] font-pretendard text-[16px]">
                   {item.name}
