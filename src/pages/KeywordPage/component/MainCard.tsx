@@ -17,7 +17,7 @@ const MainCard: React.FC<MainCardProps> = ({ keyword, newsContent, searchLink })
                     <img src={tag_right_chev} alt="right chevron" color="0xFF914CE9"/>
                 </a>
             </header>
-            <div className="text-[14px] text-[#9EAAB5]">
+            <div className="text-[14px] text-[#9EAAB5] line-clamp-2">
                 {newsContent}
             </div>
         </div>

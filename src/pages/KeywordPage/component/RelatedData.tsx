@@ -1,5 +1,4 @@
 import React from "react";
-// import liveDiscussion4 from "../../../assets/images/LiveDiscussion/LiveDiscussion4.png"
 
 interface RelatedDataProps {
     newsTitle: string;
@@ -20,7 +19,7 @@ const RelatedData:React.FC<RelatedDataProps> = ({ newsTitle, newsContent, newsLi
                     <header className="text-[18px] font-[700]">
                         {newsTitle}
                     </header>
-                    <div className="text-[#464F59] text-[14px] font-[500]">
+                    <div className="text-[#464F59] text-[14px] font-[500] line-clamp-2">
                         {newsContent}
                     </div>
                 </div>
