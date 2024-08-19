@@ -7,16 +7,26 @@ interface ItemInputProps {
   id: number;
   onRemove: (id: number) => void;
   canRemove: boolean;
-  onNameChange: (id: number, name: string) => void; // 이름 변경 콜백 함수 prop 추가
+  onNameChange: (id: number, name: string) => void;
+  onImageChange: (id: number, image: File | null) => void; // 이미지 변경 콜백 함수 prop 추가
 }
 
-const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove, onNameChange }) => {
-  const [text, setText] = useState(""); // 항목 입력 텍스트를 관리하는 상태
+const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove, onNameChange, onImageChange }) => {
+  const [text, setText] = useState(""); 
+  const [image, setImage] = useState<File | null>(null); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newText = e.target.value;
     setText(newText);
-    onNameChange(id, newText); // 이름 변경 시 부모에게 전달
+    onNameChange(id, newText); 
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedImage = e.target.files[0];
+      setImage(selectedImage);
+      onImageChange(id, selectedImage); 
+    }
   };
 
   return (
@@ -46,7 +56,16 @@ const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove, onNameCh
           />
         </div>
         <div className="w-[35px] h-[35px]">
-          <img src={ico_vote_add_photo} alt="사진 추가" className="w-full h-full" />
+          <label htmlFor={`image-upload-${id}`}>
+            <img src={ico_vote_add_photo} alt="사진 추가" className="w-full h-full cursor-pointer" />
+          </label>
+          <input
+            id={`image-upload-${id}`}
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
         </div>
       </div>
       <div className="w-full h-[0px] border border-[#edf0f3] mt-2"></div>
