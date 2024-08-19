@@ -1,12 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tag_ico_right from "@images/16x16/tag_ico_right.svg";
-
-const rankingData = [
-  { rank: 1, name: '김현주', tags: ['나무위키 1등', '트위터 1등'] },
-  { rank: 2, name: '김현주 열애설', tags: ['네이버 1등', '트위터 2등'] },
-  { rank: 3, name: '김현주 결혼', tags: ['네이버 2등', '디시인사이드 1등'] },
-];
+import { useTrendStore } from '../../../store/trendStore';
 
 const RankingItem = ({ rank, name, tags }) => (
   <div className="flex flex-col w-full">
@@ -30,6 +25,23 @@ const RankingItem = ({ rank, name, tags }) => (
 
 const IntegratedRanking: React.FC = () => {
   const navigate = useNavigate();
+  const [currentTime, setCurrentTime] = useState('');
+  const { trends, fetchTrends } = useTrendStore();
+
+  const updateCurrentTime = () => {
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2);
+    const day = String(now.getDate()).padStart(2, '0');
+    const hour = String(now.getHours()).padStart(2, '0');
+    
+    const formattedTime = `${month}월 ${day}일 ${hour}:00 기준`;
+    setCurrentTime(formattedTime);
+  };
+
+  useEffect(() => {
+    updateCurrentTime();
+    fetchTrends();
+  }, [fetchTrends]);
 
   const handleRankingClick = () => {
     navigate('/ranking');
@@ -40,7 +52,7 @@ const IntegratedRanking: React.FC = () => {
       <div className="flex justify-between items-center w-full mb-[16px]">
         <div className="flex items-center">
           <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">통합 랭킹</span>
-          <span className="text-xs text-gray-400 ml-[8px]">4월 1일 18:00 기준</span>
+          <span className="text-xs text-gray-400 ml-[8px]">{currentTime}</span>
         </div>
         <span className="ml-[43px] cursor-pointer" onClick={handleRankingClick}>
           <div className="inline-flex items-center justify-start mr-[24px]">
@@ -50,7 +62,7 @@ const IntegratedRanking: React.FC = () => {
         </span>
       </div>
       <div className="w-full flex flex-col gap-4 mt-[16px]">
-        {rankingData.map((item) => (
+        {trends.slice(0, 3).map((item) => (
           <RankingItem key={item.rank} {...item} />
         ))}
       </div>

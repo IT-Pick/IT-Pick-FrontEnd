@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ico_eclipse from "../../../assets/images/etc/ico_eclipse.svg";
-import RecentDiscussion from "./Recent";
+import RecentDiscussion from "./RecentDiscussion";
 import PopularDiscussion from "./Popular";
 
 const Tab = ({activeTab, label, onClick}) => (
@@ -16,7 +16,7 @@ const Tab = ({activeTab, label, onClick}) => (
 const TabContent = ({activeTab}) => {
     return(
         <div>
-             {activeTab === '인기순' && <RecentDiscussion/>}
+            {activeTab === '인기순' && <RecentDiscussion/>}
             {activeTab === '최신순' && <PopularDiscussion/>}
         </div>
     );

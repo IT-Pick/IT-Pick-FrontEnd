@@ -10,6 +10,7 @@ export const loginUser = async (email: string, password: string) => {
     return response.data;
   } catch (error) {
     console.log("로그인 실패:",error);
+    return null; //로그인 실패시 null 반환
     // throw error;  
   }
 };
