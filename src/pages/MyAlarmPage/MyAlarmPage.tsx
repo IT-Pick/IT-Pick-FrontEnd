@@ -43,6 +43,7 @@ const MyAlarmPage: React.FC = () => {
     fetchAlarms();
   }, []);
 
+  //알림 클릭했을 때 
   const handleAlarmClick = (id: number) => {
     setAlarms(prevAlarms => {
       const newAlarms = prevAlarms.map(alarm => 
@@ -58,15 +59,15 @@ const MyAlarmPage: React.FC = () => {
   };
 
   return (
-    <div className="w-[390px] mx-auto bg-background">
-      <header className="w-full py-[24.5px] bg-white">
+    <div className="w-[390px] h-screen mx-auto bg-background">
+      <header className="w-full py-[24.5px] bg-background">
         <h1 className="text-[20px] text-black font-bold mt-[16px] ml-[24px] ">알림</h1>
       </header>
       <div>
         {alarms.map((alarm, index) => (
           <React.Fragment key={alarm.debateId}>
             <AlarmItem {...alarm} onAlarmClick={handleAlarmClick} />
-            {index < alarms.length - 1 && <div className="border-[1px] border-[#edf0f3] h-[2px] "></div>}
+            {index < alarms.length - 1 && <div className="border-[1.5px] border-[white] h-[2px]"></div>}
           </React.Fragment>
         ))}
       </div>
