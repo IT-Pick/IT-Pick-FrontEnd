@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import tag_ico_right from "@images/16x16/tag_ico_right.svg";
 import namuwiki from '@images/CommunityLogo/namuwiki.svg';
 import naver from '@images/CommunityLogo/naver.svg';
@@ -15,11 +15,27 @@ const rankings = [
 ];
 
 const CommunityRanking: React.FC = () => {
+  const [currentTime, setCurrentTime] = useState('');
+
+  const updateCurrentTime = () => {
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2);
+    const day = String(now.getDate()).padStart(2, '0');
+    const hour = String(now.getHours()).padStart(2, '0');
+    
+    const formattedTime = `${month}월 ${day}일 ${hour}:00 기준`;
+    setCurrentTime(formattedTime);
+  };
+
+  useEffect(() => {
+    updateCurrentTime();
+  }, []);
+
   return (
     <div className=" pt-[44px]  pb-[33px] ">
       <span className='ml-[24px]'>
         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">커뮤니티 별 랭킹</span>
-        <span className="text-xs text-gray-400 ml-[8px]">4월 1일 18:00 기준</span>
+        <span className="text-xs text-gray-400 ml-[8px]">{currentTime}</span>
       </span>
       <span className="ml-[43px]">
         <div className="inline-flex items-center justify-start">
