@@ -31,7 +31,7 @@ const LiveDiscussion: React.FC = () => {
           hits: item.hit,
           image: item.mediaUrl || PurpleBox,
           comments: item.comment,
-          link: `/post/${item.debateId}`, // 링크를 debateId로 초기화
+          link: `/debate/${item.debateId}`, // 링크를 debateId로 초기화
         }));
         setDiscussions(formattedDiscussions);
       } catch (error) {
