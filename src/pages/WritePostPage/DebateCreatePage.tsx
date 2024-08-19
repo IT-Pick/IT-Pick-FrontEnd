@@ -81,7 +81,7 @@ const DebateCreatePage: React.FC = () => {
   };
 
   return (
-    <div className="w-[390px] h-screen mx-auto flex flex-col items-center justify-between bg-background">
+    <div className="w-[390px] h-full mx-auto flex flex-col items-center justify-between bg-background">
       <div className="w-full h-full flex flex-col">
         <div className="flex justify-between items-center mb-6 py-4 px-6 bg-white">
           <div className="font-pretendard font-bold text-lg">
@@ -102,7 +102,7 @@ const DebateCreatePage: React.FC = () => {
           placeholder="자유롭게 이야기해 보세요."
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-[335px] flex-grow px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
+          className="w-[335px] h-[200px] px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
         />
 
         {/* 투표 항목이 있을 경우 표시 */}
@@ -115,7 +115,7 @@ const DebateCreatePage: React.FC = () => {
         {/* 미리보기 이미지가 있을 경우 표시 */}
         {previewUrl && (
           <div className="w-[335px] mt-4">
-            <img src={previewUrl} alt="미리보기" className="w-full h-auto rounded-lg shadow-md" />
+            <img src={previewUrl} alt="미리보기" className="w-full h-full rounded-lg shadow-md" />
           </div>
         )}
       </div>
