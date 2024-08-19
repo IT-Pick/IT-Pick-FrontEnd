@@ -119,8 +119,8 @@ const SearchPage: React.FC = () => {
         // API 응답 데이터를 initialSearchResults에 맞게 변환하여 저장
         const formattedResults = data.result.map((item: KeywordResult) => {
           const sources: string[] = [];
-          if (item.naverRank !== -1) sources.push(`네이버 ${item.naverRank}등`);
           if (item.nateRank !== -1) sources.push(`네이트 ${item.nateRank}등`);
+          if (item.naverRank !== -1) sources.push(`네이버 ${item.naverRank}등`);
           if (item.zumRank !== -1) sources.push(`줌 ${item.zumRank}등`);
           if (item.googleRank !== -1) sources.push(`구글 ${item.googleRank}등`);
           if (item.namuwikiRank !== -1) sources.push(`나무위키 ${item.namuwikiRank}등`);
@@ -128,25 +128,13 @@ const SearchPage: React.FC = () => {
           return { title: item.keyword, sources };
         });
 
-        setSearchResults(formattedResults);
+        formattedResults;
       }
     } catch (error) {
       console.log("키워드 GET 실패:", error.response.data.message);
     }
   }
 
-  // const handleSearch = (term: string) => {
-  //   if (term === '') {
-  //     setSearchResults([]);
-  //     setIsSearchActive(false);
-  //     setNoResults(false);
-  //   } else {
-  //     const filteredResults = searchResults.filter(result => result.title.includes(term));
-  //     setSearchResults(filteredResults);
-  //     setIsSearchActive(true);
-  //     setNoResults(filteredResults.length === 0);
-  //   }
-  // };
 
   const handleSearch = async (term: string) => {
     if (term === '') {
@@ -154,7 +142,6 @@ const SearchPage: React.FC = () => {
       setIsSearchActive(false);
       setNoResults(false);
     } else {
-      // API를 통해 검색 결과를 가져옴
       await handleGetKeyword(term);
   
       // 검색어에 따라 검색 결과 필터링
@@ -172,6 +159,7 @@ const SearchPage: React.FC = () => {
         <SearchBar placeholder="김현주 열애설" onSearch={handleSearch} />
       </div>
       
+      {/* 검색하지 않았고 결과가 존재할때 */}
       {!isSearchActive && !noResults && (
         <>
           <RecentSearches tags={tags} removeTag={removeTag} removeAllTags={removeAllTags} />
@@ -180,6 +168,7 @@ const SearchPage: React.FC = () => {
         </>
       )}
 
+      {/* 검색했고 결과가 존재할때 */}
       {isSearchActive && !noResults && (
         <div>
           {searchResults.map((result, index) => (
@@ -188,6 +177,7 @@ const SearchPage: React.FC = () => {
         </div>
       )}
 
+      {/* 결과가 없을때 */}
       {noResults && <ErrorPage />}
     </div>
   );
