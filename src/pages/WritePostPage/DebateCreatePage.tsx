@@ -48,21 +48,24 @@ const DebateCreatePage: React.FC = () => {
     }
 
     try {
+      console.log('토큰 가져오기 시도중');
       let token = localStorage.getItem('accessToken');
 
       if (!token) {
+        console.log('토큰이 없어서 갱신 시도 중'); 
         const refreshToken = localStorage.getItem('refreshToken');
         if (refreshToken) {
           token = await refreshAccessToken(refreshToken);
           localStorage.setItem('accessToken', token);
         } else {
+          console.log('리프레시 토큰도 없어서 오류 발생');
           throw new Error('로그인이 필요합니다.');
         }
       }
 
       const keywordId = 231; // 임영웅의 키워드 ID
       
-      
+      console.log('토론 생성 시도 중'); 
       await createDebate(
         token,
         keywordId.toString(),
@@ -71,7 +74,7 @@ const DebateCreatePage: React.FC = () => {
         imageFile || undefined,
         voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
       );
-
+      console.log('토론 생성 성공, 페이지 이동 시도 중'); 
       navigate('/keyword'); // 글 작성 후 홈으로 이동 (또는 원하는 페이지로 이동)
     } catch (error) {
       console.log('헐....');
