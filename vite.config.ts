@@ -18,25 +18,25 @@ export default defineConfig({
       '/auth': {
         target: 'https://itpick.store',
         changeOrigin: true,
-        secure: false,
+        secure: true,
         rewrite: (path) => path.replace(/^\/auth/, '/auth')
       },
       '/user': {
         target: 'https://itpick.store',
         changeOrigin: true,
-        secure: false,
+        secure: true,
         rewrite: (path) => path.replace(/^\/user/, '/user')
       },
       '/rank': {
         target: 'https://itpick.store',
         changeOrigin: true,
-        secure: false,
+        secure: true,
         rewrite: (path) => path.replace(/^\/rank/, '/rank')
       },
       '/keyword': {
         target: 'https://itpick.store',
         changeOrigin: true,
-        secure: false,
+        secure: true,
         rewrite: (path) => path.replace(/^\/keyword/, '/keyword')
       },
     },
