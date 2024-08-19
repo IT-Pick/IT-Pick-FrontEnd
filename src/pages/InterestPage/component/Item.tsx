@@ -33,7 +33,6 @@ const Item: React.FC = () => {
 
         const selectedTopics = Items.filter((_, i) => newSelectedIndexes[i]).map(item => item.topic);
         setLikedTopics(selectedTopics);
-        // setLikedTopics(Items.filter((_, i) => newSelectedIndexes[i]).map(item => item.topic));
     }
 
     return (

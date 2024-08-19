@@ -5,7 +5,7 @@ import './index.css';
 import HomePage from './pages/HomePage/HomePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import ParticipatedDebatesPage from './pages/HistoryPage/ParticipatedDebate';
+import ParticipatedDebates from './pages/HistoryPage/ParticipatedDebate';
 import DebatePage from './pages/HistoryPage/Debate';
 import RankingPage from './pages/RankingPage/RankingPage';
 import PwdChangePage from './pages/ChangeInfoPage/PwdChangePage';
@@ -21,8 +21,10 @@ import MyAlarm from './pages/MyAlarmPage/MyAlarmPage';
 import UploadedPage from './pages/UploadedVotePage/UploadedPage';
 import DebateCreatePage from './pages/WritePostPage/DebateCreatePage';
 import InterestPage from './pages/InterestPage/InterestPage';
+import InterestEditPage from './pages/ChangeInfoPage/InterestEdit/InterestEditPage';
 import { SignUpProvider } from './context/SignUpContext';
 import MakeVote from './pages/MakeVote/MakeVote';
+import SignUpandGreetingPage from './pages/SignUpandGreetingPage/SignUpandGreeetingPage';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
@@ -33,7 +35,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/new-set-profile" element={<NewSetProfile />} />
-        <Route path="/participated-debates" element={<ParticipatedDebatesPage />} />
+        <Route path="/participated-debates" element={<ParticipatedDebates />} />
         <Route path="/debate" element={<DebatePage />} />
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/change-password" element={<PwdChangePage />} />
@@ -49,8 +51,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/create" element={<DebateCreatePage />} />
         <Route path='/interest' element={<InterestPage/>} />
         <Route path='/uploaded-debate' element={<UploadedPage/>} />
+        <Route path='/interest-edit' element={<InterestEditPage/>} />
         {/* <Route path="/vote-test" element={<VoteComponentTestPage />} /> */}
         <Route path='/make-vote' element={<MakeVote/>} />
+        <Route path='/welcome' element={<SignUpandGreetingPage />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>

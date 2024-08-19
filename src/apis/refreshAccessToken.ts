@@ -12,6 +12,7 @@ export const refreshAccessToken = async (refreshToken: string) => {
     if (response.data.code === 1000) {
       return response.data.result.refreshToken;
     } else {
+      
       throw new Error(`Error: ${response.data.code}`);
     }
   } catch (error) {

@@ -4,6 +4,7 @@ import profile from '../../assets/images/ico_profile_default.svg';
 import { useNavigate } from 'react-router-dom';
 import LogoutModal from '../../components/Modal/LogoutModal';
 import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
+import { logoutUser } from '@apis/logoutUser';
 
 const MyPage: React.FC = () => {
     const navigate = useNavigate();
@@ -36,10 +37,26 @@ const MyPage: React.FC = () => {
       setModalIsOpen(true); // 모달 열기
     };
 
-    const confirmLogout = () => {
-      // 로그아웃 로직 추가해야 함
+    const confirmLogout = async() => {
+        try{
+          const data = await logoutUser();
+          if(data.code === 1000){
+            console.log("로그아웃 완료");
+
+            // 토큰 제거
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+
+            navigate('/');
+          }
+        }
+        catch(error){
+          console.log("로그아웃 실패", error);
+        }
+      //탈퇴하기
       navigate('/');
-    };
+    } 
+     
   
     const handleDebateClick = () => {
       navigate('/debate');
@@ -50,7 +67,7 @@ const MyPage: React.FC = () => {
     };
   
     return (
-        <div className="w-[390px] flex flex-col items-center mx-auto">
+        <div className="w-[390px] h-screen flex flex-col items-center mx-auto bg-background">
             <header className="w-full flex justify-between items-center py-4">
             <h1 className="text-[20px] text-black font-pretendard font-bold leading-[28px] ml-6">마이페이지</h1>
               {/* <button className="mr-6"><img src={alarm} alt="alarm_icon"/></button> */}
@@ -76,7 +93,7 @@ const MyPage: React.FC = () => {
                 <div className="ml-6 mt-2">
                     <p className="text-[16px] text-black font-pretendard font-bold py-3">공지사항</p>
                     <p className="text-[16px] text-black font-pretendard font-normal py-3">자주 묻는 질문</p>
-                    <p className="text-[16px] text-black font-pretendard font-normal py-3">약관 및 정책</p>
+                    <p onClick={()=> window.open("https://emerald-server-298.notion.site/47a9e6d98af24d84a928a643f92cb930?pvs=4")}className="text-[16px] text-black font-pretendard font-normal py-3 cursor-pointer">약관 및 정책</p>
                 </div>
             </div>
             <LogoutModal

@@ -5,14 +5,19 @@ import cameraIcon from '../../assets/images/ico_camera.svg';
 import DeleteAccoutModal from '../../components/Modal/DeleteAccoutModal';
 import { editProfileImage } from '../../apis/editProfileImage';
 import { getMyPageUserInfo } from '../../apis/getMyPageUserInfo';
-import { useSignUpContext } from '../../context/SignUpContext';
 import { patchNickname } from '@apis/patchNickname';
+import { getUserNickname } from '@apis/getUserNickname';
+import { getProfileEditUserInfo } from '@apis/getProfileEditPageUserInfo';
 
+const isLoggedIn = true;
 const ProfileEditPage: React.FC = () => {
-    const {nickname, setNickname} = useSignUpContext();
+    const [nickname, setNickname] = useState<string | null>(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [profileImage, setProfileImage] = useState(profile);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [birthDate, setBirthDate] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [LikedTopics, setLikedTopics] = useState<string[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,6 +33,22 @@ const ProfileEditPage: React.FC = () => {
     
         fetchUserInfo();
     }, []);
+    
+
+  useEffect(() => {
+    const fetchNickname = async () => {
+      try {
+        const fetchedNickname = await getUserNickname();
+        setNickname(fetchedNickname);
+      } catch (error) {
+        console.error('닉네임 불러오는 중 오류 발생:', error);
+      }
+    };
+
+    if (isLoggedIn) {
+      fetchNickname();
+    }
+  }, [isLoggedIn]);
 
     const handleChangePasswordClick = () => {
         navigate('/change-password');
@@ -38,17 +59,23 @@ const ProfileEditPage: React.FC = () => {
     };
 
     const formatDate = (dateString: string) => {
-        if (dateString.length !== 8) return dateString;
-        return `${dateString.slice(0, 4)}/${dateString.slice(4, 6)}/${dateString.slice(6, 8)}`;
+        if (dateString.length !== 6) return dateString;
+
+        const yearPrefix = parseInt(dateString.slice(0, 2), 10) >= 50 ? '19' : '20';
+        const fullYear = `${yearPrefix}${dateString.slice(0, 2)}`;
+        const month = dateString.slice(2, 4);
+        const day = dateString.slice(4, 6);
+    
+        return `${fullYear}/${month}/${day}`;
     };
 
+    //추후 탈퇴 로직 추가
     const confirmDeleteAccount = async () => {
-        // 탈퇴 로직 추가
         navigate('/');
     };
 
     const handleInterest = () => {
-        navigate('/interest');
+        navigate('/interest-edit');
     };
 
     const handleProfileImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,6 +138,22 @@ const ProfileEditPage: React.FC = () => {
         navigate(-1); // 또는 다른 페이지로 이동
     };
 
+    //관심주제 
+    useEffect(()=>{
+        const fetchLikedTopic = async () => {
+            try{
+                const userInfo = await getProfileEditUserInfo();
+                setBirthDate(userInfo.birth_date);
+                setLikedTopics(userInfo.likedTopicList);
+                setEmail(userInfo.email);
+            }
+            catch(error){
+                console.error("관심주제 불러오기 실패:", error);
+            }
+        };
+        fetchLikedTopic();
+    },[]);
+
     return (
         <div className="w-[390px] h-screen flex flex-col items-center mx-auto bg-background">
             <header className="w-full flex justify-between items-center py-4">
@@ -143,9 +186,8 @@ const ProfileEditPage: React.FC = () => {
                     suppressContentEditableWarning
                     onChange={handleInput}
                     style={{ textAlign: 'left' }}
-                >
-                    {nickname}
-                </textarea>
+                    value={nickname || ''}
+                />
             </div>
             <div className="w-full h-3 bg-gray1 mt-8"></div>
             <div className="w-full">
@@ -153,11 +195,11 @@ const ProfileEditPage: React.FC = () => {
                     <h3 className="text-[16px] text-black font-pretendard font-bold py-3">프로필</h3>
                     <div className="flex justify-between py-3">
                         <p className="text-[16px] text-black font-pretendard font-normal">생년월일</p>
-                        <p className="text-[14px] text-gray3 font-pretendard font-normal">{formatDate('20020927')}</p>
+                        <p className="text-[14px] text-gray3 font-pretendard font-normal">{formatDate(birthDate)}</p>
                     </div>
                     <div className="flex justify-between py-3">
                         <button onClick={handleInterest} className="text-[16px] text-black font-pretendard font-normal">관심 주제 설정</button>
-                        <p className="text-[14px] text-gray3 font-pretendard font-normal">여행, 연예</p>
+                        <p className="text-[14px] text-gray3 font-pretendard font-normal">{LikedTopics.join(', ')}</p>
                     </div>
                 </div>
                 <div className="w-full h-0.5 bg-gray1"></div>
@@ -165,7 +207,7 @@ const ProfileEditPage: React.FC = () => {
                     <p className="text-[16px] text-black font-pretendard font-bold py-3">회원정보</p>
                     <div className="flex justify-between py-3">
                         <p className="text-[16px] text-black font-pretendard font-normal">이메일</p>
-                        <p className="text-[14px] text-gray3 font-pretendard font-normal">kimitpick@gmail.com</p>
+                        <p className="text-[14px] text-gray3 font-pretendard font-normal">{email}</p>
                     </div>
                     <p
                         className="text-[16px] text-black font-pretendard font-normal py-3 cursor-pointer"

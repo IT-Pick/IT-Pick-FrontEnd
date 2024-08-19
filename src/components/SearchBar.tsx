@@ -10,16 +10,30 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch, onSearchAll }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = () => {
-    onSearch(searchTerm);
+  const saveSearchTermToLocalStorage = (term: string) => {
+    let storedTags = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+    if (!storedTags.includes(term)) {
+      storedTags = [term, ...storedTags];
+      if (storedTags.length > 3) storedTags.pop(); // 최근 검색어가 3개를 넘지 않도록 제한
+      localStorage.setItem('recentSearches', JSON.stringify(storedTags));
+    }
   };
 
+  const handleSearch = () => {
+    if (searchTerm.trim() !== '') {
+      saveSearchTermToLocalStorage(searchTerm);
+      onSearch(searchTerm);
+    }
+  };
+
+    //엔터 눌렀을 때 검색
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       handleSearch();
     }
   };
   
+  //돋보기 버튼 눌렀을 때 검색
   const handleClick = () => {
     if (onSearchAll) {
       handleSearch();
@@ -38,7 +52,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch, onSearchAl
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         onKeyPress={handleKeyPress}
-        className="pl-4 pr-12 py-2 w-full rounded-full border border-transparent focus:outline-none placeholder-gray2 font-pretendard font-normal text-[16px]" 
+        className="pl-4 pr-12 py-2 w-full rounded-full border border-transparent focus:outline-none placeholder-gray2 font-pretendard font-normal text-[16px] caret-point500" 
       />
       <button onClick={handleSearch} className="absolute right-4 top-1/2 transform -translate-y-1/2">
         <img src={ico_search} alt="Search Icon" className="w-5 h-5" />

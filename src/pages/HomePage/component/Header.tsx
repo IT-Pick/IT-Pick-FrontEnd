@@ -17,7 +17,7 @@ const Header: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   
 
   return (
-    <header className="flex justify-end mt-[8px] mb-[8px]">
+    <header className="flex justify-end pt-[15px] mb-[8px]">
       <div className="flex">
         <AlarmButton isLoggedIn={isLoggedIn}/>
         <img 
