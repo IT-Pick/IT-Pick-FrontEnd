@@ -6,6 +6,7 @@ import LiveDiscussion from "./component/LiveDiscussion";
 import { useNavigate } from "react-router-dom";
 import ico_write from "../../assets/images/etc/ico_write.svg";
 import { getKeywordRelatedData } from "@apis/getKeywordRelatedData";
+import { useKeywordState } from '../../context/KeywordStateContext';
 
 interface KeywordResult {
     keywordId: number;
@@ -19,20 +20,23 @@ interface KeywordResult {
 
 const KeywordPage: React.FC = () => {
     const [keywordData, setKeywordData] = useState<KeywordResult | null>(null);
+    const { selectedKeyword } = useKeywordState();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await getKeywordRelatedData("total", "realtime", "원빈");
-                setKeywordData(result);
-            } catch (error) {
-                console.error("Error fetching keyword data:", error);
-            }
+        const fetchAndSetKeywordData = async () => {
+          if (!selectedKeyword) return;
+    
+          try {
+            const result = await getKeywordRelatedData('total', 'realtime', selectedKeyword);
+            setKeywordData(result);
+          } catch (error) {
+            console.error('Error fetching keyword data:', error);
+          }
         };
-
-        fetchData();
-    }, []);
+    
+        fetchAndSetKeywordData();
+      }, [selectedKeyword]);
 
     const handleButtonClick = () => {
         navigate('/create'); //라우팅 링크 typo 수정
@@ -45,6 +49,7 @@ const KeywordPage: React.FC = () => {
                 <>
                     <MainCard 
                         keyword={keywordData.keyword}
+                        newsContent={keywordData.newsContent}
                         searchLink={keywordData.searchLink}
                     />
                     <RelatedData 

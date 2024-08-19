@@ -3,10 +3,11 @@ import tag_right_chev from "../../../assets/images/16x16/tag_ico_right.svg";
 
 interface MainCardProps {
     keyword: string;
+    newsContent: string;
     searchLink: string;
 }
 
-const MainCard: React.FC<MainCardProps> = ({ keyword, searchLink }) =>{
+const MainCard: React.FC<MainCardProps> = ({ keyword, newsContent, searchLink }) =>{
     return (
         <div className="w-[350px] h-[112px] mx-auto mt-[24px] p-[16px] justify-center items-center rounded-[16px] bg-[white] flex flex-col gap-[12px]">
             <header className="w-full flex justify-between items-center">
@@ -17,7 +18,7 @@ const MainCard: React.FC<MainCardProps> = ({ keyword, searchLink }) =>{
                 </a>
             </header>
             <div className="text-[14px] text-[#9EAAB5]">
-                대한민국의 대학생 김현주(24)씨가 인스타그램에 열애 사실을 고백해 큰 화제가 되고있다.
+                {newsContent}
             </div>
         </div>
     )

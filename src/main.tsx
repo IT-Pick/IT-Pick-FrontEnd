@@ -25,9 +25,11 @@ import InterestEditPage from './pages/ChangeInfoPage/InterestEdit/InterestEditPa
 import { SignUpProvider } from './context/SignUpContext';
 import MakeVote from './pages/MakeVote/MakeVote';
 import SignUpandGreetingPage from './pages/SignUpandGreetingPage/SignUpandGreeetingPage';
+import { KeywordStateProvider } from './context/KeywordStateContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
+  <KeywordStateProvider>
   <SignUpProvider>
     <BrowserRouter>
       <Routes>
@@ -59,6 +61,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </Routes>
     </BrowserRouter>
   </SignUpProvider>
+  </KeywordStateProvider>
     
   // </React.StrictMode>
 );
