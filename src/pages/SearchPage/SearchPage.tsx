@@ -112,28 +112,30 @@ const SearchPage: React.FC = () => {
 
   const handleGetKeyword = async (term: string) => {
     try {
-      const data = await getKeyword(term);
-      if (data.code === 1000) {
-        console.log("키워드 GET 성공");
+      const response = await getKeyword(term);
+      console.log('키워드 API 응답 데이터 확인', response);
 
-        // API 응답 데이터를 initialSearchResults에 맞게 변환하여 저장
-        const formattedResults = data.result.map((item: KeywordResult) => {
-          const sources: string[] = [];
-          if (item.nateRank !== -1) sources.push(`네이트 ${item.nateRank}등`);
-          if (item.naverRank !== -1) sources.push(`네이버 ${item.naverRank}등`);
-          if (item.zumRank !== -1) sources.push(`줌 ${item.zumRank}등`);
-          if (item.googleRank !== -1) sources.push(`구글 ${item.googleRank}등`);
-          if (item.namuwikiRank !== -1) sources.push(`나무위키 ${item.namuwikiRank}등`);
+      const keywordResults = response.result.map((item: KeywordResult) => {
+        const sources = [
+          item.nateRank !== -1 ? `네이트 ${item.nateRank}등` : '',
+          item.naverRank !== -1 ? `네이버 ${item.naverRank}등` : '',
+          item.zumRank !== -1 ? `줌 ${item.zumRank}등` : '',
+          item.googleRank !== -1 ? `구글 ${item.googleRank}등` : '',
+          item.namuwikiRank !== -1 ? `나무위키 ${item.namuwikiRank}등` : ''
+        ].filter(tag => tag !== ''); // 빈 문자열 제거
 
-          return { title: item.keyword, sources };
-        });
+        return {
+          title: item.keyword,
+          sources: sources.length > 0 ? sources : [],
+        };
+      });
 
-        formattedResults;
-      }
+      return keywordResults;
     } catch (error) {
-      console.log("키워드 GET 실패:", error.response.data.message);
+      console.error('키워드 조회 중 오류:', error);
+      throw error;
     }
-  }
+  };
 
 
   const handleSearch = async (term: string) => {
@@ -142,17 +144,19 @@ const SearchPage: React.FC = () => {
       setIsSearchActive(false);
       setNoResults(false);
     } else {
-      await handleGetKeyword(term);
-  
-      // 검색어에 따라 검색 결과 필터링
-      const filteredResults = searchResults.filter(result => result.title.includes(term));
-      setSearchResults(filteredResults);
-      setIsSearchActive(true);
-      setNoResults(filteredResults.length === 0);
+      try {
+        const results = await handleGetKeyword(term);
+        setSearchResults(results);
+        setIsSearchActive(true);
+        setNoResults(results.length === 0);
+        console.log('검색 결과 확인', results);
+      } catch (error) {
+        setNoResults(true);
+        setIsSearchActive(true);
+      }
     }
   };
   
-
   return (
     <div className="w-[390px] mx-auto pt-[20px] bg-background min-h-screen">
       <div className="ml-[24px]">
