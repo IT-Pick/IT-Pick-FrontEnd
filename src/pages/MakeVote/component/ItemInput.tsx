@@ -8,7 +8,7 @@ interface ItemInputProps {
   onRemove: (id: number) => void;
   canRemove: boolean;
   onNameChange: (id: number, name: string) => void;
-  onImageChange: (id: number, image: File | null) => void; // 이미지 변경 콜백 함수 prop 추가
+  onImageChange: (id: number, image: File | null) => void;
 }
 
 const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove, onNameChange, onImageChange }) => {
@@ -26,6 +26,13 @@ const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove, onNameCh
       const selectedImage = e.target.files[0];
       setImage(selectedImage);
       onImageChange(id, selectedImage); 
+    }
+  };
+
+  const triggerImageUpload = () => {
+    const imageInput = document.getElementById(`image-upload-${id}`) as HTMLInputElement;
+    if (imageInput) {
+      imageInput.click();
     }
   };
 
@@ -55,18 +62,16 @@ const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove, onNameCh
             className="text-black text-base font-medium font-['Pretendard'] bg-transparent focus:outline-none w-[250px]"
           />
         </div>
-        <div className="w-[35px] h-[35px]">
-          <label htmlFor={`image-upload-${id}`}>
-            <img src={ico_vote_add_photo} alt="사진 추가" className="w-full h-full cursor-pointer" />
-          </label>
-          <input
-            id={`image-upload-${id}`}
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-          />
+        <div className="w-[35px] h-[35px]" onClick={triggerImageUpload}>
+          <img src={ico_vote_add_photo} alt="사진 추가" className="w-full h-full cursor-pointer" />
         </div>
+        <input
+          id={`image-upload-${id}`}
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="hidden"
+        />
       </div>
       <div className="w-full h-[0px] border border-[#edf0f3] mt-2"></div>
     </div>
