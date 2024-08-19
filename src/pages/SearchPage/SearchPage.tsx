@@ -81,17 +81,6 @@ const SearchPage: React.FC = () => {
     localStorage.removeItem('recentSearches');
   };
 
-  // const totalPopularSearches = [
-  //   '김현주',
-  //   '김현주 소속사',
-  //   '김현주 열애설',
-  //   '김현주 남친',
-  //   '김현주',
-  //   '김현주',
-  //   '김현주',
-  //   '김현주',
-  // ];
-
   interface KeywordResult {
     keyword: string;
     nateRank: number;
