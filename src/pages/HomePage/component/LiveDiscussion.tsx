@@ -1,7 +1,8 @@
 import React from 'react';
-import LiveDiscussion1 from '@images/LiveDiscussion/LiveDiscussion1.png';
-import LiveDiscussion2 from '@images/LiveDiscussion/LiveDiscussion2.png';
-import LiveDiscussion3 from '@images/LiveDiscussion/LiveDiscussion3.png';
+// import LiveDiscussion1 from '@images/LiveDiscussion/LiveDiscussion1.png';
+// import LiveDiscussion2 from '@images/LiveDiscussion/LiveDiscussion2.png';
+// import LiveDiscussion3 from '@images/LiveDiscussion/LiveDiscussion3.png';
+import PurpleBox from '@images/ico_purple_box.svg';
 import DiscussionCard from '@components/DiscussionCard';
 
 interface Discussion {
@@ -14,21 +15,21 @@ interface Discussion {
 
 const discussions: Discussion[] = [
   {
-    image: LiveDiscussion1,
+    image: PurpleBox,
     hits: 120,
     comments: 123,
     title: "김현주 열애설 어떻게 생각함?",
     link: "/Post1",
   },
   {
-    image: LiveDiscussion2,
+    image: PurpleBox,
     hits: 990,
     comments: 45,
     title: "김현주가 아깝다 vs 차은우가 아깝다",
     link: "/Post2",
   },
   {
-    image: LiveDiscussion3,
+    image: PurpleBox,
     hits: 990,
     comments: 45,
     title: "김현주가 아깝다 vs 차은우가 아깝다",
