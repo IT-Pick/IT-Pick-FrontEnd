@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { getRankingInfo } from '@apis/getRankingInfo';
 
-interface PopularSearchesProps {
-  searches: string[];
-}
-
-const PopularSearches: React.FC<PopularSearchesProps> = ({ searches }) => {
+const PopularSearches: React.FC = () => {
+  const [searches, setSearches] = useState<string[]>([]);
   const [currentTime, setCurrentTime] = useState('');
 
   const updateCurrentTime = () => {
@@ -19,7 +17,27 @@ const PopularSearches: React.FC<PopularSearchesProps> = ({ searches }) => {
 
   useEffect(() => {
     updateCurrentTime();
+    fetchPopularSearches();
   }, []);
+
+  const fetchPopularSearches = async () => {
+    try {
+      const rankingData = await getRankingInfo('total', 'real_time', '');
+      const top8Searches = rankingData.slice(0, 8).map(item => item.name); // 상위 8개의 name 가져오기
+      setSearches(top8Searches);
+    } catch (error) {
+      console.error('인기 검색어 데이터를 불러오는 중 오류 발생:', error);
+      setSearches([]);
+    }
+  };
+
+  // maxLength 이상이면 ... 처리
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + '...';
+    }
+    return text;
+  };
 
   const halfLength = Math.ceil(searches.length / 2);
 
@@ -31,21 +49,26 @@ const PopularSearches: React.FC<PopularSearchesProps> = ({ searches }) => {
           className="text-gray2 mr-8 font-pretendard font-medium text-[14px]">{currentTime}
         </span>
       </div>
-      <div className="grid grid-cols-2 gap-x-8 ml-8 mr-8">
-        {searches.slice(0, halfLength).map((search, index) => (
-          <div key={index} className="flex items-center mt-3">
-            <span className="font-pretendard font-bold text-[14px] text-gray3 mr-4">{index + 1}</span>
-            <span className="font-pretendard font-semibold text-[14px] text-black">{search}</span>
-          </div>
-        ))}
-        {searches.slice(halfLength).map((search, index) => (
-          <div key={index} className="flex items-center mt-3">
-            <span className="font-pretendard font-bold text-[14px] text-gray3 mr-4">{index + halfLength + 1}</span>
-            <span className="font-pretendard font-semibold text-[14px] text-black">{search}</span>
-          </div>
-        ))}
+      <div className="flex ml-8 mr-8">
+  <div className="flex flex-col">
+    {searches.slice(0, halfLength).map((search, index) => (
+      <div key={index} className="flex items-center mt-3">
+        <span className="font-pretendard font-bold text-[14px] text-gray3 mr-4">{index + 1}</span>
+        <span className="font-pretendard font-semibold text-[14px] text-black">{truncateText(search, 10)}</span>
       </div>
-    </div>
+    ))}
+  </div>
+  <div className="flex flex-col ml-8">
+    {searches.slice(halfLength).map((search, index) => (
+      <div key={index + halfLength} className="flex items-center mt-3">
+        <span className="font-pretendard font-bold text-[14px] text-gray3 mr-4">{index + halfLength + 1}</span>
+        <span className="font-pretendard font-semibold text-[14px] text-black">{truncateText(search, 10)}</span>
+      </div>
+    ))}
+  </div>
+</div>
+</div>
+
   );
 };
 

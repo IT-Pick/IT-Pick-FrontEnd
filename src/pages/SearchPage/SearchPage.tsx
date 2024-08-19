@@ -1,80 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar';
 import RecentSearches from './components/RecentSearches';
 import PopularSearches from './components/PopularSearches';
 import RecentDiscussions from './components/RecentDiscussions';
 import SearchResultItem from './components/SearchResultItem';
 import ErrorPage from './components/405ErrorPage';
-import LiveDiscussion1 from '../../assets/images/LiveDiscussion/LiveDiscussion1.png';
-import LiveDiscussion2 from '../../assets/images/LiveDiscussion/LiveDiscussion2.png';
-import LiveDiscussion3 from '../../assets/images/LiveDiscussion/LiveDiscussion3.png';
+// import PurpleBox from '../../assets/images/ico_purple_box.svg';
 import { getKeyword } from '@apis/getKeyword';
 
-const discussions = [
-  {
-    image: LiveDiscussion1,
-    hits: 1210,
-    comments: 2830,
-    title: "김현주 열애설 어떻게 생각함?",
-    link: "/Post1",
-  },
-  {
-    image: LiveDiscussion2,
-    hits: 990,
-    comments: null,
-    title: "김현주가 아깝다 vs 차은우가 아깝다",
-    link: "/Post2",
-  },
-  {
-    image: LiveDiscussion3,
-    hits: 32,
-    comments: 48302,
-    title: "현주씨 오늘 저녁 뭐 드셨어요",
-    link: "/Post3",
-  },
-  {
-    image: LiveDiscussion1,
-    hits: 93021,
-    comments: 123,
-    title: "뉴진스! 뉴진스!",
-    link: "/Post4",
-  },
-  {
-    image: LiveDiscussion2,
-    hits: null,
-    comments: 594,
-    title: "현주씨 오늘 저녁 뭐 드셨어요",
-    link: "/Post5",
-  },
-  {
-    image: LiveDiscussion3,
-    hits: 145,
-    comments: 3048,
-    title: "김현주 열애설 어떻게 생각함?",
-    link: "/Post6",
-  },
-];
-
-//여기!!!가 get한 검색 결과 dummy data
-// const initialSearchResults = [
-  // { title: '김현주 열애설', sources: ['나무위키 1등', '트위터 1등'] },
-  // { title: '김현주', sources: ['나무위키 2등', '네이버 1등'] },
-  // { title: '김윤서 차은우', sources: ['네이버 2등', '트위터 2등'] },
-  // { title: '김현주 결혼', sources: ['줌 1등'] },
-  // { title: '김윤서 결혼' },
-  // { title: '김현주 결혼', sources: ['나무위키 1등', '나무위키 1등'] },
-  // { title: '김윤서 결혼', sources: ['줌 5등', '나무위키 5등'] },
-
-// ];
-
-
-
 const SearchPage: React.FC = () => {
-  const [tags, setTags] = useState([
-    '김현주',
-    '김현주 열애설',
-    '김현주 남친',
-  ]);
+  const [tags, setTags] = useState<string[]>([]);
 
   const [isSearchActive, setIsSearchActive] = useState(false);
 
@@ -82,24 +17,22 @@ const SearchPage: React.FC = () => {
 
   const [noResults, setNoResults] = useState(false);
 
+  useEffect(() => {
+    const storedTags = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+    setTags(storedTags);
+  }, []);
+
   const removeTag = (tagToRemove: string) => {
-    setTags(tags.filter(tag => tag !== tagToRemove));
+    // setTags(tags.filter(tag => tag !== tagToRemove));
+    const updatedTags = tags.filter(tag => tag !== tagToRemove);
+    setTags(updatedTags);
+    localStorage.setItem('recentSearches', JSON.stringify(updatedTags));
   };
 
   const removeAllTags = () => {
     setTags([]);
+    localStorage.removeItem('recentSearches');
   };
-
-  const totalPopularSearches = [
-    '김현주',
-    '김현주 소속사',
-    '김현주 열애설',
-    '김현주 남친',
-    '김현주',
-    '김현주',
-    '김현주',
-    '김현주',
-  ];
 
   interface KeywordResult {
     keyword: string;
@@ -167,8 +100,8 @@ const SearchPage: React.FC = () => {
       {!isSearchActive && !noResults && (
         <>
           <RecentSearches tags={tags} removeTag={removeTag} removeAllTags={removeAllTags} />
-          <PopularSearches searches={totalPopularSearches} />
-          <RecentDiscussions discussions={discussions} />
+          <PopularSearches />
+          <RecentDiscussions />
         </>
       )}
 

@@ -1,7 +1,7 @@
 import React,{ useEffect, useState } from 'react';
 import Header from "./component/Header";
 import { useNavigate } from 'react-router-dom';
-import SearchBar from "@components/SearchBar";
+import SearchBar from "./component/SearchBar";
 import IntegratedRanking from "./component/IntegratedRanking";
 import LiveDiscussion from "./component/LiveDiscussion";
 import CommunityRanking from "./component/CommunityRanking";
@@ -23,17 +23,17 @@ const HomePage = () => {
     }
   }, []);
 
-  const handleSearch = (term: string) => {
-    navigate('/search', { state: { searchTerm: term } });
+  const handleNavigateToSearch = () => {
+    navigate('/search');
   };
 
   return (
-    <div className="bg-background w-[390px] mx-auto">
+    <div className="bg-background w-[390px] mx-auto scrollbar-hidden">
       <Header isLoggedIn={isLoggedIn} />
       <GreetingMessage isLoggedIn={isLoggedIn} />
       <div className="flex items-center ml-[24px] mr-[24px] mt-4">
         <img src={logo} alt="Logo Icon" className="w-8 h-8 mr-[14.79px]" />
-        <SearchBar placeholder="김현주 열애설" onSearch={handleSearch} onSearchAll={true} />
+        <SearchBar placeholder="김현주 열애설" onClick={handleNavigateToSearch} />
       </div>
       <IntegratedRanking />
       <LiveDiscussion />

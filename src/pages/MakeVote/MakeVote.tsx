@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 리디렉션을 위한 useNavigate
+import { useNavigate } from 'react-router-dom';
 import ItemInput from './component/ItemInput';
 import MakeVoteBar from './component/MakeVoteBar';
 
 const MakeVote: React.FC = () => {
   const [items, setItems] = useState<number[]>([1, 2]);
   const [itemNames, setItemNames] = useState<{ [key: number]: string }>({});
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const navigate = useNavigate();
 
-  // 항목 추가 함수
   const addItem = () => {
     if (items.length < 5) {
       setItems((prevItems) => [...prevItems, prevItems.length + 1]);
     }
   };
 
-  // 항목 삭제 함수
   const removeItem = (id: number) => {
     if (items.length > 2) {
       setItems((prevItems) => prevItems.filter((item) => item !== id));
@@ -25,15 +23,13 @@ const MakeVote: React.FC = () => {
     }
   };
 
-  // 항목 이름 변경 함수
   const handleNameChange = (id: number, name: string) => {
     setItemNames({ ...itemNames, [id]: name });
   };
 
-  // 완료 버튼 클릭 시 호출되는 함수
   const handleComplete = () => {
     const voteItems = items.map((id) => itemNames[id] || `항목 ${id}`);
-    navigate('/create', { state: { voteItems } }); // 글쓰기 페이지로 리디렉션하며 투표 항목 데이터 전달
+    navigate('/create', { state: { voteItems } });
   };
 
   return (
@@ -43,7 +39,7 @@ const MakeVote: React.FC = () => {
           <span className="text-point500 text-lg font-bold font-pretendard">투표 만들기</span>
           <span
             className="text-gray3 text-sm font-medium font-pretendard cursor-pointer"
-            onClick={handleComplete} // 클릭 시 handleComplete 함수 실행
+            onClick={handleComplete}
           >
             완료
           </span>
@@ -54,10 +50,9 @@ const MakeVote: React.FC = () => {
             <ItemInput
               key={item}
               id={item}
-              name={itemNames[item] || ''}
               onRemove={removeItem}
-              onNameChange={handleNameChange}
               canRemove={items.length > 2}
+              onNameChange={handleNameChange} // 이름 변경 시 상태 업데이트
             />
           ))}
         </div>

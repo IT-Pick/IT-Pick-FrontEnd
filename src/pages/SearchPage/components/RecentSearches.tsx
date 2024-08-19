@@ -11,22 +11,32 @@ const RecentSearches: React.FC<RecentSearchesProps> = ({ tags, removeTag, remove
   <div className="mt-6 mb-4">
     <div className="flex justify-between items-center mb-2">
       <label className="block font-pretendard font-bold text-[14px] text-gray3 ml-8">최근 검색어</label>
-      <button 
-        onClick={removeAllTags}
-        className="text-gray2 mr-8 underline font-pretendard font-medium text-[14px]"
-      >
-        지우기
-      </button>
+      {tags.length > 0 && (
+        <button 
+          onClick={removeAllTags}
+          className="text-gray2 mr-8 underline font-pretendard font-medium text-[14px]"
+        >
+          지우기
+        </button>
+      )}
     </div>
-    <div className="flex flex-wrap gap-2 ml-8 mr-8">
-      {tags.map(tag => (
-        <div key={tag} className="flex items-center bg-gray1 font-pretendard font-normal text-[14px] text-black px-2 py-1 rounded-full">
-          <span>{tag}</span>
-          <button onClick={() => removeTag(tag)} className="ml-2">
-            <img src={ico_delete_black} alt="delete" />
-          </button>
+    <div className="ml-8 mr-8" style={{ height: '30px' }}>
+      {tags.length > 0 ? (
+        <div className="flex flex-wrap gap-2 h-full py-[2px]">
+          {tags.map(tag => (
+            <div key={tag} className="flex items-center bg-gray1 font-pretendard font-normal text-[14px] text-black px-2 py-1 rounded-full">
+              <span>{tag}</span>
+              <button onClick={() => removeTag(tag)} className="ml-2">
+                <img src={ico_delete_black} alt="delete" />
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
+      ) : (
+        <div className="flex justify-center items-center h-full text-gray3 text-[16px] font-pretendard font-medium">
+          최근 검색어가 없어요
+        </div>
+      )}
     </div>
   </div>
 );
