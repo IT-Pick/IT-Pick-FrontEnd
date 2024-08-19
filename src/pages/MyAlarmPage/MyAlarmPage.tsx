@@ -7,6 +7,7 @@ interface Alarm {
   keyword: string;
   duration: string;
   debateId: number;
+  comment: boolean;
   trend: boolean;
   isRead: boolean;
 }
