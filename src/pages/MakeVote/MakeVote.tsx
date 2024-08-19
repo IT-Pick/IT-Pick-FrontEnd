@@ -29,7 +29,7 @@ const MakeVote: React.FC = () => {
 
   const handleComplete = () => {
     const voteItems = items.map((id) => itemNames[id] || `항목 ${id}`);
-    navigate('/debate/create', { state: { voteItems } });  // DebateCreatePage로 전달
+    navigate('/create', { state: { voteItems } });  // DebateCreatePage로 전달
   };
 
   return (
