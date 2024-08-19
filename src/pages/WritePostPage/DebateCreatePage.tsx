@@ -3,15 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DebateIconBar from './components/DebateIconBar';
 import VoteResult from './components/VoteResult';
 import { createDebate } from '@apis/WriteDebate/createDebate';
-import { refreshAccessToken } from '@apis/refreshAccessToken'; // 액세스 토큰 갱신 함수
+import { refreshAccessToken } from '@apis/refreshAccessToken';
 
 const DebateCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 미리보기 URL 상태 추가
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-  // const location = useLocation<{ voteItems: string[] }>();
   const location = useLocation();
   const voteItems = location.state?.voteItems || [];
   const navigate = useNavigate();
@@ -36,8 +36,13 @@ const DebateCreatePage: React.FC = () => {
   }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImageFile(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImageFile(file);
+
+      // 선택된 파일의 미리보기 URL을 생성하여 상태에 저장
+      const previewUrl = URL.createObjectURL(file);
+      setPreviewUrl(previewUrl);
     }
   };
 
@@ -48,36 +53,30 @@ const DebateCreatePage: React.FC = () => {
     }
 
     try {
-      console.log('토큰 가져오기 시도중');
       let token = localStorage.getItem('accessToken');
 
       if (!token) {
-        console.log('토큰이 없어서 갱신 시도 중'); 
         const refreshToken = localStorage.getItem('refreshToken');
         if (refreshToken) {
           token = await refreshAccessToken(refreshToken);
           localStorage.setItem('accessToken', token);
         } else {
-          console.log('리프레시 토큰도 없어서 오류 발생');
           throw new Error('로그인이 필요합니다.');
         }
       }
 
-      const keywordId = 231; // 임영웅의 키워드 ID
-      
-      console.log('토론 생성 시도 중'); 
+      const keywordId = 231; // 키워드 ID 설정
+
       await createDebate(
         token,
         keywordId.toString(),
         title,
         content,
-        imageFile || undefined,
+        imageFile || undefined, // 선택된 파일을 API 호출에 전달
         voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
       );
-      console.log('토론 생성 성공, 페이지 이동 시도 중'); 
-      navigate('/keyword'); // 글 작성 후 홈으로 이동 (또는 원하는 페이지로 이동)
+      navigate('/keyword');
     } catch (error) {
-      console.log('헐....');
       console.error('글 작성 중 오류가 발생했습니다.', error);
       alert('글 작성 중 오류가 발생했습니다.');
     }
@@ -107,14 +106,14 @@ const DebateCreatePage: React.FC = () => {
           onChange={(e) => setContent(e.target.value)}
           className="w-[335px] flex-grow px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
         />
-        <input 
-          type="file" 
-          accept="image/*,video/*"
-          onChange={handleFileChange}
-          className="w-[335px] mt-4"
-        />
+        
+        {/* 미리보기 이미지가 있을 경우 표시 */}
+        {previewUrl && (
+          <div className="w-[335px] mt-4">
+            <img src={previewUrl} alt="미리보기" className="w-full h-auto rounded-lg shadow-md" />
+          </div>
+        )}
 
-        {/* 투표 결과 표시 */}
         {voteItems.length > 0 && (
           <div className="mt-4">
             <VoteResult items={voteItems} />
@@ -123,7 +122,7 @@ const DebateCreatePage: React.FC = () => {
       </div>
       <div className={`w-[390px] flex justify-center py-3 bg-white ${isKeyboardVisible ? 'fixed bottom-0' : 'absolute bottom-0'}`}
       style={{ bottom: isKeyboardVisible ? `${window.innerHeight - viewportHeight}px` : '0' }}>
-        <DebateIconBar />
+        <DebateIconBar onFileChange={handleFileChange} /> {/* DebateIconBar에 파일 변경 핸들러 전달 */}
       </div>
     </div>
   );

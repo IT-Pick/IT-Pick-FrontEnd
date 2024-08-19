@@ -35,16 +35,27 @@ export const createDebate = async (
 
   // const token = localStorage.getItem('accessToken');
 
-  if (!token) {
-    throw new Error('토큰이 없습니다!');
+  try {
+    if (!token) {
+      throw new Error('토큰이 없습니다!');
+    }
+  
+    const response = await axios.post('/debate', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`, // Authorization 헤더에 토큰 추가
+      },
+    });
+  
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      console.error('서버 응답 에러:', error.response.data); // 서버에서 반환한 오류 데이터를 출력
+    } else if (error.request) {
+      console.error('요청이 서버에 도달하지 못했습니다:', error.request);
+    } else {
+      console.error('요청 설정 중 오류가 발생했습니다:', error.message);
+    }
+    throw error;
   }
-
-  const response = await axios.post('/debate', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${token}`, // Authorization 헤더에 토큰 추가
-    },
-  });
-
-  return response.data;
 };
