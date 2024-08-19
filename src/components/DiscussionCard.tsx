@@ -2,6 +2,7 @@ import React from 'react';
 import tag_ico_view from '../assets/images/16x16/tag_ico_view.svg';
 import tag_ico_comment from '../assets/images/16x16/tag_ico_comment.svg';
 import PurpleBox from '@images/ico_purple_box.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface DiscussionCardProps {
   image: string | null;
@@ -17,23 +18,25 @@ const formatNumber = (num: number | null) => {
 };
 
 const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, title, debateId, className }) => {
-  const formattedLink = `/debate/details?debateId=${debateId}`;
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/debate/details?debateId=${debateId}`);
+  };
 
   return (
-    <div className={`font-pretendard ${className}`}>
+    <div className={`font-pretendard ${className}`} onClick={handleClick}>
       {image === PurpleBox ? (
         <div 
           className="w-[164px] h-[200px] bg-point500 rounded-2xl mb-2 flex items-center justify-center text-white text-center p-2"
           style={{ backgroundImage: `url(${PurpleBox})`, backgroundSize: 'cover' }}
         >
-          <a href={formattedLink} className="text-[14px] font-pretendard font-semibold px-[15px] leading-6">
+          <span className="text-[14px] font-pretendard font-semibold px-[15px] leading-6">
             {title}
-          </a>
+          </span>
         </div>
       ) : (
-        <a href={formattedLink}>
-          <img src={image} alt={title} className="w-[164px] h-[200px] rounded-2xl mb-2 object-cover object-center" />
-        </a>
+        <img src={image} alt={title} className="w-[164px] h-[200px] rounded-2xl mb-2 object-cover object-center" />
       )}
       <div className="flex justify-start items-center gap-2 mb-2">
         {hits !== null && (
@@ -49,9 +52,9 @@ const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, 
           </div>
         )}
       </div>
-      <a href={formattedLink} className="text-black font-bold text-[16px] text-left">
+      <span className="text-black font-bold text-[16px] text-left">
         {title}
-      </a>
+      </span>
     </div>
   );
 };
