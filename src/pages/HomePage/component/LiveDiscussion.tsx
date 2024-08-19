@@ -37,9 +37,9 @@ const discussions: Discussion[] = [
 ];
 
 
-const formatNumber = (num: number | null): string => {
-  return num !== null ? new Intl.NumberFormat().format(num) : '0';
-};
+// const formatNumber = (num: number | null): string => {
+//   return num !== null ? new Intl.NumberFormat().format(num) : '0';
+// };
 
 
 const LiveDiscussion: React.FC = () => {
@@ -54,8 +54,8 @@ const LiveDiscussion: React.FC = () => {
             key={index}
             title={discussion.title}
             image={discussion.image}
-            hits={formatNumber(discussion.hits)}
-            comments={formatNumber(discussion.comments)}
+            hits={discussion.hits}
+            comments={discussion.comments}
             link={discussion.link}
             className="w-[164px] h-[100%] flex-shrink-0"
           />
