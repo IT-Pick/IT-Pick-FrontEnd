@@ -6,7 +6,6 @@ interface VoteOption {
 }
 
 export const createDebate = async (
-  // userId: string,
   token: string,
   keywordId: string,
   title: string,
@@ -15,7 +14,6 @@ export const createDebate = async (
   voteOptions?: VoteOption[]
 ) => {
   const formData = new FormData();
-  // formData.append('userId', userId);
   formData.append('keywordId', keywordId);
   formData.append('title', title);
   formData.append('content', content);
@@ -33,24 +31,22 @@ export const createDebate = async (
     });
   }
 
-  // const token = localStorage.getItem('accessToken');
-
   try {
     if (!token) {
       throw new Error('토큰이 없습니다!');
     }
-  
+
     const response = await axios.post('/debate', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${token}`, // Authorization 헤더에 토큰 추가
+        'Authorization': `Bearer ${token}`,
       },
     });
-  
+
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.error('서버 응답 에러:', error.response.data); // 서버에서 반환한 오류 데이터를 출력
+      console.error('서버 응답 에러:', error.response.data);
     } else if (error.request) {
       console.error('요청이 서버에 도달하지 못했습니다:', error.request);
     } else {

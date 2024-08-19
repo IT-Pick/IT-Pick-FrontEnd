@@ -49,10 +49,10 @@ const DebateCreatePage: React.FC = () => {
       alert('제목과 내용을 입력해주세요.');
       return;
     }
-
+  
     try {
       let token = localStorage.getItem('accessToken');
-
+  
       if (!token) {
         const refreshToken = localStorage.getItem('refreshToken');
         if (refreshToken) {
@@ -62,16 +62,21 @@ const DebateCreatePage: React.FC = () => {
           throw new Error('로그인이 필요합니다.');
         }
       }
-
+  
       const keywordId = 231;
-
+  
+      const formattedVoteItems = voteItems.map(item => ({
+        optionText: item.text,
+        imageFile: item.image || undefined
+      }));
+  
       await createDebate(
         token,
         keywordId.toString(),
         title,
         content,
         imageFile || undefined,
-        voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
+        formattedVoteItems.length > 0 ? formattedVoteItems : undefined
       );
       navigate('/keyword');
     } catch (error) {
@@ -79,6 +84,7 @@ const DebateCreatePage: React.FC = () => {
       alert('글 작성 중 오류가 발생했습니다.');
     }
   };
+  
 
   return (
     <div className="w-[390px] h-screen mx-auto flex flex-col items-center justify-between bg-background">
