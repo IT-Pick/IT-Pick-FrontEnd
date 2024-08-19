@@ -7,7 +7,6 @@ interface Alarm {
   keyword: string;
   duration: string;
   debateId: number;
-  comment: boolean;
   trend: boolean;
   isRead: boolean;
 }
@@ -66,8 +65,9 @@ const MyAlarmPage: React.FC = () => {
       <div>
         {alarms.map((alarm, index) => (
           <React.Fragment key={alarm.debateId}>
+            <div className="border-[1.5px] border-[white] h-[2px]"></div>
             <AlarmItem {...alarm} onAlarmClick={handleAlarmClick} />
-            {index < alarms.length - 1 && <div className="border-[1.5px] border-[white] h-[2px]"></div>}
+            {index < alarms.length - 1}
           </React.Fragment>
         ))}
       </div>
