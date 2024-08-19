@@ -21,7 +21,6 @@ interface Debate {
 }
 
 interface DebateItemProps {
-    debateId: number;
     id: number;
     title: string;
     keyword: string;
@@ -35,31 +34,31 @@ interface DebateItemProps {
 
 const SortingDebates: React.FC<DebateItemProps & { className?: string }> = ({ id, title, keyword, duration, hits, comments, editMode, selectedItems, toggleSelect, className }) => (
     <div className="w-[390px] px-[20px] pt-6 justify-between items-center">
-        <div className={`flex pb-[20px] ${className}`}>
-            {editMode && (
-                <button onClick={() => toggleSelect(id)} className="mr-4">
-                    <img src={selectedItems.includes(id) ? ico_roundcheck : ico_rounduncheck} alt="select_icon" />
-                </button>
-            )}
-            <div className="flex flex-col items-start flex-grow">
-                <div className="text-center font-[600] text-[16px]">{title}</div>
-                <div className="flex gap-[4px]">
-                    <div className="text-[#9EAAB5] text-[12px] font-[400]">{duration} |</div>
-                    <div className="text-[#7620E4] text-[12px] font-[400]">#{keyword}</div>
+             <div className={`flex pb-[20px] ${className}`}>
+                 {editMode && (
+                    <button onClick={() => toggleSelect(id)} className="mr-4">
+                        <img src={selectedItems.includes(id) ? ico_roundcheck : ico_rounduncheck} alt="select_icon" />
+                    </button>
+                )}
+                <div className="flex flex-col items-start flex-grow">
+                    <div className="text-center font-[600] text-[16px]">{title}</div>
+                    <div className="flex gap-[4px]">
+                        <div className="text-[#9EAAB5] text-[12px] font-[400]">{duration} |</div>
+                        <div className="text-[#7620E4] text-[12px] font-[400]">#{keyword}</div>
+                    </div>
                 </div>
-            </div>
-            <div className="flex items-center gap-[8px]">
-                <div className="flex items-center gap-[4px] bg-purple-100 rounded-2xl px-2 py-1 text-xs text-violet-700 font-medium">
-                    <img src={tag_ico_view} alt="tag_ico_view" />
-                    {formatNumber(hits)}
-                </div>
-                <div className="flex items-center gap-[4px] bg-purple-100 rounded-2xl px-2 py-1 text-xs text-violet-700 font-medium">
-                    <img src={tag_ico_comment} alt="tag_ico_comment" />
-                    {formatNumber(comments)}
+                <div className="flex items-center gap-[8px]">
+                    <div className="flex items-center gap-[4px] bg-purple-100 rounded-2xl px-2 py-1 text-xs text-violet-700 font-medium">
+                        <img src={tag_ico_view} alt="tag_ico_view" />
+                        {formatNumber(hits)}
+                    </div>
+                    <div className="flex items-center gap-[4px] bg-purple-100 rounded-2xl px-2 py-1 text-xs text-violet-700 font-medium">
+                        <img src={tag_ico_comment} alt="tag_ico_comment" />
+                        {formatNumber(comments)}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 );
 
 const Debate: React.FC = () => {
@@ -80,31 +79,15 @@ const Debate: React.FC = () => {
     };
 
     const handleDeleteClick = async () => {
-        if (selectedItems.length > 0) {
-            try {
-                await handleDelete(selectedItems);
-                setIsEditMode(false);
-                setSelectedItems([]);
-            } catch (error) {
-                console.log("삭제 작업 중 오류가 발생했습니다.");
-            }
-        }
-    };
-    
-    const handleDelete = async (debateIds: number[]) => {
+        console.log("Attempting to delete debate with ID:");
         try {
-            const deletePromises = debateIds.map(debateId => deleteDebate(debateId));
-            const results = await Promise.all(deletePromises);
-    
-            const failedDeletes = results.filter(result => result.code !== 1000);
-            if (failedDeletes.length > 0) {
-                throw new Error("일부 항목 삭제 실패");
-            }
-    
-            setDebates(prevDebates => prevDebates.filter(debate => !debateIds.includes(debate.debateId)));
+            await Promise.all(selectedItems.map(id => deleteDebate(id)));
+            setDebates(debates.filter(debate => !selectedItems.includes(debate.debateId)));
+            setSelectedItems([]);
+            setIsEditMode(false);
             console.log("삭제 성공");
         } catch (error) {
-            console.error("삭제 실패: ", error.message);
+            console.error('삭제 실패:', error);
         }
     };
 
@@ -156,7 +139,6 @@ const Debate: React.FC = () => {
                 {debates.map((item) => (
                     <SortingDebates
                         key={item.debateId}
-                        debateId={item.debateId}
                         id={item.debateId}
                         title={item.title}
                         keyword={item.keyword}
