@@ -26,9 +26,9 @@ export const createDebate = async (
 
   if (voteOptions && voteOptions.length > 0) {
     voteOptions.forEach((option, index) => {
-      formData.append(`voteOptions[${index}][optionText]`, option.optionText);
+      formData.append(`voteOptions[${index}].optionText`, option.optionText);
       if (option.imageFile) {
-        formData.append(`voteOptions[${index}][imageFile]`, option.imageFile);
+        formData.append(`voteOptions[${index}].imageFile`, option.imageFile);
       }
     });
   }
