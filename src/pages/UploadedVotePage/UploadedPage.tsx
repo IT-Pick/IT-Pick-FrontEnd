@@ -9,7 +9,7 @@ import AddComment from "../UploadedVotePage/components/AddComment";
 const UploadedPage: React.FC = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
-    const debateId = params.get('debateId'); // 쿼리 문자열에서 debateId 가져오기
+    const debateId = params.get('debateId'); // 쿼리 문자열에서 debateId 가져 오기
 
     const [info, setInfo] = useState({
         userName: '',
