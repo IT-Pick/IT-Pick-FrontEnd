@@ -20,7 +20,7 @@ const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, 
   <div className={`font-pretendard ${className}`}>
     {image === PurpleBox ? (
       <div 
-        className="w-[164px] h-[200px] bg-purple-500 rounded-2xl mb-2 flex items-center justify-center text-white text-center p-2"
+        className="w-[164px] h-[200px] bg-point500 rounded-2xl mb-2 flex items-center justify-center text-white text-center p-2"
         style={{ backgroundImage: `url(${PurpleBox})`, backgroundSize: 'cover' }}
       >
         <span className="text-[14px] font-pretendard font-semibold px-[15px] leading-6">{title}</span>
