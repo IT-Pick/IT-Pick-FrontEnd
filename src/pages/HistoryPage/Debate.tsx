@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import tag_ico_comment from '../../assets/images/16x16/tag_ico_comment.svg';
-import tag_ico_view from "../../assets/images/16x16/tag_ico_view.svg";
-import ico_roundcheck from "../../assets/images/24x24/ico_roundcheck_filled.svg";
+import tag_ico_view from "@images/16x16/tag_ico_view.svg";
+import ico_roundcheck from "@images/24x24/ico_roundcheck_filled.svg";
 import ico_rounduncheck from "../../assets/images/24x24/ico_roundcheck_outline.svg";
 import { useNavigate } from "react-router-dom";
 import { getMyDebate } from "@apis/getMyDebate";
@@ -10,21 +10,6 @@ import { deleteDebate } from "@apis/deleteDebate";
 const formatNumber = (num: number) => {
     return new Intl.NumberFormat().format(num);
 };
-
-const handleDelete = async (debateIds: number[], setDebates: React.Dispatch<React.SetStateAction<Debate[]>>) => {
-    try {
-        for (const debateId of debateIds) {
-            const data = await deleteDebate(debateId);
-            if (data.code !== 1000) {
-                throw new Error("삭제 실패");
-            }
-        }
-        setDebates(prevDebates => prevDebates.filter(debate => !debateIds.includes(debate.debateId)));
-        console.log("삭제 성공");
-    } catch (error) {
-        console.log("삭제 실패");
-    }
-}
 
 interface Debate {
     debateId: number;
@@ -96,9 +81,30 @@ const Debate: React.FC = () => {
 
     const handleDeleteClick = async () => {
         if (selectedItems.length > 0) {
-            await handleDelete(selectedItems, setDebates);
-            setIsEditMode(false);
-            setSelectedItems([]);
+            try {
+                await handleDelete(selectedItems);
+                setIsEditMode(false);
+                setSelectedItems([]);
+            } catch (error) {
+                console.log("삭제 작업 중 오류가 발생했습니다.");
+            }
+        }
+    };
+    
+    const handleDelete = async (debateIds: number[]) => {
+        try {
+            const deletePromises = debateIds.map(debateId => deleteDebate(debateId));
+            const results = await Promise.all(deletePromises);
+    
+            const failedDeletes = results.filter(result => result.code !== 1000);
+            if (failedDeletes.length > 0) {
+                throw new Error("일부 항목 삭제 실패");
+            }
+    
+            setDebates(prevDebates => prevDebates.filter(debate => !debateIds.includes(debate.debateId)));
+            console.log("삭제 성공");
+        } catch (error) {
+            console.error("삭제 실패: ", error.message);
         }
     };
 
@@ -120,16 +126,30 @@ const Debate: React.FC = () => {
             <header className="w-full flex justify-between items-center py-4">
                 <h1 className="text-[20px] text-black font-pretendard font-bold leading-[28px] ml-6">내가 만든 토론</h1>
                 <div className="flex items-center">
-                    <button
-                        onClick={handleDeleteClick}
-                        disabled={!isEditMode || selectedItems.length === 0}
-                        className={`text-[14px] font-[500] mr-[12px] cursor-pointer ${isEditMode && selectedItems.length > 0 ? 'text-purple-600' : 'text-gray-400'}`}
-                    >
-                        삭제
-                    </button>
-                    <p onClick={toggleEditMode} className="text-point400 text-[14px] font-[500] mr-[24px] cursor-pointer">
-                        {isEditMode ? '완료' : '편집'}
-                    </p>
+                    {isEditMode && (
+                        <>
+                            <button
+                                onClick={toggleEditMode}
+                                className="text-[14px] font-[500] mr-[12px] cursor-pointer text-point400"
+                            >
+                                취소
+                            </button>
+                            <button
+                                onClick={handleDeleteClick}
+                                className={`text-[14px] font-[500] mr-[24px] cursor-pointer ${
+                                    selectedItems.length > 0 ? 'text-point400' : 'text-gray3 cursor-not-allowed'
+                                }`}
+                                disabled={selectedItems.length === 0}
+                            >
+                                삭제
+                            </button>
+                        </>
+                    )}
+                    {!isEditMode && (
+                        <p onClick={toggleEditMode} className="text-point400 text-[14px] font-[500] mr-[24px] cursor-pointer">
+                            편집
+                        </p>
+                    )}
                 </div>
             </header>
             <div className="bg-background h-screen">
