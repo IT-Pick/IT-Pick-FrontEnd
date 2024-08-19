@@ -6,6 +6,7 @@ import MakeVoteBar from './component/MakeVoteBar';
 const MakeVote: React.FC = () => {
   const [items, setItems] = useState<number[]>([1, 2]);
   const [itemNames, setItemNames] = useState<{ [key: number]: string }>({});
+  const [itemImages, setItemImages] = useState<{ [key: number]: File | null }>({}); // 이미지 파일을 저장하는 상태 추가
   const navigate = useNavigate();
 
   const addItem = () => {
@@ -20,6 +21,10 @@ const MakeVote: React.FC = () => {
       const updatedNames = { ...itemNames };
       delete updatedNames[id];
       setItemNames(updatedNames);
+
+      const updatedImages = { ...itemImages };
+      delete updatedImages[id];
+      setItemImages(updatedImages); // 이미지 상태에서도 삭제
     }
   };
 
@@ -27,8 +32,15 @@ const MakeVote: React.FC = () => {
     setItemNames({ ...itemNames, [id]: name });
   };
 
+  const handleImageChange = (id: number, image: File | null) => {
+    setItemImages({ ...itemImages, [id]: image });
+  };
+
   const handleComplete = () => {
-    const voteItems = items.map((id) => itemNames[id] || `항목 ${id}`);
+    const voteItems = items.map((id) => ({
+      name: itemNames[id] || `항목 ${id}`,
+      image: itemImages[id] || null,
+    }));
     navigate('/create', { state: { voteItems } });
   };
 
@@ -52,7 +64,8 @@ const MakeVote: React.FC = () => {
               id={item}
               onRemove={removeItem}
               canRemove={items.length > 2}
-              onNameChange={handleNameChange} // 이름 변경 시 상태 업데이트
+              onNameChange={handleNameChange}
+              onImageChange={handleImageChange} // 이 부분 추가
             />
           ))}
         </div>
@@ -70,6 +83,19 @@ const MakeVote: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* 미리보기 섹션 */}
+        <div className="w-full mt-8 p-4 bg-white rounded-lg shadow-md">
+          <h2 className="text-lg font-bold text-point500 mb-4">미리보기</h2>
+          <ul className="w-full list-disc list-inside text-gray-800">
+            {items.map((item) => (
+              <li key={item} className="mb-2">
+                {itemNames[item] || `항목 ${item}`}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div className='w-[390px]'>
           <MakeVoteBar />
         </div>
