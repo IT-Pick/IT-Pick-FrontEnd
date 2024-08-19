@@ -6,7 +6,8 @@ interface VoteOption {
 }
 
 export const createDebate = async (
-  userId: string,
+  // userId: string,
+  token: string,
   keywordId: string,
   title: string,
   content: string,
@@ -14,7 +15,7 @@ export const createDebate = async (
   voteOptions?: VoteOption[]
 ) => {
   const formData = new FormData();
-  formData.append('userId', userId);
+  // formData.append('userId', userId);
   formData.append('keywordId', keywordId);
   formData.append('title', title);
   formData.append('content', content);
@@ -32,7 +33,7 @@ export const createDebate = async (
     });
   }
 
-  const token = localStorage.getItem('accessToken');
+  // const token = localStorage.getItem('accessToken');
 
   if (!token) {
     throw new Error('토큰이 없습니다!');

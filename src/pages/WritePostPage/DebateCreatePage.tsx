@@ -60,23 +60,16 @@ const DebateCreatePage: React.FC = () => {
         }
       }
 
-      const keywordId = '231'; // 임영웅의 키워드 ID
-      console.log('Submitting form with:', {
-        token,
-        keywordId,
-        title,
-        content,
-        imageFile,
-        voteItems,
-      });
+      const keywordId = 231; // 임영웅의 키워드 ID
+      
       
       await createDebate(
         token,
-        keywordId,
+        keywordId.toString(),
         title,
         content,
         imageFile || undefined,
-        voteItems.map((item) => ({ optionText: item }))
+        voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
       );
 
       navigate('/keyword'); // 글 작성 후 홈으로 이동 (또는 원하는 페이지로 이동)
