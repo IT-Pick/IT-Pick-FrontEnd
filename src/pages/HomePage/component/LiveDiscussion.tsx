@@ -55,7 +55,7 @@ const LiveDiscussion: React.FC = () => {
             image={discussion.image}
             hits={discussion.hits}
             comments={discussion.comments}
-            link={discussion.link}
+            link={discussion.link} // 링크 전달
             className="w-[164px] h-[100%] flex-shrink-0"
           />
         ))}
