@@ -1,9 +1,10 @@
 import React from 'react';
 import tag_ico_view from '../assets/images/16x16/tag_ico_view.svg';
 import tag_ico_comment from '../assets/images/16x16/tag_ico_comment.svg';
+import PurpleBox from '@images/ico_purple_box.svg';
 
 interface DiscussionCardProps {
-  image: string;
+  image: string | null;
   hits: number | null;
   comments: number | null;
   title: string;
@@ -17,7 +18,16 @@ const formatNumber = (num: number | null) => {
 
 const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, title, link, className }) => (
   <div className={`font-pretendard ${className}`}>
-    <img src={image} alt={title} className="w-[164px] h-[200px]  rounded-2xl mb-2  " />
+    {image === PurpleBox ? (
+      <div 
+        className="w-[164px] h-[200px] bg-point500 rounded-2xl mb-2 flex items-center justify-center text-white text-center p-2"
+        style={{ backgroundImage: `url(${PurpleBox})`, backgroundSize: 'cover' }}
+      >
+        <span className="text-[14px] font-pretendard font-semibold px-[15px] leading-6">{title}</span>
+    </div>
+  ) : (
+      <img src={image} alt={title} className="w-[164px] h-[200px] rounded-2xl mb-2 object-cover object-center" />
+    )}
     <div className="flex justify-start items-center gap-2 mb-2">
       {hits !== null && (
         <div className="bg-point100 text-point500 rounded-2xl px-2 py-1 gap-[2px] flex items-center font-pretendard font-medium text-[12px]">

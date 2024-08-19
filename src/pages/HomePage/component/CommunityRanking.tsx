@@ -6,18 +6,18 @@ import naver from '@images/CommunityLogo/naver.svg';
 import google from '@images/CommunityLogo/google.svg';
 import nate from '@images/CommunityLogo/nate.svg';
 import zum from '@images/CommunityLogo/zum.svg';
-
-const rankings = [
-  { name: '네이트', tag: '#김현주_연애', icon: nate },
-  { name: '네이버', tag: '#김현주_열애설', icon: naver },
-  { name: '줌', tag: '#김현주_남자친구', icon: zum },
-  { name: '구글', tag: '#김현주_열애설', icon: google },
-  { name: '나무위키', tag: '#김현주_열애설', icon: namuwiki },
-];
+import { getCommunityRankingKeyword } from '@apis/getCommunityRankingKeyword';
 
 const CommunityRanking: React.FC = () => {
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState('');
+  const [rankings, setRankings] = useState([
+    { name: '네이트', tag: '#', icon: nate },
+    { name: '네이버', tag: '#', icon: naver },
+    { name: '줌', tag: '#', icon: zum },
+    { name: '구글', tag: '#', icon: google },
+    { name: '나무위키', tag: '#', icon: namuwiki },
+  ]);
 
   const updateCurrentTime = () => {
     const now = new Date();
@@ -31,6 +31,24 @@ const CommunityRanking: React.FC = () => {
 
   useEffect(() => {
     updateCurrentTime();
+
+    const fetchRankingData = async () => {
+      try {
+        const result = await getCommunityRankingKeyword('your-main-keywords');
+        setRankings([
+          { name: '네이트', tag: `#${result.nateMainKeyword}`, icon: nate },
+          { name: '네이버', tag: `#${result.naverMainKeyword}`, icon: naver },
+          { name: '줌', tag: `#${result.zumMainKeyword}`, icon: zum },
+          { name: '구글', tag: `#${result.googleMainKeyword}`, icon: google },
+          { name: '나무위키', tag: `#${result.namuwikiMainKeyword}`, icon: namuwiki },
+        ]);
+      } catch (error) {
+        console.error('랭킹 데이터를 불러오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchRankingData();
+
   }, []);
 
   const handleRankingClick = () => {
