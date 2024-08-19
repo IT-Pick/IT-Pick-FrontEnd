@@ -11,7 +11,8 @@ const DebateCreatePage: React.FC = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-  const location = useLocation<{ voteItems: string[] }>();
+  // const location = useLocation<{ voteItems: string[] }>();
+  const location = useLocation();
   const voteItems = location.state?.voteItems || [];
   const navigate = useNavigate();
 

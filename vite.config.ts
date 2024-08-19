@@ -51,6 +51,12 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/keyword/, '/keyword')
       },
+      '/debate': {
+        target: 'https://itpick.store',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/debate/, '/debate')
+      },
     },
   },
 })
