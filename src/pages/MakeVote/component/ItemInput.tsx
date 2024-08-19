@@ -7,10 +7,17 @@ interface ItemInputProps {
   id: number;
   onRemove: (id: number) => void;
   canRemove: boolean;
+  onNameChange: (id: number, name: string) => void; // 이름 변경 콜백 함수 prop 추가
 }
 
-const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove }) => {
+const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove, onNameChange }) => {
   const [text, setText] = useState(""); // 항목 입력 텍스트를 관리하는 상태
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newText = e.target.value;
+    setText(newText);
+    onNameChange(id, newText); // 이름 변경 시 부모에게 전달
+  };
 
   return (
     <div className="w-[350px] h-[47px] flex flex-col justify-center items-start">
@@ -33,7 +40,7 @@ const ItemInput: React.FC<ItemInputProps> = ({ id, onRemove, canRemove }) => {
           <input
             type="text"
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={handleChange}
             placeholder="항목 입력"
             className="text-black text-base font-medium font-['Pretendard'] bg-transparent focus:outline-none w-[250px]"
           />

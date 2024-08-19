@@ -9,11 +9,11 @@ const DebateCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 미리보기 URL 상태 추가
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const location = useLocation();
-  const voteItems = location.state?.voteItems || [];
+  const voteItems = location.state?.voteItems || []; // 투표 항목을 받아옴
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const DebateCreatePage: React.FC = () => {
     };
 
     window.visualViewport.addEventListener('resize', handleResize);
-    handleResize(); // 초기화
+    handleResize();
     return () => {
       window.visualViewport.removeEventListener('resize', handleResize);
     };
@@ -39,8 +39,6 @@ const DebateCreatePage: React.FC = () => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setImageFile(file);
-
-      // 선택된 파일의 미리보기 URL을 생성하여 상태에 저장
       const previewUrl = URL.createObjectURL(file);
       setPreviewUrl(previewUrl);
     }
@@ -65,14 +63,14 @@ const DebateCreatePage: React.FC = () => {
         }
       }
 
-      const keywordId = 231; // 키워드 ID 설정
+      const keywordId = 231;
 
       await createDebate(
         token,
         keywordId.toString(),
         title,
         content,
-        imageFile || undefined, // 선택된 파일을 API 호출에 전달
+        imageFile || undefined,
         voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
       );
       navigate('/keyword');
@@ -107,22 +105,23 @@ const DebateCreatePage: React.FC = () => {
           className="w-[335px] flex-grow px-5 font-pretendard font-medium text-[16px] text-gray5 placeholder-gray3 border-none focus:outline-none resize-none bg-background"
         />
 
+        {/* 투표 항목이 있을 경우 표시 */}
+        {voteItems.length > 0 && (
+          <div className="mt-4">
+            <VoteResult items={voteItems} />
+          </div>
+        )}
+        
         {/* 미리보기 이미지가 있을 경우 표시 */}
         {previewUrl && (
           <div className="w-[335px] mt-4">
             <img src={previewUrl} alt="미리보기" className="w-full h-auto rounded-lg shadow-md" />
           </div>
         )}
-        
-        {voteItems.length > 0 && (
-          <div className="mt-4">
-            <VoteResult items={voteItems} />
-          </div>
-        )}
       </div>
       <div className={`w-[390px] flex justify-center py-3 bg-white ${isKeyboardVisible ? 'fixed bottom-0' : 'absolute bottom-0'}`}
       style={{ bottom: isKeyboardVisible ? `${window.innerHeight - viewportHeight}px` : '0' }}>
-        <DebateIconBar onFileChange={handleFileChange} /> {/* DebateIconBar에 파일 변경 핸들러 전달 */}
+        <DebateIconBar onFileChange={handleFileChange} />
       </div>
     </div>
   );
