@@ -13,6 +13,6 @@ export const getUserNickname = async () => {
     return response.data.result.nickname;
   } catch (error) {
     console.error('닉네임 불러오는 중 오류 발생:', error);
-    throw error;
+    throw error;  
   }
 };
