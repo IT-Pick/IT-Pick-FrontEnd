@@ -20,13 +20,13 @@ interface TrendState {
   communityType: string;
   date: string;
   trends: Trend[];
-  comments: Comment[];  // 댓글 상태 추가
+  comments: { [debateId: number]: Comment[] };  // 댓글 상태를 debateId별로 관리
   setMenuType: (type: 'realTime' | 'daily' | 'weekly') => void;
   setCommunityType: (type: string) => void;
   setDate: (date: string) => void;
   fetchTrends: () => void;
-  addComment: (comment: Comment) => void;  // 댓글 추가 함수
-  setComments: (comments: Comment[]) => void;  // 댓글 설정 함수
+  addComment: (debateId: number, comment: Comment) => void;  // 댓글 추가 함수
+  setComments: (debateId: number, comments: Comment[]) => void;  // 댓글 설정 함수
 }
 
 export const useTrendStore = create<TrendState>((set, get) => ({
@@ -34,7 +34,8 @@ export const useTrendStore = create<TrendState>((set, get) => ({
   communityType: 'total',
   date: new Date().toISOString().split('T')[0],
   trends: [],
-  comments: [],  // 댓글 초기화
+  comments: {},  // 댓글 초기 상태를 객체로 초기화
+
   setMenuType: (type) => set({ menuType: type }),
   setCommunityType: (type) => set({ communityType: type }),
   setDate: (date) => set({ date }),
@@ -52,22 +53,30 @@ export const useTrendStore = create<TrendState>((set, get) => ({
       formattedDate = date.replace(/-/g, '').substring(2);
     } else if (menuType === 'weekly') {
       period = 'week';
-      formattedDate = date.replace(/-/g, '').substring(2); // '240818 week도 query는 이렇게'
+      formattedDate = date.replace(/-/g, '').substring(2);
     }
-    
+
     try {
       const trends = await getRankingInfo(communityType, period, formattedDate);
       console.log('Fetched trends:', trends);
       set({ trends });
     } catch (error) {
       console.error('트렌드 (랭킹) 데이터를 불러오는 중 오류 발생:', error);
-      set({ trends: [] }); // 오류 발생 시 빈 배열로 설정
+      set({ trends: [] });
     }
   },
 
-  addComment: (newComment) => set((state) => ({
-    comments: [...state.comments, newComment],
+  addComment: (debateId, newComment) => set((state) => ({
+    comments: {
+      ...state.comments,
+      [debateId]: [...(state.comments[debateId] || []), newComment],  // 특정 debateId에 댓글 추가
+    },
   })),
 
-  setComments: (comments) => set({ comments }),
+  setComments: (debateId, comments) => set((state) => ({
+    comments: {
+      ...state.comments,
+      [debateId]: comments,
+    },
+  })),
 }));
