@@ -58,7 +58,7 @@ const PopularSearches: React.FC = () => {
       </div>
     ))}
   </div>
-  <div className="flex flex-col ml-8">
+  <div className="flex flex-col ml-16">
     {searches.slice(halfLength).map((search, index) => (
       <div key={index + halfLength} className="flex items-center mt-3">
         <span className="font-pretendard font-bold text-[14px] text-gray3 mr-4">{index + halfLength + 1}</span>

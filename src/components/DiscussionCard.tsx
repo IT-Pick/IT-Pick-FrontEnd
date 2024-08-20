@@ -66,7 +66,7 @@ const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, 
           </div>
         )}
       </div>
-      <span className="text-black font-bold text-[16px] text-left">
+      <span className="text-black font-bold text-[16px] text-left line-clamp-2">
         {title}
       </span>
     </div>

@@ -59,7 +59,7 @@ const MyAlarmPage: React.FC = () => {
   };
 
   return (
-    <div className="w-[390px] h-screen mx-auto bg-background">
+    <div className="w-[390px] h-full mx-auto bg-background">
       <header className="w-full py-[24.5px] bg-background">
         <h1 className="text-[20px] text-black font-bold mt-[16px] ml-[24px] ">알림</h1>
       </header>
