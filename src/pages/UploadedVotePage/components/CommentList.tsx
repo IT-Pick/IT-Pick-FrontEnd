@@ -2,8 +2,13 @@ import React from "react";
 import Comment from "./Comment";
 import { useTrendStore } from "@store/useTrendStore"; // zustand store import
 
-const CommentList: React.FC = () => {
-  const comments = useTrendStore((state) => state.comments);
+
+interface CommentListProps {
+  debateId: number; // debateId를 prop으로 받아옴
+}
+
+const CommentList: React.FC<CommentListProps> = ({ debateId }) => {
+  const comments = useTrendStore((state) => state.comments[debateId] || []); // 특정 debateId에 대한 댓글 가져오기
 
   return (
     <div className="flex flex-col border-t-[12px] border-[#EDF0F3] pt-[28px] pb-[42px]">
