@@ -62,7 +62,7 @@ const ParticipatedDebates: React.FC = () => {
     },[navigate]);
 
     return (
-        <div className="w-[390px] h-screen mx-auto">
+        <div className="w-[390px] h-full mx-auto">
             <header className="w-full flex justify-between items-center py-4">
                 <h1 className="text-[20px] text-black font-pretendard font-bold leading-[28px] ml-6">내가 참여한 토론</h1>
             </header>
