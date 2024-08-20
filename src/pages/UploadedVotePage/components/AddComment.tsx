@@ -26,7 +26,7 @@ const AddComment: React.FC<AddCommentProps> = ({ debateId, userId }) => {
           debateId,
           userId,
         });
-        
+
         const newComment = {
           commentId: response.result.commentId,
           userName: '현재 유저명', // 실제 유저명 사용
@@ -35,7 +35,7 @@ const AddComment: React.FC<AddCommentProps> = ({ debateId, userId }) => {
           text: comment,
         };
 
-        addComment(newComment);
+        addComment(debateId, newComment);  // debateId와 함께 댓글 추가
         setComment("");
       } catch (error) {
         console.error("댓글을 추가하는 중 오류가 발생했습니다:", error);
