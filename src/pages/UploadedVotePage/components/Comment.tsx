@@ -3,11 +3,10 @@ import profile from "../../../assets/images/ico_profile2.svg";
 import moreVertical from "../../../assets/images/ico_more-vertical.svg"; 
 import heart from "../../../assets/images/24x24/ico_heart.png"; 
 import heartFilled from "../../../assets/images/24x24/ico_heart_filled.svg";
-import { getTimeDifference } from "@utils/timeUtils";
 
 interface CommentProps {
     userName: string;
-    time: number;
+    time: string;  // time을 string 형식으로 수정
     text: string;
     like: number;
 }
@@ -16,9 +15,24 @@ const formatNumber = (num: number): string => {
     return new Intl.NumberFormat().format(num);
 };
 
+const getTimeDifference = (timeString: string) => {
+    const alarmTime = new Date(timeString);
+    const now = new Date();
+    const diffInMs = now.getTime() - alarmTime.getTime();
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
 
+    if (diffInMinutes < 60) {
+        return `${diffInMinutes}분 전`;
+    } else if (diffInHours < 24) {
+        return `${diffInHours}시간 전`;
+    } else {
+        return `${diffInDays}일 전`;
+    }
+};
 
-const Comment: React.FC<CommentProps> = ({ userName, time, text, like}) => {
+const Comment: React.FC<CommentProps> = ({ userName, time, text, like }) => {
     const [isLiked, setIsLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(like);
 

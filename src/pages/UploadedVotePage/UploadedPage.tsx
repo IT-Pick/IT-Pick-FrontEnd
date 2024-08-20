@@ -7,6 +7,23 @@ import CommentList from "../UploadedVotePage/components/CommentList";
 import AddComment from "../UploadedVotePage/components/AddComment";
 import { useTrendStore } from "@store/useTrendStore"; // zustand store import
 
+const getTimeDifference = (timeString: string) => {
+    const alarmTime = new Date(timeString);
+    const now = new Date();
+    const diffInMs = now.getTime() - alarmTime.getTime();
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    if (diffInMinutes < 60) {
+        return `${diffInMinutes}분 전`;
+    } else if (diffInHours < 24) {
+        return `${diffInHours}시간 전`;
+    } else {
+        return `${diffInDays}일 전`;
+    }
+};
+
 const UploadedPage: React.FC = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
@@ -43,7 +60,7 @@ const UploadedPage: React.FC = () => {
                     const formattedComments = data.result.comments.map(comment => ({
                         commentId: comment.commentId,
                         userName: comment.userNickname,
-                        time: new Date(comment.createAt).toLocaleString(),
+                        time: getTimeDifference(new Date(comment.createAt).toLocaleString()),  // 시간 포맷팅
                         like: comment.commentHeartCount,
                         text: comment.commentText,
                         parentCommentId: comment.parentCommentId,
