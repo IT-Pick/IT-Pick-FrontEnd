@@ -57,6 +57,7 @@ const RecentDiscussions: React.FC = () => {
             hits={discussion.hits}
             comments={discussion.comments}
             link={discussion.link}
+            showRank={false}
             className="w-[164px] h-[100%] flex-shrink-0"
           />
         ))}
