@@ -12,10 +12,14 @@ const DebateCreatePage: React.FC = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  
   const location = useLocation();
-  const voteItems = location.state?.voteItems || []; // 투표 항목을 받아옴
   const navigate = useNavigate();
 
+  // 직전 페이지에서 전달된 keywordId를 받아옴
+  const keywordId = location.state?.keywordId;
+  const voteItems = location.state?.voteItems || []; // 투표 항목을 받아옴
+  
   useEffect(() => {
     const handleResize = () => {
       const currentViewportHeight = visualViewport.height;
@@ -63,11 +67,9 @@ const DebateCreatePage: React.FC = () => {
         }
       }
 
-      const keywordId = 231;
-
       await createDebate(
         token,
-        keywordId.toString(),
+        keywordId.toString(), // keywordId를 사용
         title,
         content,
         imageFile || undefined,
@@ -85,7 +87,7 @@ const DebateCreatePage: React.FC = () => {
       <div className="w-full h-full flex flex-col">
         <div className="flex justify-between items-center mb-6 py-4 px-6 bg-white">
           <div className="font-pretendard font-bold text-lg">
-            <span className="text-point500">#하하</span>
+            <span className="text-point500">#{keywordId}</span> {/* keywordId를 표시 */}
             <span className="text-black"> 토론 만들기</span>
           </div>
           <button className="text-point400 font-pretendard font-medium text-[14px]" onClick={handleSubmit}>등록하기</button>

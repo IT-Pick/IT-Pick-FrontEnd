@@ -26,7 +26,7 @@ const KeywordPage: React.FC = () => {
   const location = useLocation();
 
   // location.state를 통해 전달된 community_name을 가져옵니다.
-  const community_name = location.state?.community_name || 'Default Community';
+  const community_name = location.state?.community_name || ' ';
 
   useEffect(() => {
     const fetchAndSetKeywordData = async () => {
@@ -45,7 +45,8 @@ const KeywordPage: React.FC = () => {
   }, [selectedKeyword]);
 
   const handleButtonClick = () => {
-    navigate('/create');
+    // create 페이지로 이동할 때 keywordId를 함께 전달
+    navigate('/create', { state: { keywordId } });
   };
 
   return (
