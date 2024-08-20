@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DebateIconBar from './components/DebateIconBar';
-import VoteResult from './components/VoteResult';
+// import VoteResult from './components/VoteResult';
 import { createDebate } from '@apis/WriteDebate/createDebate';
 import { refreshAccessToken } from '@apis/refreshAccessToken';
 import { getKeywordById } from '@apis/getKeywordById'; // 키워드 ID로 키워드 이름을 불러오는 API 함수 임포트
@@ -26,7 +26,7 @@ const DebateCreatePage: React.FC = () => {
       if (keywordId) {
         try {
           const data = await getKeywordById(keywordId);
-          setKeywordName(data.keyword); // API에서 반환된 키워드 이름 설정
+          setKeywordName(data.result); // API에서 반환된 키워드 이름 설정
         } catch (error) {
           console.error('키워드 이름을 불러오는 중 오류가 발생했습니다.', error);
         }
@@ -87,7 +87,7 @@ const DebateCreatePage: React.FC = () => {
         title,
         content,
         imageFile || undefined,
-        voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
+        // voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
       );
       navigate('/keyword');
     } catch (error) {
@@ -96,13 +96,13 @@ const DebateCreatePage: React.FC = () => {
     }
   };
 
-  if (!keywordName) {
-    // 키워드 이름이 로딩 중일 때는 로딩 메시지 표시
-    return <div>Loading...</div>;
-  }
+  // if (!keywordName) {
+  //   // 키워드 이름이 로딩 중일 때는 로딩 메시지 표시
+  //   return <div>Loading...</div>;
+  // }
 
   return (
-    <div className="w-[390px] h-full mx-auto flex flex-col items-center justify-between bg-background">
+    <div className="w-[390px] min-h-screen mx-auto flex flex-col items-center justify-between bg-background">
       <div className="w-full h-full flex flex-col">
         <div className="flex justify-between items-center mb-6 py-4 px-6 bg-white">
           <div className="font-pretendard font-bold text-lg">
@@ -127,11 +127,11 @@ const DebateCreatePage: React.FC = () => {
         />
 
         {/* 투표 항목이 있을 경우 표시 */}
-        {voteItems.length > 0 && (
+        {/* {voteItems.length > 0 && (
           <div className="mt-4">
             <VoteResult items={voteItems} />
           </div>
-        )}
+        )} */}
         
         {/* 미리보기 이미지가 있을 경우 표시 */}
         {previewUrl && (
