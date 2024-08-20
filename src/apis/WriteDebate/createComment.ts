@@ -2,7 +2,6 @@ import axios from 'axios';
 
 interface CommentPayload {
   comment: string;
-  parentCommentId: number | null;
   debateId: number;
   userId: number;
 }
@@ -32,8 +31,6 @@ export const createComment = async (payload: CommentPayload) => {
           throw new Error('댓글 생성 요청에서 잘못된 값이 존재합니다.');
         case 6002:
           throw new Error('해당 토론이 존재하지 않습니다.');
-        case 6003:
-          throw new Error('부모 댓글이 존재하지 않습니다.');
         default:
           throw new Error('요청 중 오류가 발생했습니다.');
       }
