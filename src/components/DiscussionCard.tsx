@@ -9,37 +9,34 @@ interface DiscussionCardProps {
   hits: number | null;
   comments: number | null;
   title: string;
-  debateId: number; // debateId를 직접 받아옴
-  className?: string; // 추가적인 클래스 이름을 위한 props
+  debateId: number; 
+  rank: number; // Add the rank prop
+  className?: string; 
 }
 
 const formatNumber = (num: number | null) => {
   return num !== null ? new Intl.NumberFormat().format(num) : '';
 };
 
-const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, title, debateId, className }) => {
+const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, title, debateId, rank, className }) => {
   const navigate = useNavigate();
 
-  // const handleClick = () => {
-  //   navigate(`/debate/details?debateId=${debateId}`);
-  // };
-  //김민석님 리팩토링 코드 삽입
-
   const handleClick = () => {
-    // localStorage에서 accessToken 가져오기
     const accessToken = localStorage.getItem('accessToken');
-
-    // accessToken이 있는 경우에만 navigate 호출
     if (accessToken) {
       navigate(`/debate/details?debateId=${debateId}`);
     } else {
-      // accessToken이 없는 경우 처리 (예: 로그인 페이지로 리다이렉트)
       navigate('/login');
     }
   };
 
   return (
-    <div className={`font-pretendard ${className}`} onClick={handleClick}>
+    <div className={`font-pretendard relative ${className}`} onClick={handleClick}>
+      {/* Ranking Number Overlay */}
+      <div className="absolute top-[12px] left-[16px] bg-[#914CE9] rounded-[8px] text-white w-6 h-6 flex items-center justify-center z-10">
+        {rank}
+      </div>
+
       {image === PurpleBox ? (
         <div 
           className="w-[164px] h-[200px] bg-point500 rounded-2xl mb-2 flex items-center justify-center text-white text-center p-2"

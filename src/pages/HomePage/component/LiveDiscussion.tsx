@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import DiscussionCard from '@components/DiscussionCard';
 import { getLiveDiscussionBest3 } from '@apis/getLiveDiscussionBest3';
 import PurpleBox from '@images/ico_purple_box.svg';
+import DiscussionCard from '@components/DiscussionCard';
 
 interface Discussion {
   image: string | null;
   hits: number | null;
   comments: number | null;
   title: string;
-  debateId: number; // debateId를 이곳에서 관리
+  debateId: number;
 }
 
 interface Response {
@@ -31,7 +31,7 @@ const LiveDiscussion: React.FC = () => {
           hits: item.hit,
           image: item.mediaUrl || PurpleBox,
           comments: item.comment,
-          debateId: item.debateId, // debateId 추가
+          debateId: item.debateId,
         }));
         setDiscussions(formattedDiscussions);
       } catch (error) {
@@ -47,16 +47,17 @@ const LiveDiscussion: React.FC = () => {
       <div className="flex flex-shrink-0">
         <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">실시간 토론 BEST 3</span>
       </div>
-      <div className="flex flex-row space-x-[12px] mt-[12px] overflow-x-scroll overflow-y-hidden scrollbar-hidden w-auto h-[100%]] pr-[24px]">
+      <div className="flex flex-row space-x-[12px] mt-[12px] overflow-x-scroll overflow-y-hidden scrollbar-hidden w-auto h-[100%] pr-[24px]">
         {discussions.map((discussion, index) => (
-          <DiscussionCard 
+          <DiscussionCard
             key={index}
             title={discussion.title}
             image={discussion.image}
             hits={discussion.hits}
             comments={discussion.comments}
-            debateId={discussion.debateId} // debateId를 props로 전달
-            className="w-[164px] h-[100%] flex-shrink-0"
+            debateId={discussion.debateId}
+            rank={index + 1} 
+            className="w-[164px] h-[100%] flex-shrink-0 "
           />
         ))}
       </div>
