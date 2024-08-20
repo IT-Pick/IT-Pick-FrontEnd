@@ -91,7 +91,7 @@ const SearchPage: React.FC = () => {
   };
   
   return (
-    <div className="w-[390px] mx-auto pt-[20px] bg-background min-h-screen">
+    <div className="w-[390px] mx-auto pt-[20px] bg-background h-full">
       <div className="ml-[24px]">
         <SearchBar placeholder="김현주 열애설" onSearch={handleSearch} />
       </div>
