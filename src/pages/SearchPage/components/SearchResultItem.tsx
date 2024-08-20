@@ -1,5 +1,6 @@
 import React from 'react';
 import { useKeywordState } from '../../../context/KeywordStateContext';
+import { useNavigate } from "react-router-dom";
 
 interface SearchResultItemProps {
   title: string;
@@ -8,9 +9,11 @@ interface SearchResultItemProps {
 
 const SearchResultItem: React.FC<SearchResultItemProps> = ({ title, sources = [] }) => {
   const { setSelectedKeyword } = useKeywordState();
+  const navigate = useNavigate();
 
   const handleSearchItemClick = () => {
     setSelectedKeyword(title);  // title을 context에 저장
+    navigate('/keyword');
   };
 
   return (

@@ -93,7 +93,7 @@ const SearchPage: React.FC = () => {
   return (
     <div className="w-[390px] mx-auto pt-[20px] bg-background h-full">
       <div className="ml-[24px]">
-        <SearchBar placeholder="김현주 열애설" onSearch={handleSearch} />
+        <SearchBar placeholder="올림픽" onSearch={handleSearch} />
       </div>
       
       {/* 검색하지 않았고 결과가 존재할때 */}
