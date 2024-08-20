@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DebateIconBar from './components/DebateIconBar';
-// import VoteResult from './components/VoteResult';
+import VoteResult from './components/VoteResult';
 import { createDebate } from '@apis/WriteDebate/createDebate';
 import { refreshAccessToken } from '@apis/refreshAccessToken';
 import { getKeywordById } from '@apis/getKeywordById'; // 키워드 ID로 키워드 이름을 불러오는 API 함수 임포트
@@ -87,7 +87,7 @@ const DebateCreatePage: React.FC = () => {
         title,
         content,
         imageFile || undefined,
-        // voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
+        voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
       );
       navigate('/keyword');
     } catch (error) {
@@ -127,11 +127,11 @@ const DebateCreatePage: React.FC = () => {
         />
 
         {/* 투표 항목이 있을 경우 표시 */}
-        {/* {voteItems.length > 0 && (
+        {voteItems.length > 0 && (
           <div className="mt-4">
             <VoteResult items={voteItems} />
           </div>
-        )} */}
+        )} 
         
         {/* 미리보기 이미지가 있을 경우 표시 */}
         {previewUrl && (
