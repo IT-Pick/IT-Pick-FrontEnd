@@ -31,14 +31,15 @@ interface TrendState {
 
 export const useTrendStore = create<TrendState>((set, get) => ({
   menuType: 'realTime',
-  communityType: 'total',
+  communityType: 'total', // 기본값 설정
   date: new Date().toISOString().split('T')[0],
   trends: [],
-  comments: [],  // 댓글 초기화
+  comments: [],  // 댓글 초기 상태 추가
+  
   setMenuType: (type) => set({ menuType: type }),
   setCommunityType: (type) => set({ communityType: type }),
   setDate: (date) => set({ date }),
-
+  
   fetchTrends: async () => {
     const { menuType, communityType, date } = get();
 
@@ -52,7 +53,7 @@ export const useTrendStore = create<TrendState>((set, get) => ({
       formattedDate = date.replace(/-/g, '').substring(2);
     } else if (menuType === 'weekly') {
       period = 'week';
-      formattedDate = date.replace(/-/g, '').substring(2); // '240818 week도 query는 이렇게'
+      formattedDate = date.replace(/-/g, '').substring(2);
     }
     
     try {
@@ -61,13 +62,13 @@ export const useTrendStore = create<TrendState>((set, get) => ({
       set({ trends });
     } catch (error) {
       console.error('트렌드 (랭킹) 데이터를 불러오는 중 오류 발생:', error);
-      set({ trends: [] }); // 오류 발생 시 빈 배열로 설정
+      set({ trends: [] });
     }
   },
-
+  
   addComment: (newComment) => set((state) => ({
     comments: [...state.comments, newComment],
   })),
-
+  
   setComments: (comments) => set({ comments }),
 }));

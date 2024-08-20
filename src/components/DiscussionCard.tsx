@@ -20,8 +20,22 @@ const formatNumber = (num: number | null) => {
 const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, title, debateId, className }) => {
   const navigate = useNavigate();
 
+  // const handleClick = () => {
+  //   navigate(`/debate/details?debateId=${debateId}`);
+  // };
+  //김민석님 리팩토링 코드 삽입
+
   const handleClick = () => {
-    navigate(`/debate/details?debateId=${debateId}`);
+    // localStorage에서 accessToken 가져오기
+    const accessToken = localStorage.getItem('accessToken');
+
+    // accessToken이 있는 경우에만 navigate 호출
+    if (accessToken) {
+      navigate(`/debate/details?debateId=${debateId}`);
+    } else {
+      // accessToken이 없는 경우 처리 (예: 로그인 페이지로 리다이렉트)
+      navigate('/login');
+    }
   };
 
   return (
