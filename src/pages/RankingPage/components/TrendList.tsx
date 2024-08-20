@@ -1,6 +1,6 @@
 import React from 'react';
 import TrendItem from './TrendItem';
-import { useTrendStore } from '../../../store/trendStore';
+import { useTrendStore } from '../../../store/useTrendStore';
 import { useKeywordState } from '../../../context/KeywordStateContext';
 import { useNavigate } from 'react-router-dom';
 

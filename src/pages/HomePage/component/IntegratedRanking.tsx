@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import tag_ico_right from "@images/16x16/tag_ico_right.svg";
-import { useTrendStore } from '../../../store/trendStore';
+import { useTrendStore } from '@store/useTrendStore';
 
 const RankingItem = ({ rank, name, tags }) => (
   <div className="flex flex-col w-full">
