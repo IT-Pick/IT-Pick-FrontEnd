@@ -13,16 +13,17 @@ const Tab = ({activeTab, label, onClick}) => (
     </button>
 );
 
-const TabContent = ({activeTab}) => {
-    return(
-        <div>
-            {activeTab === '인기순' && <RecentDiscussion/>}
-            {activeTab === '최신순' && <PopularDiscussion/>}
-        </div>
-    );
+const TabContent = ({ activeTab, keywordId }) => {
+    if (activeTab === '인기순') {
+        return <RecentDiscussion keywordId={keywordId} />;
+      }
+      if (activeTab === '최신순') {
+        return <PopularDiscussion keywordId={keywordId} />;
+      }
+      return null;
 };
 
-const LiveDiscussion: React.FC = () => {
+const LiveDiscussion: React.FC<{ keywordId: number }> = ({ keywordId }) => {
     const [activeTab, setActiveTab] = useState('인기순')
     return(
         <div className="mt-[44px] mx-[24px]">
@@ -35,7 +36,7 @@ const LiveDiscussion: React.FC = () => {
                     <Tab activeTab={activeTab} label="최신순" onClick={setActiveTab}/>
                 </div>
              </div>
-            <TabContent activeTab={activeTab}/>
+            <TabContent activeTab={activeTab} keywordId={keywordId}/>
         </div>
         
     )
