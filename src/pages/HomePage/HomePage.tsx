@@ -33,7 +33,7 @@ const HomePage = () => {
       <GreetingMessage isLoggedIn={isLoggedIn} />
       <div className="flex items-center ml-[24px] mr-[24px] mt-4">
         <img src={logo} alt="Logo Icon" className="w-8 h-8 mr-[14.79px]" />
-        <SearchBar placeholder="김현주 열애설" onClick={handleNavigateToSearch} />
+        <SearchBar placeholder="올림픽" onClick={handleNavigateToSearch} />
       </div>
       <IntegratedRanking />
       <LiveDiscussion />
