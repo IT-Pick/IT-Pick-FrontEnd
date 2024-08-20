@@ -57,6 +57,7 @@ const LiveDiscussion: React.FC = () => {
             comments={discussion.comments}
             debateId={discussion.debateId}
             rank={index + 1} 
+            showRnak={true}
             className="w-[164px] h-[100%] flex-shrink-0 "
           />
         ))}

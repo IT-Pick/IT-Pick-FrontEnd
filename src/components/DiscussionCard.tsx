@@ -12,13 +12,14 @@ interface DiscussionCardProps {
   debateId: number; 
   rank: number; // Add the rank prop
   className?: string; 
+  showRnak: boolean;
 }
 
 const formatNumber = (num: number | null) => {
   return num !== null ? new Intl.NumberFormat().format(num) : '';
 };
 
-const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, title, debateId, rank, className }) => {
+const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, title, debateId, rank, className, showRank = true }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -32,10 +33,12 @@ const DiscussionCard: React.FC<DiscussionCardProps> = ({ image, hits, comments, 
 
   return (
     <div className={`font-pretendard relative ${className}`} onClick={handleClick}>
-      {/* Ranking Number Overlay */}
-      <div className="absolute top-[12px] left-[16px] bg-[#914CE9] rounded-[8px] text-white w-6 h-6 flex items-center justify-center z-10">
-        {rank}
-      </div>
+      {showRank &&(
+          <div className="absolute top-[12px] left-[16px] bg-[#914CE9] rounded-[8px] text-white w-6 h-6 flex items-center justify-center z-10">
+          {rank}
+        </div>
+      )}
+      
 
       {image === PurpleBox ? (
         <div 
