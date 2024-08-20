@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ico_eclipse from "../../../assets/images/etc/ico_eclipse.svg";
 import RecentDiscussion from "./RecentDiscussion";
 import PopularDiscussion from "./Popular";
-// import { getKeywordLiveDiscussion } from "@apis/getKeywordLiveDiscussion";
 
 const Tab = ({activeTab, label, onClick}) => (
     <button className={`text-[14px] ${activeTab === label ? 'font-[700]' : 'text-[#9EAAB5] font-[500'}`}  onClick={()=> onClick(label)}>
