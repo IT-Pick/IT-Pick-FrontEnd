@@ -26,27 +26,31 @@ const KeywordPage: React.FC = () => {
 
     useEffect(() => {
         const fetchAndSetKeywordData = async () => {
-          if (!selectedKeyword) return;
-    
-          try {
-            const result = await getKeywordRelatedData('total', 'realtime', selectedKeyword);
-            setKeywordData(result);
-            setKeywordId(result.keywordId);
-          } catch (error) {
-            console.error('Error fetching keyword data:', error);
-          }
+            if (!selectedKeyword) return;
+
+            try {
+                const result = await getKeywordRelatedData('total', 'realtime', selectedKeyword);
+                setKeywordData(result);
+                setKeywordId(result.keywordId);
+            } catch (error) {
+                console.error('Error fetching keyword data:', error);
+            }
         };
-    
+
         fetchAndSetKeywordData();
-      }, [selectedKeyword]);
+    }, [selectedKeyword]);
 
     const handleButtonClick = () => {
-        navigate('/create'); //라우팅 링크 typo 수정
+        if (keywordId) {
+            navigate('/create', { state: { keywordId } }); // keywordId를 전달하며 이동
+        } else {
+            alert('키워드 정보가 없습니다.');
+        }
     };
 
-    return(
+    return (
         <div className="w-[390px] mx-auto bg-[#F8F9FC] min-h-screen">
-            <Header/>
+            <Header />
             {keywordData && (
                 <>
                     <MainCard 
@@ -66,9 +70,8 @@ const KeywordPage: React.FC = () => {
             <button className="fixed bottom-[18px] right-0" onClick={handleButtonClick}>
                 <img src={ico_write} alt="add discussion icon"/>
             </button>
-            
         </div>
-    )
+    );
 }
 
 export default KeywordPage;
