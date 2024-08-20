@@ -1,4 +1,5 @@
 import React from 'react';
+import { useKeywordState } from '../../../context/KeywordStateContext';
 
 interface SearchResultItemProps {
   title: string;
@@ -6,9 +7,15 @@ interface SearchResultItemProps {
 }
 
 const SearchResultItem: React.FC<SearchResultItemProps> = ({ title, sources = [] }) => {
+  const { setSelectedKeyword } = useKeywordState();
+
+  const handleSearchItemClick = () => {
+    setSelectedKeyword(title);  // title을 context에 저장
+  };
+
   return (
     <div>
-      <div className="h-[84px] mx-6 pt-3 justify-between">
+      <div onClick={handleSearchItemClick} className="h-[84px] mx-6 pt-3 justify-between">
         <h3 className="text-[16px] font-pretendard font-medium">{title}</h3>
         {sources.length > 0 && (
           <div className="flex mt-2">
