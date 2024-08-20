@@ -2,7 +2,6 @@ import React from "react";
 import Comment from "./Comment";
 import { useTrendStore } from "@store/useTrendStore"; // zustand store import
 
-
 interface CommentListProps {
   debateId: number; // debateId를 prop으로 받아옴
 }
