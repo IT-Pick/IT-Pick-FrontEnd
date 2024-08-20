@@ -3,6 +3,7 @@ import profile from "../../../assets/images/ico_profile2.svg";
 import moreVertical from "../../../assets/images/ico_more-vertical.svg"; 
 import heart from "../../../assets/images/24x24/ico_heart.png"; 
 import heartFilled from "../../../assets/images/24x24/ico_heart_filled.svg";
+import { getTimeDifference } from "@utils/timeUtils";
 
 interface CommentProps {
     userName: string;
@@ -14,6 +15,8 @@ interface CommentProps {
 const formatNumber = (num: number): string => {
     return new Intl.NumberFormat().format(num);
 };
+
+
 
 const Comment: React.FC<CommentProps> = ({ userName, time, text, like}) => {
     const [isLiked, setIsLiked] = useState(false);
@@ -35,7 +38,7 @@ const Comment: React.FC<CommentProps> = ({ userName, time, text, like}) => {
                     <div className="flex items-center">
                         <img src={profile} alt="profile" className="rounded-full" width={28} height={28} />
                         <div className="text-[14px] pl-[8px] font-bold">{userName}</div>
-                        <div className="text-[14px] text-gray2 pl-[8px]">{time}분 전</div>
+                        <div className="text-[14px] text-gray2 pl-[8px]">{getTimeDifference(time)}</div>
                         <button className="ml-2 text-[14px] text-gray3 pl-[16px]">답글 달기</button>
                     </div>
                     <div>
