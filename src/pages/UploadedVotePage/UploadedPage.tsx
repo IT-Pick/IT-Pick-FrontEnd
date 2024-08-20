@@ -7,8 +7,9 @@ import CommentList from "../UploadedVotePage/components/CommentList";
 import AddComment from "../UploadedVotePage/components/AddComment";
 import { useTrendStore } from "@store/useTrendStore"; // zustand store import
 
+// 시간 차이를 계산해주는 함수
 const getTimeDifference = (timeString: string) => {
-    const alarmTime = new Date(timeString);
+    const alarmTime = new Date(timeString);  // 문자열을 Date 객체로 변환
     const now = new Date();
     const diffInMs = now.getTime() - alarmTime.getTime();
     const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
@@ -48,7 +49,7 @@ const UploadedPage: React.FC = () => {
                     const data = await getDebateDetails(debateId);
                     setInfo({
                         userName: data.result.userNickname,
-                        time: new Date(data.result.createAt).toLocaleString(),
+                        time: data.result.createAt, // 원래 서버에서 온 포맷을 그대로 유지
                         view: data.result.hits,
                         title: data.result.title,
                         text: data.result.content,
@@ -60,7 +61,7 @@ const UploadedPage: React.FC = () => {
                     const formattedComments = data.result.comments.map(comment => ({
                         commentId: comment.commentId,
                         userName: comment.userNickname,
-                        time: getTimeDifference(new Date(comment.createAt).toLocaleString()),  // 시간 포맷팅
+                        time: getTimeDifference(comment.createAt),  // 시간 변환
                         like: comment.commentHeartCount,
                         text: comment.commentText,
                         parentCommentId: comment.parentCommentId,
@@ -86,7 +87,7 @@ const UploadedPage: React.FC = () => {
             <Header 
                 info={{
                     userName: info.userName,
-                    time: info.time,
+                    time: getTimeDifference(info.time), // 시간을 변환하여 전달
                     view: info.view,
                     title: info.title,
                     userImgUrl: info.userImgUrl,

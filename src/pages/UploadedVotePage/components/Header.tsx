@@ -27,7 +27,7 @@ const Header: React.FC <HeaderProps>=({info}) =>{
                         {info.userName}
                     </div>
                     <div className="flex text-[#9EAAB5] text-[14px] font-[400] gap-3">
-                        <div >{info.time}분전</div>
+                        <div >{info.time}</div>
                         <div>|</div>
                         <div>조회수 {formatNumber(info.view)}</div>
                     </div>

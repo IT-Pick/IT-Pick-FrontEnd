@@ -6,19 +6,21 @@ import heartFilled from "../../../assets/images/24x24/ico_heart_filled.svg";
 
 interface CommentProps {
     userName: string;
-    time: string;  // time을 string 형식으로 수정
+    time: string;  // 서버에서 오는 시간 형식인 string으로 유지
     text: string;
     like: number;
 }
 
-const formatNumber = (num: number): string => {
-    return new Intl.NumberFormat().format(num);
-};
-
 const getTimeDifference = (timeString: string) => {
-    const alarmTime = new Date(timeString);
+    const parsedTime = new Date(timeString);
+    if (isNaN(parsedTime.getTime())) {
+        // 파싱 실패 시 처리
+        console.error('Invalid time string format:', timeString);
+        return 'Invalid date';
+    }
+
     const now = new Date();
-    const diffInMs = now.getTime() - alarmTime.getTime();
+    const diffInMs = now.getTime() - parsedTime.getTime();
     const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
@@ -30,6 +32,11 @@ const getTimeDifference = (timeString: string) => {
     } else {
         return `${diffInDays}일 전`;
     }
+};
+
+
+const formatNumber = (num: number): string => {
+    return new Intl.NumberFormat().format(num);
 };
 
 const Comment: React.FC<CommentProps> = ({ userName, time, text, like }) => {
