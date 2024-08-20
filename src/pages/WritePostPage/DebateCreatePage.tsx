@@ -85,7 +85,7 @@ const DebateCreatePage: React.FC = () => {
       <div className="w-full h-full flex flex-col">
         <div className="flex justify-between items-center mb-6 py-4 px-6 bg-white">
           <div className="font-pretendard font-bold text-lg">
-            <span className="text-point500">#임영웅</span>
+            <span className="text-point500">#하하</span>
             <span className="text-black"> 토론 만들기</span>
           </div>
           <button className="text-point400 font-pretendard font-medium text-[14px]" onClick={handleSubmit}>등록하기</button>
