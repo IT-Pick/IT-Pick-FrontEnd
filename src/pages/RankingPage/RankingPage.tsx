@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CategorySlider from './components/CategorySlider';
 import TrendList from './components/TrendList';
-import { useTrendStore } from '../../store/trendStore';
+import { useTrendStore } from '../../store/useTrendStore';
 import MenuSelector from './components/MenuSelector';
 import DateDisplay from './components/DateDisplay';
 
