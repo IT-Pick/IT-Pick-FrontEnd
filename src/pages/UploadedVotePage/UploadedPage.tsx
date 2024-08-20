@@ -5,6 +5,7 @@ import Header from "../UploadedVotePage/components/Header";
 import Content from "../UploadedVotePage/components/Content";
 import CommentList from "../UploadedVotePage/components/CommentList";
 import AddComment from "../UploadedVotePage/components/AddComment";
+import { useTrendStore } from "@store/useTrendStore"; // zustand store import
 
 const UploadedPage: React.FC = () => {
     const location = useLocation();
@@ -20,8 +21,8 @@ const UploadedPage: React.FC = () => {
         userImgUrl: '',
         debateImgUrl: '',
     });
-    const [comments, setComments] = useState([]);
     const [currentUser, setCurrentUser] = useState(''); // 현재 유저명
+    const setComments = useTrendStore((state) => state.setComments); // zustand의 setComments 함수
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -37,13 +38,18 @@ const UploadedPage: React.FC = () => {
                         userImgUrl: data.result.userImgUrl || '',
                         debateImgUrl: data.result.debateImgUrl || '',
                     });
-                    setComments(data.result.comments.map(comment => ({
+                    
+                    // 서버에서 받아온 댓글 데이터를 zustand 스토어에 저장
+                    const formattedComments = data.result.comments.map(comment => ({
+                        commentId: comment.commentId,
                         userName: comment.userNickname,
                         time: new Date(comment.createAt).toLocaleString(),
                         like: comment.commentHeartCount,
                         text: comment.commentText,
                         parentCommentId: comment.parentCommentId,
-                    })));
+                    }));
+                    setComments(debateId, formattedComments);
+
                     setCurrentUser(data.result.currentUserNickname);
                 } catch (error) {
                     console.error('토론 정보를 불러오는 중 오류가 발생했습니다:', error);
@@ -52,15 +58,11 @@ const UploadedPage: React.FC = () => {
         };
 
         fetchDetails();
-    }, [debateId]);
+    }, [debateId, setComments]);
 
     if (!info.title) {
         return <div>로딩 중...</div>;
     }
-
-    const addComment = (newComment: any) => {
-        setComments([...comments, newComment]);
-    };
 
     return (
         <div className="w-[390px] bg-[#F8F9FC] mx-auto py-4">
@@ -80,8 +82,8 @@ const UploadedPage: React.FC = () => {
                     debateImgUrl: info.debateImgUrl,
                 }} 
             />
-            <CommentList comments={comments} />
-            <AddComment onAddComment={addComment} debateId={debateId} userId={123} />
+            <CommentList debateId={debateId} />
+            <AddComment debateId={debateId} userId={123} />
         </div>
     );
 };
