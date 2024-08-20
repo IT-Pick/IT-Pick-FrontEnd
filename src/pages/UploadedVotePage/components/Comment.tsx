@@ -59,17 +59,19 @@ const Comment: React.FC<CommentProps> = ({ userName, time, text, like }) => {
                     <div className="flex items-center">
                         <img src={profile} alt="profile" className="rounded-full" width={28} height={28} />
                         <div className="text-[14px] pl-[8px] font-bold">{userName}</div>
-                        <div className="text-[14px] text-gray2 pl-[8px]">{getTimeDifference(time)}</div>
-                        <button className="ml-2 text-[14px] text-gray3 pl-[16px]">답글 달기</button>
+                        {/* <div className="text-[14px] text-gray2 pl-[8px]">{getTimeDifference(time)}</div> */}
+                        <div className="text-[14px] text-gray2 pl-[8px]">{time}</div>
+
+                        {/* <button className="ml-2 text-[14px] text-gray3 pl-[16px]">답글 달기</button> */}
                     </div>
-                    <div>
+                    {/* <div>
                         <img src={moreVertical} alt="more vertical btn" />
-                    </div>
+                    </div> */}
                 </div>
                 <div className="flex justify-between items-center">
                     <div className="text-[#1D2228] mt-2 whitespace-pre-line">{text}</div>
                     <div className="text-gray-500 text-[12px] flex flex-col justify-center items-center">
-                        <button onClick={handleLikeClick} className="focus:outline-none">
+                        <button onClick={handleLikeClick} className="focus:outline-none ">
                             <img src={isLiked ? heartFilled : heart} alt="heart icon" />
                         </button>
                         <div className="text-gray3">
