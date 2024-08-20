@@ -45,7 +45,7 @@ const KeywordPage: React.FC = () => {
     };
 
     return(
-        <div className="w-[390px] mx-auto bg-[#F8F9FC]">
+        <div className="w-[390px] mx-auto bg-[#F8F9FC] min-h-screen">
             <Header/>
             {keywordData && (
                 <>
