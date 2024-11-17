@@ -12,7 +12,9 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false); // 비밀번호 표시/숨김 상태 관리
   const [errorMessage, setErrorMessage] = useState<string>(''); // 오류 메시지 상태 관리
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기 상태 관리
-  const [modalType, setModalType] = useState<'findId' | 'findPassword'>('findId'); // 모달 타입 관리
+  const [modalType, setModalType] = useState<'findId' | 'findPassword'>(
+    'findId'
+  ); // 모달 타입 관리
   const navigate = useNavigate();
 
   const handleOpenModal = (type: 'findId' | 'findPassword') => {
@@ -57,7 +59,6 @@ const Login: React.FC = () => {
         localStorage.setItem('accessToken', response.result.jwt.accessToken);
         localStorage.setItem('refreshToken', response.result.jwt.refreshToken);
         navigate('/');
-
       } else {
         handleErrorResponse(response.data.code);
       }
@@ -84,7 +85,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="bg-background flex w-[390px] h-[800px] pt-[70px] justify-center min-h-screen mx-auto font-pretendard">
+    <div className="bg-background flex w-custom max-w-custom mx-auto h-[800px] pt-[70px] justify-center min-h-screen  font-pretendard">
       <div className="w-auto max-w-md p-8 rounded-lg">
         <h1 className="text-[24px] font-[700] mb-[52px]">
           <div>안녕하세요 :)</div>
@@ -93,7 +94,10 @@ const Login: React.FC = () => {
         </h1>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-3 relative">
-            <label htmlFor="email" className="text-[16px] text-black font-[700] ml-3">
+            <label
+              htmlFor="email"
+              className="text-[16px] text-black font-[700] ml-3"
+            >
               이메일
             </label>
             <input
@@ -111,7 +115,10 @@ const Login: React.FC = () => {
             )}
           </div>
           <div className="space-y-3 relative">
-            <label htmlFor="password" className="text-[16px] text-black font-[700] ml-3">
+            <label
+              htmlFor="password"
+              className="text-[16px] text-black font-[700] ml-3"
+            >
               비밀번호
             </label>
             <input
@@ -127,7 +134,10 @@ const Login: React.FC = () => {
               onClick={handleTogglePasswordVisibility}
               className="absolute inset-y-0 right-4 pt-[25px] flex items-center text-gray-500"
             >
-              <img src={showPassword ? Visibility : NonVisibility} alt="toggle password visibility" />
+              <img
+                src={showPassword ? Visibility : NonVisibility}
+                alt="toggle password visibility"
+              />
             </button>
           </div>
           {errorMessage && (
@@ -149,18 +159,13 @@ const Login: React.FC = () => {
           <Link to="/signup" className="hover:underline">
             회원가입
           </Link>
-          <button onClick={() => handleOpenModal('findId')}>
-            아이디 찾기
-          </button>
+          <button onClick={() => handleOpenModal('findId')}>아이디 찾기</button>
           <button onClick={() => handleOpenModal('findPassword')}>
             비밀번호 찾기
           </button>
         </div>
       </div>
-      <LostPasswardModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
+      <LostPasswardModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };

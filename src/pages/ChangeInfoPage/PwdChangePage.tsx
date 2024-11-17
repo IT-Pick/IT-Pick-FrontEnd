@@ -15,17 +15,23 @@ const PwdChangePage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleCurrentPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCurrentPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setCurrentPassword(event.target.value);
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const password = event.target.value;
     setPassword(password);
-    setIsPasswordValid(/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(password));
+    setIsPasswordValid(
+      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(password)
+    );
   };
 
-  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setConfirmPassword(event.target.value);
   };
 
@@ -42,30 +48,30 @@ const PwdChangePage: React.FC = () => {
   };
 
   const handleSubmitNewPwd = async () => {
-    try{
+    try {
       const data = await patchPwd(password);
-      if(data.code === 1000){
-        console.log("비번 변경 성공!");
+      if (data.code === 1000) {
+        console.log('비번 변경 성공!');
         navigate(-1);
+      } else {
+        console.log('변경 실패', data.message);
       }
-      else{
-        console.log("변경 실패", data.message);
-      }
-    }
-    catch(error){
-      console.log("비번 변경 실패!: ", error);
+    } catch (error) {
+      console.log('비번 변경 실패!: ', error);
     }
   };
 
   const isFormValid = isPasswordValid && password === confirmPassword;
 
   return (
-    <div className="w-[390px] h-screen mx-auto pt-[72px] bg-background">
+    <div className="w-custom max-w-custom mx-auto h-screen pt-[72px] bg-background">
       <h1 className="text-2xl font-pretendard font-bold ml-6">
         <span className="text-black">비밀번호 변경</span>
       </h1>
       <div className="mt-14 mb-4">
-        <label className="block font-pretendard font-bold text-[16px] text-black ml-8">현재 비밀번호</label>
+        <label className="block font-pretendard font-bold text-[16px] text-black ml-8">
+          현재 비밀번호
+        </label>
         <div className="relative mx-5 mt-2">
           <input
             type={showCurrentPassword ? 'text' : 'password'}
@@ -79,12 +85,17 @@ const PwdChangePage: React.FC = () => {
             onClick={handleToggleCurrentPasswordVisibility}
             className="absolute inset-y-0 right-0 px-[22px] flex items-center"
           >
-            <img src={showCurrentPassword ? showIcon : hideIcon} alt="toggle password visibility" />
+            <img
+              src={showCurrentPassword ? showIcon : hideIcon}
+              alt="toggle password visibility"
+            />
           </button>
         </div>
       </div>
       <div className="mb-4">
-        <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[39px]">비밀번호</label>
+        <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[39px]">
+          비밀번호
+        </label>
         <div className="relative mx-5 mt-2">
           <input
             type={showPassword ? 'text' : 'password'}
@@ -98,15 +109,22 @@ const PwdChangePage: React.FC = () => {
             onClick={handleTogglePasswordVisibility}
             className="absolute inset-y-0 right-0 px-[22px] flex items-center"
           >
-            <img src={showPassword ? showIcon : hideIcon} alt="toggle password visibility" />
+            <img
+              src={showPassword ? showIcon : hideIcon}
+              alt="toggle password visibility"
+            />
           </button>
         </div>
         {!isPasswordValid && password.length > 0 && (
-          <p className="text-[12px] text-errorpoint font-pretendard font-medium mt-1 ml-8">영문, 숫자, 특수문자를 포함하여 8자 이상 입력해주세요.</p>
+          <p className="text-[12px] text-errorpoint font-pretendard font-medium mt-1 ml-8">
+            영문, 숫자, 특수문자를 포함하여 8자 이상 입력해주세요.
+          </p>
         )}
       </div>
       <div className="mb-4">
-        <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[39px]">비밀번호 확인</label>
+        <label className="block font-pretendard font-bold text-[16px] text-black ml-8 mt-[39px]">
+          비밀번호 확인
+        </label>
         <div className="relative mx-5 mt-2">
           <input
             type={showConfirmPassword ? 'text' : 'password'}
@@ -120,11 +138,16 @@ const PwdChangePage: React.FC = () => {
             onClick={handleToggleConfirmPasswordVisibility}
             className="absolute inset-y-0 right-0 px-[22px] flex items-center"
           >
-            <img src={showConfirmPassword ? showIcon : hideIcon} alt="toggle password visibility check"/>
+            <img
+              src={showConfirmPassword ? showIcon : hideIcon}
+              alt="toggle password visibility check"
+            />
           </button>
         </div>
         {confirmPassword.length > 0 && password !== confirmPassword && (
-          <p className="text-[12px] text-errorpoint font-pretendard font-medium mt-1 ml-8">비밀번호가 일치하지 않습니다.</p>
+          <p className="text-[12px] text-errorpoint font-pretendard font-medium mt-1 ml-8">
+            비밀번호가 일치하지 않습니다.
+          </p>
         )}
       </div>
       <div className="mx-5 mt-[71px] mb-4">
@@ -133,7 +156,8 @@ const PwdChangePage: React.FC = () => {
           className={`w-full h-[48px] py-2 rounded flex items-center justify-center font-pretendard font-bold text-[16px] text-white ${isFormValid ? 'bg-point500' : 'bg-gray2'}`}
           disabled={!isFormValid}
           style={{ border: 'none', padding: 0, borderRadius: '12px' }}
-        >변경하기
+        >
+          변경하기
         </button>
       </div>
     </div>

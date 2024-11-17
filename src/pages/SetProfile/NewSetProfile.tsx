@@ -31,7 +31,7 @@ const NewSetProfile: React.FC = () => {
   const handleClick = async () => {
     try {
       const response = await nicknameDuplicateCheck(nickname);
-  
+
       if (response.code === 1000) {
         const formattedDate = birthDate.substring(2);
         setBirthDate(formattedDate);
@@ -41,7 +41,7 @@ const NewSetProfile: React.FC = () => {
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const response = error.response.data;
-  
+
         if (response.code === 5002) {
           setNicknameError('중복된 닉네임입니다.');
           console.log('중복 닉네임');
@@ -75,10 +75,11 @@ const NewSetProfile: React.FC = () => {
     };
   }, [birthDate]);
 
-  const isFormValid = nickname.length > 0 && birthDate.length === 8 && !nicknameError;
+  const isFormValid =
+    nickname.length > 0 && birthDate.length === 8 && !nicknameError;
 
   return (
-    <div className="flex w-[390px] h-[800px] pt-[70px] justify-center min-h-screen mx-auto font-pretendard bg-background">
+    <div className="flex w-custom max-w-custom mx-auto h-[800px] pt-[70px] justify-center min-h-screen font-pretendard bg-background">
       <div className="w-full max-w-md p-[20px] rounded-lg">
         <h1 className="text-[24px] font-[700] mb-[52px]">
           <div>잇픽에 필요한</div>{' '}
@@ -125,7 +126,7 @@ const NewSetProfile: React.FC = () => {
           </div>
 
           <button
-          onClick={handleClick}
+            onClick={handleClick}
             type="button"
             className={`absolute bottom-[100px] w-[352px] h-[48px]  ${
               isFormValid
