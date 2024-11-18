@@ -10,7 +10,7 @@ const ErrorPage: React.FC = () => {
   };
 
   return (
-    <div className="w-custom max-w-custom mx-autoflex flex-col items-center justify-center min-h-screen bg-background">
+    <div className="w-custom max-w-custom mx-auto flex flex-col items-center justify-center min-h-screen bg-background">
       <div className="flex-grow flex flex-col items-center">
         <img
           src={errorIcon}
