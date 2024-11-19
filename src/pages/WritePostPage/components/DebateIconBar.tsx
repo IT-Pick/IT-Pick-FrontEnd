@@ -25,25 +25,41 @@ const DebateIconBar: React.FC<DebateIconBarProps> = ({ onFileChange }) => {
   };
 
   return (
-    <div className="w-[390px] ml-5 flex space-x-2">
+    <div className="w-custom max-w-custom mx-auto ml-5 flex space-x-2">
       <button
         className={`flex justify-start items-center px-4 py-1.5 rounded-full focus:outline-none border ${voteActive ? 'bg-point100 border-point500' : 'bg-background border-gray2'} border-gray2`}
         onClick={handleVoteClick}
       >
-        <img src={voteActive ? tagIcoVotePoint : tagIcoVoteGray} alt="tag_ico_vote" className="mr-2" />
-        <span className={`font-pretendard font-medium text-[14px] ${voteActive ? 'text-point500' : 'text-gray3'}`}>투표</span>
+        <img
+          src={voteActive ? tagIcoVotePoint : tagIcoVoteGray}
+          alt="tag_ico_vote"
+          className="mr-2"
+        />
+        <span
+          className={`font-pretendard font-medium text-[14px] ${voteActive ? 'text-point500' : 'text-gray3'}`}
+        >
+          투표
+        </span>
       </button>
       <button
         className={`flex justify-start items-center px-4 py-1.5 rounded-full focus:outline-none border ${pictureActive ? 'bg-point100 border-point500' : 'bg-background border-gray2'} border-gray2`}
         onClick={handlePictureClick}
       >
-        <img src={pictureActive ? tagIcoPicturePoint : tagIcoPictureGray} alt="tag_ico_picture" className="mr-2" />
-        <span className={`font-pretendard font-medium text-[14px] ${pictureActive ? 'text-point500' : 'text-gray3'}`}>사진/동영상</span>
+        <img
+          src={pictureActive ? tagIcoPicturePoint : tagIcoPictureGray}
+          alt="tag_ico_picture"
+          className="mr-2"
+        />
+        <span
+          className={`font-pretendard font-medium text-[14px] ${pictureActive ? 'text-point500' : 'text-gray3'}`}
+        >
+          사진/동영상
+        </span>
       </button>
-      <input 
-        type="file" 
-        id="file-input" 
-        accept="image/*,video/*" 
+      <input
+        type="file"
+        id="file-input"
+        accept="image/*,video/*"
         onChange={onFileChange} // 파일이 선택되었을 때 부모 컴포넌트로 전달된 콜백 함수를 호출합니다
         style={{ display: 'none' }} // 파일 입력 요소를 화면에 보이지 않게 숨깁니다
       />

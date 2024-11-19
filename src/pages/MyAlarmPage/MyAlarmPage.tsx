@@ -28,7 +28,7 @@ const MyAlarmPage: React.FC = () => {
   useEffect(() => {
     const fetchAlarms = async () => {
       try {
-        const result = await getAlarm(); 
+        const result = await getAlarm();
         const readStatus = getReadStatus();
         const updatedAlarms = result.map((alarm: Alarm) => ({
           ...alarm,
@@ -43,25 +43,30 @@ const MyAlarmPage: React.FC = () => {
     fetchAlarms();
   }, []);
 
-  //알림 클릭했을 때 
+  //알림 클릭했을 때
   const handleAlarmClick = (id: number) => {
-    setAlarms(prevAlarms => {
-      const newAlarms = prevAlarms.map(alarm => 
+    setAlarms((prevAlarms) => {
+      const newAlarms = prevAlarms.map((alarm) =>
         alarm.debateId === id ? { ...alarm, isRead: true } : alarm
       );
-      const newReadStatus = newAlarms.reduce((acc, alarm) => {
-        acc[alarm.debateId] = alarm.isRead || false;
-        return acc;
-      }, {} as { [key: number]: boolean });
+      const newReadStatus = newAlarms.reduce(
+        (acc, alarm) => {
+          acc[alarm.debateId] = alarm.isRead || false;
+          return acc;
+        },
+        {} as { [key: number]: boolean }
+      );
       saveReadStatus(newReadStatus);
       return newAlarms;
     });
   };
 
   return (
-    <div className="w-[390px] h-screen bg-background mx-auto">
+    <div className="w-custom max-w-custom mx-auto h-screen bg-background">
       <header className="w-full h-[80px] py-[18.5px] bg-[white]">
-        <h1 className="text-[20px] text-black font-bold mt-[16px] ml-[24px] ">알림</h1>
+        <h1 className="text-[20px] text-black font-bold mt-[16px] ml-[24px] ">
+          알림
+        </h1>
       </header>
       <div>
         {alarms.map((alarm, index) => (

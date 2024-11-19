@@ -13,18 +13,22 @@ const SearchPage: React.FC = () => {
 
   const [isSearchActive, setIsSearchActive] = useState(false);
 
-  const [searchResults, setSearchResults] = useState<{ title: string; sources?: string[] }[]>([]);
+  const [searchResults, setSearchResults] = useState<
+    { title: string; sources?: string[] }[]
+  >([]);
 
   const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
-    const storedTags = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+    const storedTags = JSON.parse(
+      localStorage.getItem('recentSearches') || '[]'
+    );
     setTags(storedTags);
   }, []);
 
   const removeTag = (tagToRemove: string) => {
     // setTags(tags.filter(tag => tag !== tagToRemove));
-    const updatedTags = tags.filter(tag => tag !== tagToRemove);
+    const updatedTags = tags.filter((tag) => tag !== tagToRemove);
     setTags(updatedTags);
     localStorage.setItem('recentSearches', JSON.stringify(updatedTags));
   };
@@ -54,8 +58,8 @@ const SearchPage: React.FC = () => {
           item.naverRank !== -1 ? `네이버 ${item.naverRank}등` : '',
           item.zumRank !== -1 ? `줌 ${item.zumRank}등` : '',
           item.googleRank !== -1 ? `구글 ${item.googleRank}등` : '',
-          item.namuwikiRank !== -1 ? `나무위키 ${item.namuwikiRank}등` : ''
-        ].filter(tag => tag !== ''); // 빈 문자열 제거
+          item.namuwikiRank !== -1 ? `나무위키 ${item.namuwikiRank}등` : '',
+        ].filter((tag) => tag !== ''); // 빈 문자열 제거
 
         return {
           title: item.keyword,
@@ -69,7 +73,6 @@ const SearchPage: React.FC = () => {
       throw error;
     }
   };
-
 
   const handleSearch = async (term: string) => {
     if (term === '') {
@@ -89,17 +92,21 @@ const SearchPage: React.FC = () => {
       }
     }
   };
-  
+
   return (
-    <div className="w-[390px] mx-auto pt-[20px] bg-background h-full">
+    <div className="w-custom max-w-custom mx-auto pt-[20px] bg-background h-full">
       <div className="ml-[24px]">
         <SearchBar placeholder="올림픽" onSearch={handleSearch} />
       </div>
-      
+
       {/* 검색하지 않았고 결과가 존재할때 */}
       {!isSearchActive && !noResults && (
         <>
-          <RecentSearches tags={tags} removeTag={removeTag} removeAllTags={removeAllTags} />
+          <RecentSearches
+            tags={tags}
+            removeTag={removeTag}
+            removeAllTags={removeAllTags}
+          />
           <PopularSearches />
           <RecentDiscussions />
         </>
@@ -109,7 +116,11 @@ const SearchPage: React.FC = () => {
       {isSearchActive && !noResults && (
         <div>
           {searchResults.map((result, index) => (
-            <SearchResultItem key={index} title={result.title} sources={result.sources} />
+            <SearchResultItem
+              key={index}
+              title={result.title}
+              sources={result.sources}
+            />
           ))}
         </div>
       )}
@@ -118,7 +129,6 @@ const SearchPage: React.FC = () => {
       {noResults && <ErrorPage />}
     </div>
   );
-}
+};
 
 export default SearchPage;
-

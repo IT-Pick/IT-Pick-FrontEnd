@@ -29,14 +29,16 @@ const MakeVote: React.FC = () => {
 
   const handleComplete = () => {
     const voteItems = items.map((id) => itemNames[id] || `항목 ${id}`);
-    navigate('/create', { state: { voteItems } });  // DebateCreatePage로 전달
+    navigate('/create', { state: { voteItems } }); // DebateCreatePage로 전달
   };
 
   return (
-    <div className="w-[390px] h-screen mx-auto flex flex-col items-center bg-background">
+    <div className="w-custom max-w-custom mx-auto h-screen flex flex-col items-center bg-background">
       <div className="w-full flex flex-col justify-start items-center">
         <div className="w-full flex justify-between items-center mb-6 py-4 px-6 bg-white">
-          <span className="text-point500 text-lg font-bold font-pretendard">투표 만들기</span>
+          <span className="text-point500 text-lg font-bold font-pretendard">
+            투표 만들기
+          </span>
           <span
             className="text-gray3 text-sm font-medium font-pretendard cursor-pointer"
             onClick={handleComplete}
@@ -53,6 +55,9 @@ const MakeVote: React.FC = () => {
               onRemove={removeItem}
               canRemove={items.length > 2}
               onNameChange={handleNameChange} // 이름 변경 시 상태 업데이트
+              onImageChange={function (id: number, image: File | null): void {
+                throw new Error('Function not implemented.');
+              } }            
             />
           ))}
         </div>
@@ -60,7 +65,9 @@ const MakeVote: React.FC = () => {
         <div className="w-full flex justify-center mt-4">
           <div
             className={`w-[350px] h-[52px] rounded-lg flex justify-center items-center ${
-              items.length >= 5 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#7620e4] cursor-pointer'
+              items.length >= 5
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-[#7620e4] cursor-pointer'
             }`}
             onClick={addItem}
             style={{ pointerEvents: items.length >= 5 ? 'none' : 'auto' }}
@@ -70,7 +77,7 @@ const MakeVote: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className='w-[390px]'>
+        <div className="w-custom max-w-custom mx-auto">
           <MakeVoteBar />
         </div>
       </div>

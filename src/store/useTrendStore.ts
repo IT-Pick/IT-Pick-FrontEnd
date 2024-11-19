@@ -26,7 +26,7 @@ interface TrendState {
   setDate: (date: string) => void;
   fetchTrends: () => void;
   addComment: (debateId: number, comment: Comment) => void;  // 댓글 추가 함수
-  setComments: (debateId: number, comments: Comment[]) => void;  // 댓글 설정 함수
+  setComments: (debateId: number, commentsOrUpdater: Comment[] | ((existingComments: Comment[]) => Comment[])) => void;  // 댓글 설정 함수
 }
 
 export const useTrendStore = create<TrendState>((set, get) => ({
@@ -66,17 +66,38 @@ export const useTrendStore = create<TrendState>((set, get) => ({
     }
   },
 
-  addComment: (debateId, newComment) => set((state) => ({
-    comments: {
-      ...state.comments,
-      [debateId]: [...(state.comments[debateId] || []), newComment],  // 특정 debateId에 댓글 추가
-    },
-  })),
+  addComment: (debateId, newComment) => set((state) => {
+    const existingComments = state.comments[debateId] || [];
+    if (existingComments.some((comment) => comment.commentId === newComment.commentId)) {
+      return { comments: state.comments }; // 상태 변경 없이 반환
+    }
+    return {
+      comments: {
+        ...state.comments,
+        [debateId]: [...existingComments, newComment], // 새로운 댓글 추가
+      },
+    };
+  }),
 
-  setComments: (debateId, comments) => set((state) => ({
-    comments: {
-      ...state.comments,
-      [debateId]: comments,
-    },
-  })),
+  setComments: (debateId, commentsOrUpdater) =>
+    set((state) => {
+      const existingComments = state.comments[debateId] || [];
+      const newComments =
+        typeof commentsOrUpdater === "function"
+          ? commentsOrUpdater(existingComments)
+          : commentsOrUpdater;
+  
+      // 중복 방지: 이미 존재하는 commentId는 제외
+      const existingIds = new Set(existingComments.map((comment) => comment.commentId));
+      const filteredComments = newComments.filter(
+        (comment) => !existingIds.has(comment.commentId)
+      );
+  
+      return {
+        comments: {
+          ...state.comments,
+          [debateId]: [...existingComments, ...filteredComments],
+        },
+      };
+    }),
 }));

@@ -28,7 +28,10 @@ const DebateCreatePage: React.FC = () => {
           const data = await getKeywordById(keywordId);
           setKeywordName(data.result); // API에서 반환된 키워드 이름 설정
         } catch (error) {
-          console.error('키워드 이름을 불러오는 중 오류가 발생했습니다.', error);
+          console.error(
+            '키워드 이름을 불러오는 중 오류가 발생했습니다.',
+            error
+          );
         }
       }
     };
@@ -86,7 +89,7 @@ const DebateCreatePage: React.FC = () => {
         keywordId.toString(), // keywordId를 사용
         title,
         content,
-        imageFile || undefined,
+        imageFile || undefined
         // voteItems.length > 0 ? voteItems.map((item) => ({ optionText: item })) : []
       );
       navigate('/keyword');
@@ -102,17 +105,23 @@ const DebateCreatePage: React.FC = () => {
   // }
 
   return (
-    <div className="w-[390px] min-h-screen mx-auto flex flex-col items-center justify-between bg-background">
+    <div className="w-custom max-w-custom mx-auto min-h-screen flex flex-col items-center justify-between bg-background">
       <div className="w-full h-full flex flex-col">
         <div className="flex justify-between items-center mb-6 py-4 px-6 bg-white">
           <div className="font-pretendard font-bold text-lg">
-            <span className="text-point500">#{keywordName}</span> {/* keywordName을 표시 */}
+            <span className="text-point500">#{keywordName}</span>{' '}
+            {/* keywordName을 표시 */}
             <span className="text-black"> 토론 만들기</span>
           </div>
-          <button className="text-point400 font-pretendard font-medium text-[14px]" onClick={handleSubmit}>등록하기</button>
+          <button
+            className="text-point400 font-pretendard font-medium text-[14px]"
+            onClick={handleSubmit}
+          >
+            등록하기
+          </button>
         </div>
-        <input 
-          type="text" 
+        <input
+          type="text"
           placeholder="제목을 입력해주세요."
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -132,16 +141,26 @@ const DebateCreatePage: React.FC = () => {
             <VoteResult items={voteItems} />
           </div>
         )}  */}
-        
+
         {/* 미리보기 이미지가 있을 경우 표시 */}
         {previewUrl && (
           <div className="w-[335px] mt-4">
-            <img src={previewUrl} alt="미리보기" className="w-full h-full rounded-lg shadow-md" />
+            <img
+              src={previewUrl}
+              alt="미리보기"
+              className="w-full h-full rounded-lg shadow-md"
+            />
           </div>
         )}
       </div>
-      <div className={`w-[390px] flex justify-center py-3 bg-white ${isKeyboardVisible ? 'fixed bottom-0' : 'absolute bottom-0'}`}
-      style={{ bottom: isKeyboardVisible ? `${window.innerHeight - viewportHeight}px` : '0' }}>
+      <div
+        className={`w-custom max-w-custom mx-auto flex justify-center py-3 bg-white ${isKeyboardVisible ? 'fixed bottom-0' : 'absolute bottom-0'}`}
+        style={{
+          bottom: isKeyboardVisible
+            ? `${window.innerHeight - viewportHeight}px`
+            : '0',
+        }}
+      >
         <DebateIconBar onFileChange={handleFileChange} />
       </div>
     </div>
