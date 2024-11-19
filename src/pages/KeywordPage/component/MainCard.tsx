@@ -9,7 +9,7 @@ interface MainCardProps {
 
 const MainCard: React.FC<MainCardProps> = ({ keyword, newsContent, searchLink }) =>{
     return (
-        <div className="w-[350px] h-[112px] mx-auto mt-[24px] p-[16px] justify-center items-center rounded-[16px] bg-[white] flex flex-col gap-[12px]">
+        <div className="max-w-custom h-[112px] mt-[24px] p-[16px] justify-center items-center rounded-[16px] bg-[white] flex flex-col gap-[12px] mx-5">
             <header className="w-full flex justify-between items-center">
                 <div className="text-[20px] font-[700]">{keyword}</div>
                 <a href={searchLink} className="flex text-[#c5d9ec] text-[14px]">

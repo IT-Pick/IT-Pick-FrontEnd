@@ -44,15 +44,15 @@ const AddComment: React.FC<AddCommentProps> = ({ debateId, userId }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-[370px] mx-auto flex justify-around items-center bg-[#EDF0F3] p-1 rounded-[8px]">
+    <form onSubmit={handleSubmit} className="max-x-custom flex justify-between items-center bg-[#EDF0F3] p-1 rounded-[8px] mx-4">
       <input
         type="text"
         placeholder="댓글을 입력해주세요"
         value={comment}
         onChange={handleInputChange}
-        className="w-[272px] px-4 py-2 rounded-lg bg-[#EDF0F3] focus:outline-none"
+        className="px-4 py-2 rounded-lg bg-[#EDF0F3] focus:outline-none"
       />
-      <button type="submit" className="text-white rounded-lg">
+      <button type="submit" className="text-white rounded-lg mx-3">
         <img src={send} alt="submit button" />
       </button>
     </form>
