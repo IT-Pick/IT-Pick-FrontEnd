@@ -1,13 +1,13 @@
-import React,{ useEffect, useState } from 'react';
-import Header from "./component/Header";
+import React, { useEffect, useState } from 'react';
+import Header from './component/Header';
 import { useNavigate } from 'react-router-dom';
-import SearchBar from "./component/SearchBar";
-import IntegratedRanking from "./component/IntegratedRanking";
-import LiveDiscussion from "./component/LiveDiscussion";
-import CommunityRanking from "./component/CommunityRanking";
-import GreetingMessage from "./component/GreetingMessage";
-import logo from "@images/etc/logo.png";
-import victory_banner from "@images/victory_banner.png";
+import SearchBar from './component/SearchBar';
+import IntegratedRanking from './component/IntegratedRanking';
+import LiveDiscussion from './component/LiveDiscussion';
+import CommunityRanking from './component/CommunityRanking';
+import GreetingMessage from './component/GreetingMessage';
+import logo from '@images/etc/logo.png';
+import victory_banner from '@images/victory_banner.png';
 
 const HomePage = () => {
   // 여기에 실제 로그인 상태를 확인하는 로직을 추가해야 함 -> 추가함
@@ -15,7 +15,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem('accessToken');
     if (token) {
       setIsLoggedIn(true);
     } else {
@@ -28,7 +28,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="bg-background w-[390px] mx-auto scrollbar-hidden">
+    <div className="bg-background w-custom max-w-custom mx-auto scrollbar-hidden">
       <Header isLoggedIn={isLoggedIn} />
       <GreetingMessage isLoggedIn={isLoggedIn} />
       <div className="flex items-center ml-[24px] mr-[24px] mt-4">
@@ -37,10 +37,14 @@ const HomePage = () => {
       </div>
       <IntegratedRanking />
       <LiveDiscussion />
-      <img src={victory_banner} alt="victory_banner" className="w-[390px] mx-auto mt-[40px] px-[20px]" />
-      <CommunityRanking/>
+      <img
+        src={victory_banner}
+        alt="victory_banner"
+        className="w-[100%] mt-[40px] px-[20px]"
+      />
+      <CommunityRanking />
     </div>
   );
-}
+};
 
 export default HomePage;

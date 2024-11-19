@@ -6,9 +6,20 @@ import MenuSelector from './components/MenuSelector';
 import DateDisplay from './components/DateDisplay';
 
 const RankingPage: React.FC = () => {
-  const { menuType, setMenuType, communityType, setCommunityType, fetchTrends, setDate } = useTrendStore();
-  const [dailyDate, setDailyDate] = useState(new Date().toISOString().split('T')[0]);
-  const [weeklyDate, setWeeklyDate] = useState(new Date().toISOString().split('T')[0]);
+  const {
+    menuType,
+    setMenuType,
+    communityType,
+    setCommunityType,
+    fetchTrends,
+    setDate,
+  } = useTrendStore();
+  const [dailyDate, setDailyDate] = useState(
+    new Date().toISOString().split('T')[0]
+  );
+  const [weeklyDate, setWeeklyDate] = useState(
+    new Date().toISOString().split('T')[0]
+  );
   const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
@@ -36,12 +47,16 @@ const RankingPage: React.FC = () => {
   const handleDateChange = (direction: 'prev' | 'next') => {
     if (menuType === 'daily') {
       const currentDate = new Date(dailyDate);
-      currentDate.setDate(currentDate.getDate() + (direction === 'prev' ? -1 : 1));
+      currentDate.setDate(
+        currentDate.getDate() + (direction === 'prev' ? -1 : 1)
+      );
       setDailyDate(currentDate.toISOString().split('T')[0]);
       setDate(currentDate.toISOString().split('T')[0]);
     } else if (menuType === 'weekly') {
       const currentDate = new Date(weeklyDate);
-      currentDate.setDate(currentDate.getDate() + (direction === 'prev' ? -7 : 7));
+      currentDate.setDate(
+        currentDate.getDate() + (direction === 'prev' ? -7 : 7)
+      );
       setWeeklyDate(currentDate.toISOString().split('T')[0]);
       setDate(currentDate.toISOString().split('T')[0]);
     }
@@ -81,7 +96,7 @@ const RankingPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-background w-[390px] h-full mx-auto font-pretendard">
+    <div className="bg-background w-custom max-w-custom mx-auto h-full font-pretendard">
       <MenuSelector menuType={menuType} setMenuType={setMenuType} />
       <CategorySlider setCommunityType={setCommunityType} />
       <DateDisplay
