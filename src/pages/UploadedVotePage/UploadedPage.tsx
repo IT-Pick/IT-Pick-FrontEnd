@@ -8,8 +8,8 @@ import AddComment from '../UploadedVotePage/components/AddComment';
 import { useTrendStore } from '@store/useTrendStore'; // zustand store import
 
 // 시간 차이를 계산해주는 함수
-const getTimeDifference = (time: number) => {
-  const alarmTime = new Date(time); // 문자열을 Date 객체로 변환
+const getTimeDifference = (timeString: string) => {
+  const alarmTime = new Date(timeString); // 문자열을 Date 객체로 변환
   const now = new Date();
   const diffInMs = now.getTime() - alarmTime.getTime();
   const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
@@ -94,7 +94,7 @@ const UploadedPage: React.FC = () => {
       <Header
         info={{
           userName: info.userName,
-          time: new Date(info.time).getTime(), // 시간을 변환하여 전달
+          time: getTimeDifference(info.time), // 시간을 변환하여 전달
           view: info.view,
           title: info.title,
           userImgUrl: info.userImgUrl,

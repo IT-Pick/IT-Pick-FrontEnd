@@ -8,8 +8,6 @@ interface HeaderProps{
         userName: string;
         time: number;
         view: number;
-        title: string;
-        userImgUrl: string;
     }
 }
 

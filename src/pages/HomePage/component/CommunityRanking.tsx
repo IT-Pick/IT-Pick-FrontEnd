@@ -57,16 +57,22 @@ const CommunityRanking: React.FC = () => {
 
   return (
     <div className=" pt-[44px]  pb-[33px] ">
-      <span className='ml-[24px]'>
-        <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">커뮤니티 별 랭킹</span>
-        <span className="text-xs text-gray-400 ml-[8px]">{currentTime}</span>
-      </span>
-      <span className="ml-[43px] cursor-pointer" onClick={handleRankingClick}>
-        <div className="inline-flex items-center justify-start">
-          <span className="w-[50px] h-5 text-right text-gray-400 text-sm font-medium font-['Pretendard']">랭킹보기</span>
+      <div className="flex justify-between items-center px-[24px]">
+        <span>
+          <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">
+            커뮤니티 별 랭킹
+          </span>
+          <span className="text-xs text-gray-400 ml-[8px]">{currentTime}</span>
+        </span>
+        <span className="cursor-pointer" onClick={handleRankingClick}>
+          <div className="inline-flex items-center justify-start">
+          <span className="w-[50px] h-5 text-right text-gray-400 text-sm font-medium font-['Pretendard']">
+            랭킹보기
+          </span>
           <img src={tag_ico_right} alt="tag_ico_right" />
-        </div>
-      </span>
+          </div>
+        </span>
+      </div>
 
       <ul className="ml-[24px] mt-[24px] space-y-4">
         {rankings.map((item, index) => (
