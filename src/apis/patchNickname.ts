@@ -4,7 +4,7 @@ export const patchNickname = async (nickname: string) => {
     try {
         const token = localStorage.getItem('accessToken');
         const response = await axios.patch(
-            '/user/nickname',
+            '/api/user/nickname',
             { nickname },
             {
                 headers: {

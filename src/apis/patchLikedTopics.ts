@@ -4,7 +4,7 @@ export const patchLikedTopics = async(likedTopicList: string[]) => {
     try {
         const token = localStorage.getItem('accessToken');
         const response = await axios.patch(
-            '/user/liked-topics',
+            '/api/user/liked-topics',
             { likedTopicList },
             {
                 headers: {

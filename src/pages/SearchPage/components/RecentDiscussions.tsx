@@ -31,7 +31,7 @@ const RecentDiscussions: React.FC = () => {
           hits: item.hit,
           image: item.mediaUrl || PurpleBox,
           comments: item.comment,
-          link: `/post/${item.debateId}`, // 링크를 debateId로 초기화
+          link: item.debateId ? `/debate/details?debateId=${item.debateId}` : '', // 링크를 debateId로 초기화
         }));
         setDiscussions(formattedDiscussions);
         console.log('최근 본 토론 데이터 가져오기 성공', result);
@@ -56,6 +56,7 @@ const RecentDiscussions: React.FC = () => {
             image={discussion.image}
             hits={discussion.hits}
             comments={discussion.comments}
+            debateId={discussion.debateId}
             link={discussion.link}
             showRank={false}
             className="w-[164px] h-[100%] flex-shrink-0"

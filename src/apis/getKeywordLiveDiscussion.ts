@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getKeywordLiveDiscussion = async (keywordId: number, sort: string) => {
   try {
-    const response = await axios.get(`debate/keyword`, {
+    const response = await axios.get(`/api/debate/keyword`, {
       params: {
         keywordId: keywordId,
         sort: sort,

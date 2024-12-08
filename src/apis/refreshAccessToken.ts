@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const refreshAccessToken = async (refreshToken: string) => {
   try {
-    const response = await axios.post('/auth/refresh', {
+    const response = await axios.post('/api/auth/refresh', {
       refreshToken,
     });
 

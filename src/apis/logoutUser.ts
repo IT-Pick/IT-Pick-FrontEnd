@@ -5,7 +5,7 @@ export const logoutUser = async () => {
         const token = localStorage.getItem('refreshToken');
         console.log(token);
         const response = await axios.patch(
-            '/auth/logout',
+            '/api/auth/logout',
             null,
             {
                 headers: {

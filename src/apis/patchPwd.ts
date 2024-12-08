@@ -4,7 +4,7 @@ export const patchPwd = async (password: string) => {
     try {
         const token = localStorage.getItem('accessToken');
         const response = await axios.patch(
-            '/user/password',
+            '/api/user/password',
             { password },
             {
                 headers: {

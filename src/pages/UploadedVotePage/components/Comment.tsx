@@ -53,7 +53,7 @@ const Comment: React.FC<CommentProps> = ({ userName, time, text, like }) => {
     };
 
     return (
-        <div className="max-w-custom mx-auto h-auto py-[10px] px-[20px] bg-[white] rounded-[20px] mb-3 mx-4">
+        <div className="max-w-custom h-auto py-[10px] px-[20px] bg-[white] rounded-[20px] mb-3 mx-4">
             <div className="p-2">
                 <div className="flex w-full justify-between items-center">
                     <div className="flex items-center">

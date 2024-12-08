@@ -8,7 +8,7 @@ export const deleteDebate = async (debateId: number) => {
         }
 
         // 올바른 URL 형식으로 debateId를 포함
-        const response = await axios.delete(`/debate/${debateId}`, {
+        const response = await axios.delete(`/api/debate/${debateId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }

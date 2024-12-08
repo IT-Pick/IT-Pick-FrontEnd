@@ -9,7 +9,7 @@ interface SignUpRequest {
 }
 
 export const signUp = async (request: SignUpRequest) => {
-  const response = await axios.post('/auth/signup', request, {
+  const response = await axios.post('/api/auth/signup', request, {
     headers: {
       'Content-Type': 'application/json',
     },
