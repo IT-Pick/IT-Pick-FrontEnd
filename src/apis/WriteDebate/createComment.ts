@@ -14,7 +14,7 @@ export const createComment = async (payload: CommentPayload) => {
   }
 
   try {
-    const response = await axios.post('/debate/comment', payload, {
+    const response = await axios.post('/api/debate/comment', payload, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`, // Authorization 헤더에 토큰 추가

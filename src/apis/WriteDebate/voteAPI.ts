@@ -16,7 +16,7 @@ interface ApiResponse {
 export const vote = async (userId: number, voteOptionIds: number[]): Promise<ApiResponse> => {
     try {
         const payload: VoteRequest = { userId, voteOptionIds };
-        const response: AxiosResponse<ApiResponse> = await axios.post('/debate/vote', payload);
+        const response: AxiosResponse<ApiResponse> = await axios.post('/api/debate/vote', payload);
         return response.data;
     } catch (error) {
         throw new Error(`투표 요청 실패: ${error.response.data.message || error.message}`);
@@ -27,7 +27,7 @@ export const vote = async (userId: number, voteOptionIds: number[]): Promise<Api
 export const cancelVote = async (userId: number, voteOptionIds: number[]): Promise<ApiResponse> => {
     try {
         const payload: VoteRequest = { userId, voteOptionIds };
-        const response: AxiosResponse<ApiResponse> = await axios.delete('/debate/vote', { data: payload });
+        const response: AxiosResponse<ApiResponse> = await axios.delete('/api/debate/vote', { data: payload });
         return response.data;
     } catch (error) {
         throw new Error(`투표 취소 실패: ${error.response.data.message || error.message}`);

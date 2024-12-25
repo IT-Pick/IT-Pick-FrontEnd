@@ -13,7 +13,7 @@ export const handleLikeComment = async (payload: CommentHeartPayload) => {
   }
 
   try {
-    const response = await axios.post('/debate/comment/heart', payload, {
+    const response = await axios.post('/api/debate/comment/heart', payload, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`, // Authorization 헤더에 토큰 추가

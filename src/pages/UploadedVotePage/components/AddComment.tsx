@@ -6,6 +6,7 @@ import { useTrendStore } from "@store/useTrendStore"; // zustand store import
 interface AddCommentProps {
   debateId: number;
   userId: number;
+  userName: string;
 }
 
 const AddComment: React.FC<AddCommentProps> = ({ debateId, userId }) => {
