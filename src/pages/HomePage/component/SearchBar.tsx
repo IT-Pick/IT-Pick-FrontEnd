@@ -9,7 +9,7 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onClick, placeholder }) => {
   return (
     <div 
-      className="w-[342px] h-[40px] flex items-center rounded-full bg-white cursor-pointer pl-4 pr-4" 
+      className="w-custom max-w-custom mx-auto h-[40px] flex items-center rounded-full bg-white cursor-pointer pl-4 pr-4" 
       onClick={onClick}
     >
       <div className="flex justify-between items-center w-full">

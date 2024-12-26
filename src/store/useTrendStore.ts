@@ -13,6 +13,7 @@ interface Comment {
   time: string;
   like: number;
   text: string;
+  parentCommentId: number | null;
 }
 
 interface TrendState {
@@ -26,7 +27,7 @@ interface TrendState {
   setDate: (date: string) => void;
   fetchTrends: () => void;
   addComment: (debateId: number, comment: Comment) => void;  // 댓글 추가 함수
-  setComments: (debateId: number, comments: Comment[]) => void;  // 댓글 설정 함수
+  setComments: (debateId: number, updater: (prevComments: Comment[]) => Comment[]) => void;  // 댓글 설정 함수
 }
 
 export const useTrendStore = create<TrendState>((set, get) => ({
@@ -66,17 +67,31 @@ export const useTrendStore = create<TrendState>((set, get) => ({
     }
   },
 
-  addComment: (debateId, newComment) => set((state) => ({
-    comments: {
-      ...state.comments,
-      [debateId]: [...(state.comments[debateId] || []), newComment],  // 특정 debateId에 댓글 추가
-    },
-  })),
+  addComment: (debateId, newComment) => set((state) => {
+    const existingComments = state.comments[debateId] || [];
+    const isDuplicate = existingComments.some((comment) => comment.commentId === newComment.commentId);
 
-  setComments: (debateId, comments) => set((state) => ({
-    comments: {
-      ...state.comments,
-      [debateId]: comments,
-    },
-  })),
+    if (isDuplicate) {
+      console.warn(`중복된 댓글 감지: commentId=${newComment.commentId}`);
+      return {}; // 중복 댓글이면 상태 변경 없음
+    } 
+
+    return {
+      comments: {
+        ...state.comments,
+        [debateId]: [...existingComments, newComment],
+      },
+    };
+  }),
+
+  setComments: (debateId, updater: (prevComments: Comment[]) => Comment[]) => set((state) => {
+    const prevComments = state.comments[debateId] || []; // 기존 댓글 가져오기
+    const updatedComments = updater(prevComments); // 업데이트 함수 실행
+    return {
+      comments: {
+        ...state.comments,
+        [debateId]: updatedComments, // 업데이트된 댓글 상태 저장
+      },
+    };
+  }),
 }));

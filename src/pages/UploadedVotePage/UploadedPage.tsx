@@ -40,13 +40,19 @@ const UploadedPage: React.FC = () => {
     debateImgUrl: '',
   });
   const [currentUser, setCurrentUser] = useState(''); // 현재 유저명
-  const setComments = useTrendStore((state) => state.setComments); // zustand의 setComments 함수
+  const { setComments, comments } = useTrendStore((state) => ({
+    setComments: state.setComments,
+    comments: state.comments,
+  }));
 
   useEffect(() => {
     const fetchDetails = async () => {
       if (debateId) {
         try {
           const data = await getDebateDetails(debateId);
+
+          setCurrentUser(data.result.currentUserNickname || "익명");
+          
           setInfo({
             userName: data.result.userNickname,
             time: data.result.createAt, // 원래 서버에서 온 포맷을 그대로 유지
@@ -66,7 +72,13 @@ const UploadedPage: React.FC = () => {
             text: comment.commentText,
             parentCommentId: comment.parentCommentId,
           }));
-          setComments(debateId, formattedComments);
+          setComments(debateId, (prevComments = []) => {
+            const uniqueCommentMap = new Map<number, typeof formattedComments[0]>();
+            [...prevComments, ...formattedComments].forEach((comment) => {
+              uniqueCommentMap.set(comment.commentId, comment); // 중복 제거
+            });
+            return Array.from(uniqueCommentMap.values());
+          });
 
           setCurrentUser(data.result.currentUserNickname);
         } catch (error) {
@@ -83,7 +95,7 @@ const UploadedPage: React.FC = () => {
   }
 
   return (
-    <div className="w-custom max-w-custom mx-auto bg-[#F8F9FC] py-4">
+    <div className="w-custom max-w-custom mx-auto bg-[#F8F9FC] py-4 px-[16px]">
       <Header
         info={{
           userName: info.userName,
@@ -101,7 +113,12 @@ const UploadedPage: React.FC = () => {
         }}
       />
       <CommentList debateId={debateId} />
-      <AddComment debateId={debateId} userId={123} />
+      <AddComment
+        debateId={debateId}
+        userId={123}
+        currentUser={currentUser}
+        getTimeDifference={getTimeDifference} 
+      />
     </div>
   );
 };

@@ -14,7 +14,7 @@ const CommentList: React.FC<CommentListProps> = ({ debateId }) => {
       <div className="text-[14px] text-[#9EAAB5] ml-[28px] mb-[12px]">댓글 {comments.length}</div>
       {comments.map((comment, index) => (
         <Comment
-          key={index}
+          key={comment.commentId}
           userName={comment.userName}
           time={comment.time}
           text={comment.text}

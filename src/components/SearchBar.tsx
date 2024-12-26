@@ -42,7 +42,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch, onSearchAl
   
   return (
     <div 
-      className="w-[342px] relative" 
+      className="w-custom max-w-custom mx-auto relative" 
       onClick={handleClick} 
       style={onSearchAll ? { cursor: 'pointer' } : {}}
     >

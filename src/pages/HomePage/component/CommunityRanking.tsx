@@ -56,24 +56,25 @@ const CommunityRanking: React.FC = () => {
   };
 
   return (
-    <div className=" pt-[44px]  pb-[33px] ">
-      <span className='ml-[24px]'>
-        <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">커뮤니티 별 랭킹</span>
-        <span className="text-xs text-gray-400 ml-[8px]">{currentTime}</span>
-      </span>
-      <span className="ml-[43px] cursor-pointer" onClick={handleRankingClick}>
-        <div className="inline-flex items-center justify-start">
-          <span className="w-[50px] h-5 text-right text-gray-400 text-sm font-medium font-['Pretendard']">랭킹보기</span>
-          <img src={tag_ico_right} alt="tag_ico_right" />
+    <div className="flex flex-col items-start pt-[44px] ml-[24px]">
+      <div className="flex justify-between items-center w-full mb-[16px]">
+        <div className="flex items-center">
+          <span className="text-[#2E333B] font-pretendard text-[20px] font-bold leading-normal">커뮤니티 별 랭킹</span>
+          <span className="text-xs text-gray-400 ml-[8px]">{currentTime}</span>
         </div>
-      </span>
-
-      <ul className="ml-[24px] mt-[24px] space-y-4">
+        <span className="cursor-pointer" onClick={handleRankingClick}>
+          <div className="inline-flex items-center justify-start mr-[24px]">
+            <span className="w-[50px] h-5 text-right text-gray-400 text-sm font-medium font-['Pretendard']">랭킹보기</span>
+            <img src={tag_ico_right} alt="tag_ico_right" />
+          </div>
+        </span>
+      </div>
+      <ul className="w-full flex flex-col gap-4 mt-[24px]">
         {rankings.map((item, index) => (
           <React.Fragment key={index}>
             <li className="flex mb-4">
               <object data={item.icon} className="mr-4" type="image/svg+xml">
-                <img src={item.icon} alt={item.name}/>
+                <img src={item.icon} alt={item.name} />
               </object>
               <div className="flex justify-between items-center w-full">
                 <span className="font-medium text-[#1D2228] font-pretendard text-[16px]">
@@ -85,12 +86,11 @@ const CommunityRanking: React.FC = () => {
               </div>
             </li>
             {index < rankings.length - 1 && (
-              <div className="h-[1px] bg-gray1 "/>
+              <div className="h-[1px] bg-gray1 " />
             )}
           </React.Fragment>
         ))}
       </ul>
-
     </div>
   );
 };

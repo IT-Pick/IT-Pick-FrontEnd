@@ -95,7 +95,7 @@ const SearchPage: React.FC = () => {
 
   return (
     <div className="w-custom max-w-custom mx-auto pt-[20px] bg-background h-full">
-      <div className="ml-[24px]">
+      <div className="mx-[24px]">
         <SearchBar placeholder="올림픽" onSearch={handleSearch} />
       </div>
 
